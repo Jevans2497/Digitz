@@ -1,0 +1,92 @@
+{
+    "levels": [
+        {
+            "name": "The Beach",
+            "level_number": 1,
+            "level_sprites": [
+                {
+                    "sprite_name": "TheBeach",
+                    "alternate_name": ""
+                }
+            ]
+        },
+        {
+            "name": "The Field",
+            "level_number": 2,
+            "level_sprites": [
+                {
+                    "sprite_name": "TheField",
+                    "alternate_name": ""
+                }
+            ]
+        },
+        {
+            "name": "Dusk",
+            "level_number": 3,
+            "level_sprites": [
+                {
+                    "sprite_name": "Dusk",
+                    "alternate_name": ""
+                }
+            ]
+        },
+        {
+            "name": "The Crevasse",
+            "level_number": 4,
+            "level_sprites": [
+                {
+                    "sprite_name": "TheCrevasse",
+                    "alternate_name": ""
+                }
+            ]
+        },
+        {
+            "name": "The Cave",
+            "level_number": 5,
+            "level_sprites": [
+                {
+                    "sprite_name": "TheCave",
+                    "alternate_name": ""
+                }
+            ]
+        },
+        {
+            "name": "Shipwreck",
+            "level_number": 6,
+            "level_sprites": [
+                {
+                    "sprite_name": "Shipwreck",
+                    "alternate_name": ""
+                }
+            ]
+        },
+        {
+            "name": "Tundra",
+            "level_number": 7,
+            "level_sprites": [
+                {
+                    "sprite_name": "Tundra",
+                    "alternate_name": ""
+                }
+            ]
+        },
+        {
+            "name": "The City",
+            "level_number": 8,
+            "level_sprites": [
+                {
+                    "sprite_name": "TheCityDay",
+                    "alternate_name": "Day"
+                },
+                {
+                    "sprite_name": "TheCityNight",
+                    "alternate_name": "Night"
+                },
+                {
+                    "sprite_name": "TheCityDawn",
+                    "alternate_name": "Dawn"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,84 @@
+{
+    "songs": [
+        {
+            "name": "Yesterday",
+            "song_file_name": "Yesterday",
+            "sprite_name": "Yesterday",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "The Beatles",
+            "difficulty_string": "veryEasy"
+        },
+        {
+            "name": "After the Earthquake",
+            "song_file_name": "AfterTheEarthquake",
+            "sprite_name": "AfterTheEarthquake",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "Alvvays",
+            "difficulty_string": "hard"
+        },
+        {
+            "name": "D.A.N.C.E",
+            "song_file_name": "DANCE",
+            "sprite_name": "DANCE",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "Justice",
+            "difficulty_string": "hard"
+        },
+        {
+            "name": "Freaking Out the Neighborhood",
+            "song_file_name": "FreakingOutTheNeighborhood",
+            "sprite_name": "FreakingOutTheNeighborhood",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "Mac Demarco",
+            "difficulty_string": "medium"
+        },
+        {
+            "name": "If You Want the Truth",
+            "song_file_name": "IfYouWantTheTruth",
+            "sprite_name": "IfYouWantTheTruth",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "Preacher and Daisy",
+            "difficulty_string": "easy"
+        },
+        {
+            "name": "Little Secrets",
+            "song_file_name": "LittleSecrets",
+            "sprite_name": "LittleSecrets",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "Passion Pit",
+            "difficulty_string": "veryHard"
+        },
+        {
+            "name": "Mamma Mia",
+            "song_file_name": "MammaMia",
+            "sprite_name": "MammaMia",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "Abba",
+            "difficulty_string": "medium"
+        },
+        {
+            "name": "Waves",
+            "song_file_name": "Waves",
+            "sprite_name": "Waves",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "Electric Guest",
+            "difficulty_string": "easy"
+        }
+    ]
+}

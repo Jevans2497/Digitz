@@ -1,0 +1,252 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using static SharedResources;
+using static GameManager;
+
+public class SpawnedArrowManager: MonoBehaviour {
+
+    [SerializeField] GameObject leftArrow;
+    [SerializeField] GameObject upArrow;
+    [SerializeField] GameObject rightArrow;
+    [SerializeField] GameObject downArrow;
+
+    [SerializeField] GameObject leftArrowPrefab;
+    [SerializeField] GameObject upArrowPrefab;
+    [SerializeField] GameObject rightArrowPrefab;
+    [SerializeField] GameObject downArrowPrefab;
+
+    [SerializeField] GameManager gameManager;
+
+    public Transform leftSpawn, upSpawn, rightSpawn, downSpawn;
+
+    float defaultSpeed = 1f;
+    private List<ArrowSpawnData> arrowSpawnDataList = new List<ArrowSpawnData>();
+    private int currentArrowIndex;
+    private bool isSetup;
+
+    private void Update() {
+        if (isSetup) {
+            float songTime = gameManager.getSongTime();
+            if (currentArrowIndex < arrowSpawnDataList.Count && arrowSpawnDataList[currentArrowIndex].arrowData.timestamp <= songTime) {
+                spawnArrow(arrowSpawnDataList[currentArrowIndex]);
+                currentArrowIndex += 1;
+            }
+        }
+    }
+
+    public void resetSpawnedArrowManager() {
+        arrowSpawnDataList = new List<ArrowSpawnData>();
+        currentArrowIndex = 0;
+        isSetup = false;
+    }
+
+    public void setup(SongPreset song) {
+        defaultSpeed = song.default_speed;
+        createArrowSpawnDataList(song);
+        preproccessArrowTimestampForArrivalTime();
+        preprocessArrowsForArrowEffects();
+        isSetup = true;
+    }
+
+    private void createArrowSpawnDataList(SongPreset song) {
+        foreach (ArrowData arrowData in song.arrows) {
+            Direction spawnDirection = convertStringToDirection(arrowData.arrow_direction);
+            ArrowSpawnData spawnData = GetSpawnData(spawnDirection, arrowData);
+            if (spawnData != null) {
+                arrowSpawnDataList.Add(spawnData);
+            }
+        }
+    }
+    /**
+     * We don't care when arrows leave, we care when they arrive. 
+     * This function calculates when the arrow would need to leave it's spawn point in order to arrive at it's destination at the expected timestamp
+    **/
+    private void preproccessArrowTimestampForArrivalTime() {
+        foreach (ArrowSpawnData spawnData in arrowSpawnDataList) {
+            Vector3 startPosition = spawnData.spawnPoint.transform.position;
+            Vector3 targetPosition = spawnData.targetPosition.position;
+            float journeyLength = Vector3.Distance(startPosition, targetPosition);
+
+            float arrowSpeed = spawnData.arrowData.arrow_speed != 0 ? spawnData.arrowData.arrow_speed : defaultSpeed;
+            if (ChallengeTracker.hasChallenge(Challenge.ChallengeEffect.Supersonic)) {
+                arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.25f;
+            }
+            spawnData.arrowData.arrow_speed = arrowSpeed;
+
+            float travelTime = journeyLength / arrowSpeed;
+
+            spawnData.arrowData.timestamp -= travelTime;
+        }
+
+        alterSpawnedArrowsForChallengeIfNeeded();
+
+        arrowSpawnDataList.Sort((a, b) => a.arrowData.timestamp.CompareTo(b.arrowData.timestamp));
+    }
+
+    private void preprocessArrowsForArrowEffects() {
+        if (UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.Houston)) {
+            ArrowData lastArrowData = arrowSpawnDataList[^1].arrowData;
+            lastArrowData.arrowEffect = ArrowData.ArrowEffect.golden;
+        }
+
+        arrowSpawnDataList.ForEach(spawnData => spawnData.arrowData.applyEffectToArrow());
+    }
+
+    private void spawnArrow(ArrowSpawnData arrowSpawnData) {
+        if (arrowSpawnData.spawnPoint != null && arrowSpawnData.arrowPrefab != null) {
+            GameObject spawnedArrow = Instantiate(arrowSpawnData.arrowPrefab, arrowSpawnData.spawnPoint.position, Quaternion.identity);
+            SpriteRenderer spriteRenderer = spawnedArrow.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = arrowSpawnData.arrowData.color;
+            spawnedArrow.layer = arrowSpawnData.arrowData.layer;
+            StartCoroutine(moveSpawnedArrowToTargetArrow(arrowSpawnData, spawnedArrow));
+        }
+    }
+
+    private IEnumerator moveSpawnedArrowToTargetArrow(ArrowSpawnData arrowSpawnData, GameObject spawnedArrow) {
+        Transform arrowTransform = spawnedArrow.transform;
+        Vector3 startPosition = arrowTransform.position;
+        float journeyLength = Vector3.Distance(startPosition, arrowSpawnData.targetPosition.position);
+        float startTime = Time.time;
+
+        while (arrowTransform != null) {
+            float arrowSpeed = arrowSpawnData.arrowData.arrow_speed;
+            float distanceCovered = (Time.time - startTime) * arrowSpeed;
+            float fractionOfJourney = distanceCovered / journeyLength;
+            arrowTransform.position = Vector3.Lerp(startPosition, arrowSpawnData.targetPosition.position, fractionOfJourney);
+
+            handleGraveyardChallenge(fractionOfJourney, spawnedArrow);
+
+            if (fractionOfJourney >= 1.00) {
+                break;
+            }
+
+            yield return null;
+        }
+
+        if (arrowTransform != null) {
+            StartCoroutine(destroySpawnedArrowAfterDelay(arrowSpawnData.targetArrow, arrowTransform));
+        }
+    }
+
+    private void alterSpawnedArrowsForChallengeIfNeeded() {
+        Challenge challenge = ChallengeTracker.getChallenge();
+        if (challenge == null) {
+            return;
+        }
+
+        if (challenge.effect == Challenge.ChallengeEffect.EarlyBird) {
+            modifyTimeStampsBy(challenge.getSeverityMultiplier() * -0.05f);
+        } else if (challenge.effect == Challenge.ChallengeEffect.LaterGator) {
+            modifyTimeStampsBy(challenge.getSeverityMultiplier() * 0.05f);
+        } else if (challenge.effect == Challenge.ChallengeEffect.BrokenTape) {
+            modifyTimeStampsForBrokenTapeChallenge(challenge.getSeverityMultiplier());
+        } else if (challenge.effect == Challenge.ChallengeEffect.Bombardment) {
+            addSpeedyArrowsForBombardmentChallenge(challenge.getSeverityMultiplier());
+        }
+    }
+
+    private void modifyTimeStampsBy(float timeToModify) {
+        arrowSpawnDataList.ForEach(spawnData => spawnData.arrowData.timestamp += timeToModify);
+    }
+
+    private void modifyTimeStampsForBrokenTapeChallenge(float challengeSeverityMultiplier) {
+        foreach (ArrowSpawnData spawnData in arrowSpawnDataList) {
+            int randomInt = UnityEngine.Random.Range(0, 4);
+            if (randomInt == 0) {
+                spawnData.arrowData.timestamp += (challengeSeverityMultiplier * -.05f);
+            } else if (randomInt == 1) {
+                spawnData.arrowData.timestamp += (challengeSeverityMultiplier * .05f);
+            }
+            //Else, leave the timestamp as is
+        }
+    }
+
+    private void addSpeedyArrowsForBombardmentChallenge(float challengeSeverityMultiplier) {
+        float lastArrowTimestamp = arrowSpawnDataList[arrowSpawnDataList.Count - 1].arrowData.timestamp;
+        float numOfSpeedyArrowsToSpawn = 6 * challengeSeverityMultiplier;
+        for (int i = 0; i < numOfSpeedyArrowsToSpawn; i++) {
+
+            //Get random timestamp to spawn arrow at
+            float randomFloat = UnityEngine.Random.Range(0, lastArrowTimestamp - 2);
+
+            //Get random direction
+            string randomDirection = getRandomDirectionAsString();
+            Direction spawnDirection = convertStringToDirection(randomDirection);
+
+            //Create spawn data
+            ArrowData speedyArrowData = new(randomFloat, getRandomDirectionAsString(), ArrowData.ArrowEffect.regular);
+            speedyArrowData.arrow_speed = defaultSpeed * 1.75f;
+            ArrowSpawnData spawnData = GetSpawnData(spawnDirection, speedyArrowData);
+
+            //Add to list
+            arrowSpawnDataList.Add(spawnData);
+        }
+    }
+
+    private void handleGraveyardChallenge(float fractionOfJourney, GameObject spawnedArrow) {
+        Challenge challenge = ChallengeTracker.getChallenge();
+        if (challenge != null && challenge.effect == Challenge.ChallengeEffect.Graveyard) {
+            float startingAlpha = -.25f - (.125f * challenge.getSeverityMultiplier());
+            float alpha = Mathf.Lerp(startingAlpha, 0.85f, fractionOfJourney);
+
+            Color alphaAdjustedColor = spawnedArrow.GetComponent<SpriteRenderer>().color;
+            alphaAdjustedColor.a = alpha;
+            spawnedArrow.GetComponent<SpriteRenderer>().color = alphaAdjustedColor;
+        }
+    }
+
+    private IEnumerator destroySpawnedArrowAfterDelay(GameObject targetArrow, Transform arrowTransform) {
+        //Delay so the user has time to hit arrow before it counts as a miss.
+        float destructionDelay = 0.1f;
+
+        if (UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.Sharpshooter)) {
+            destructionDelay = 0.125f;
+        }
+
+        yield return new WaitForSeconds(destructionDelay);
+
+        if (arrowTransform != null) {
+            Arrow targetArrowComponent = targetArrow.GetComponent<Arrow>();
+            if (targetArrowComponent != null) {
+                // Report a miss
+                targetArrowComponent.handleScoring(1.0f, false);
+            }
+            Destroy(arrowTransform.gameObject);
+        }
+    }
+
+    private ArrowSpawnData GetSpawnData(Direction direction, ArrowData arrowData) {
+        var directionMapping = new Dictionary<Direction, (Transform spawnPoint, Transform targetPosition, GameObject arrowPrefab, GameObject targetArrow)> {
+        { Direction.Left, (leftSpawn, leftArrow.transform, leftArrowPrefab, leftArrow) },
+        { Direction.Up, (upSpawn, upArrow.transform, upArrowPrefab, upArrow) },
+        { Direction.Right, (rightSpawn, rightArrow.transform, rightArrowPrefab, rightArrow) },
+        { Direction.Down, (downSpawn, downArrow.transform, downArrowPrefab, downArrow) }
+    };
+
+        // Get the spawn data using the direction
+        if (directionMapping.TryGetValue(direction, out var spawnData)) {
+            // Return the mapped data wrapped in an ArrowSpawnData object
+            return new ArrowSpawnData(arrowData, direction, spawnData.spawnPoint, spawnData.targetPosition, spawnData.arrowPrefab, spawnData.targetArrow);
+        }
+
+        return null;
+    }
+}
+
+public class ArrowSpawnData {
+    public ArrowData arrowData;
+    public Direction direction;
+    public Transform spawnPoint;
+    public Transform targetPosition;
+    public GameObject arrowPrefab;
+    public GameObject targetArrow;
+
+    public ArrowSpawnData(ArrowData arrowData, Direction direction, Transform spawnPoint, Transform targetPosition, GameObject arrowPrefab, GameObject targetArrow) {
+        this.arrowData = arrowData;
+        this.spawnPoint = spawnPoint;
+        this.targetPosition = targetPosition;
+        this.arrowPrefab = arrowPrefab;
+        this.targetArrow = targetArrow;
+    }
+}
