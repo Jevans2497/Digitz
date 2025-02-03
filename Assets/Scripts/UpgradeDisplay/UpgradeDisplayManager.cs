@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradeDisplayManager : MonoBehaviour {
+public class UpgradeDisplayManager: MonoBehaviour {
 
     [SerializeField] GameObject upgradeDisplayPrefab;
     [SerializeField] Transform upgradeDisplayTransform;
 
-    //private Dictionary<Upgrade.UpgradeEffect, GameObject> upgradeDisplayObjects = new();
-    private List<KeyValuePair<Upgrade.UpgradeEffect, GameObject>> upgradeDisplayObjects = new();
+    private List<KeyValuePair<Upgrade, GameObject>> upgradeDisplayObjects = new();
     private float spacing = 85;
 
     private void Start() {
@@ -19,8 +18,7 @@ public class UpgradeDisplayManager : MonoBehaviour {
     public void upgradeAdded(Upgrade upgrade) {
         GameObject upgradeDisplayObject = Instantiate(upgradeDisplayPrefab, upgradeDisplayTransform);
         setUpgradeDisplay(upgrade, upgradeDisplayObject);
-        upgradeDisplayObjects.Add(new(upgrade.effect, upgradeDisplayObject));
-        //upgradeDisplayObjects.Add(upgrade.effect, upgradeDisplayObject);
+        upgradeDisplayObjects.Add(new(upgrade, upgradeDisplayObject));
     }
 
     private void setUpgradeDisplay(Upgrade upgrade, GameObject upgradeDisplayObject) {
@@ -28,7 +26,6 @@ public class UpgradeDisplayManager : MonoBehaviour {
         float newXPosition = upgradeDisplayObjects.Count * spacing;
         upgradeDisplayObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(newXPosition, 0);
 
-        // Set color
         GameObject foreground = upgradeDisplayObject.transform.Find("UpgradeDisplayForeground").gameObject;
         foreground.GetComponent<Image>().color = SharedResources.hexToColor(upgrade.color);
 
@@ -36,11 +33,15 @@ public class UpgradeDisplayManager : MonoBehaviour {
         GameObject image = foreground.transform.Find("UpgradeDisplayImage").gameObject;
         Sprite sprite = Resources.Load<Sprite>($"MenuItems/Upgrades/UpgradeIcons/{upgrade.sprite_name}");
         image.GetComponent<Image>().sprite = sprite;
+
+        // Set Tooltip
+        Tooltip tooltip = upgradeDisplayObject.GetComponent<Tooltip>();
+        tooltip.message = upgrade.name + "\n" + upgrade.description;
     }
 
     public void upgradeRemoved(Upgrade upgrade) {
-        KeyValuePair<Upgrade.UpgradeEffect, GameObject> upgradeToRemove = upgradeDisplayObjects
-            .Find(pair => pair.Key == upgrade.effect);
+        KeyValuePair<Upgrade, GameObject> upgradeToRemove = upgradeDisplayObjects
+            .Find(pair => pair.Key == upgrade);
 
         if (upgradeToRemove.Equals(default(KeyValuePair<Upgrade.UpgradeEffect, GameObject>))) {
             Debug.LogWarning("Upgrade not found!");
@@ -51,4 +52,32 @@ public class UpgradeDisplayManager : MonoBehaviour {
         Destroy(upgradeToRemove.Value);
     }
 
+    public void upgradeDisabled(Upgrade upgrade) {
+        KeyValuePair<Upgrade, GameObject> upgradeToDisable = upgradeDisplayObjects
+    .Find(pair => pair.Key == upgrade);
+
+        if (upgradeToDisable.Equals(default(KeyValuePair<Upgrade.UpgradeEffect, GameObject>))) {
+            Debug.LogWarning("Unable to disable upgrade, not found!");
+            return;
+        }
+
+        setUpgradeDisplayColor(upgradeToDisable.Value, SharedResources.hexToColor("#DEDEDE"));
+    }
+
+    public void upgradeEnabled(Upgrade upgrade) {
+        KeyValuePair<Upgrade, GameObject> upgradeToEnable = upgradeDisplayObjects
+    .Find(pair => pair.Key == upgrade);
+
+        if (upgradeToEnable.Equals(default(KeyValuePair<Upgrade.UpgradeEffect, GameObject>))) {
+            Debug.LogWarning("Unable to disable upgrade, not found!");
+            return;
+        }
+
+        setUpgradeDisplayColor(upgradeToEnable.Value, SharedResources.hexToColor(upgrade.color));
+    }
+
+    private void setUpgradeDisplayColor(GameObject upgradeDisplayObject, Color color) {
+        GameObject foreground = upgradeDisplayObject.transform.Find("UpgradeDisplayForeground").gameObject;
+        foreground.GetComponent<Image>().color = color;
+    }
 }

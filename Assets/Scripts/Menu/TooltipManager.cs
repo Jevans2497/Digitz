@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TooltipManager : MonoBehaviour {
+public class TooltipManager: MonoBehaviour {
 
     public static TooltipManager instance;
     [SerializeField] TextMeshProUGUI textComponent;
 
     private Vector2 offset = new Vector2(100, 30);
+
+    public enum PrefabType {
+        menuOption, upgradeDisplay
+    }
 
     private void Awake() {
         if (instance != null && instance != this) {
@@ -22,11 +26,22 @@ public class TooltipManager : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
-    public void setAndShowTooltip(string message, Vector2 target) {
+    public void setAndShowTooltip(string message, Vector2 target, PrefabType prefabType) {
         gameObject.SetActive(true);
         textComponent.text = message;
-        transform.position = target + offset;
+        transform.position = target + getOffsetForPrefabType(prefabType);
         transform.SetAsLastSibling();
+    }
+
+    private Vector2 getOffsetForPrefabType(PrefabType prefabType) {
+        switch (prefabType) {
+            case PrefabType.menuOption:
+            return new Vector2(100, 30);
+            case PrefabType.upgradeDisplay:
+            return new Vector2(25, 35);
+            default:
+            return new Vector2(0, 0);
+        }
     }
 
     public void hideTooltip() {

@@ -95,7 +95,7 @@
             "sprite_name": "ShatteredSword",
             "challenge_type_string": "other",
             "color": "#00D903",
-            "rarity_string": "rare",
+            "rarity_string": "always",
             "hasSeverity": false,
             "description": "Permanently removes the last upgrade received"
         },

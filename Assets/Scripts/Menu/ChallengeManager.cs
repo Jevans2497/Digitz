@@ -58,6 +58,10 @@ public static class ChallengeTracker {
             theCurse = challenge;
         }
 
+        if (challenge.effect == Challenge.ChallengeEffect.ShatteredSword) {
+            UpgradeTracker.removeLastAcquiredUpgrade();
+        }
+
         currentActiveChallenge = challenge;
     }
 

@@ -45,16 +45,23 @@ public static class UpgradeTracker {
         return currentActiveUpgrades.Any(upgrade => upgrade.effect == effect && upgrade.isEnabled);
     }
 
+    public static void disableUpgrade(Upgrade upgrade) {
+        upgrade.isEnabled = false;
+        upgradeDisplayManager.upgradeDisabled(upgrade);
+    }
+
     public static void enableAllUpgrades() {
         foreach (var upgrade in currentActiveUpgrades) {
             upgrade.isEnabled = true;
+            upgradeDisplayManager.upgradeEnabled(upgrade);
         }
     }
 
     public static void removeLastAcquiredUpgrade() {
         if (currentActiveUpgrades.Count > 0) {
-            Debug.Log("Removing upgrade " + currentActiveUpgrades[currentActiveUpgrades.Count - 1].name);
-            currentActiveUpgrades.RemoveAt(currentActiveUpgrades.Count - 1);
+            Upgrade upgradeToRemove = currentActiveUpgrades[^1];
+            currentActiveUpgrades.Remove(upgradeToRemove);
+            upgradeDisplayManager.upgradeRemoved(upgradeToRemove);
         }
     }
 

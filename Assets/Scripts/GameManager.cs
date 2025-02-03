@@ -139,16 +139,36 @@ public class GameManager: MonoBehaviour {
     private void manageDelayCountdown() {
         if (delayStartSeconds >= 0.0f) {
             countdown.enabled = true;
-            updateDelayCountdown();
             delayStartSeconds -= Time.deltaTime * audioSource.pitch;
         } else if (delayStartSeconds <= 0.0f) {
-            countdown.enabled = false;
+            StartCoroutine(AnimateCountdown());
+            //countdown.enabled = false;
         }
     }
 
-    private void updateDelayCountdown() {
-        countdown.text = delayStartSeconds.ToString("F0");
+    private IEnumerator AnimateCountdown() {
+        float duration = 1.0f; // Fade duration
+        float elapsedTime = 0f;
+
+        Vector3 originalScale = countdown.transform.localScale;
+        Vector3 targetScale = originalScale * 1.5f;
+
+        Color originalColor = countdown.color;
+        Color targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
+
+        while (elapsedTime < duration) {
+            float t = elapsedTime / duration;
+            countdown.transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
+            countdown.color = Color.Lerp(originalColor, targetColor, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        countdown.enabled = false;
+        countdown.transform.localScale = originalScale; // Reset scale
+        countdown.color = originalColor; // Reset color
     }
+
 
     private void songFinished() {
         resetSongLoop();
@@ -172,14 +192,15 @@ public class GameManager: MonoBehaviour {
             Sprite background = Resources.Load<Sprite>($"Levels/Backgrounds/{currentLevel.level_sprites[0].sprite_name}");
             SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = background;
+            countdown.text = currentLevel.name;
         }
     }
 
     private void handleUpgradesAndChallenges() {
+        UpgradeTracker.enableAllUpgrades();
+        handleOutageChallenge();
         handleSecurityCameraUpgrade();
         handleOverclockChallenge();
-        handleOutageChallenge();
-        handleShatteredSwordChallenge();
     }
 
     private void handleSecurityCameraUpgrade() {
@@ -212,18 +233,9 @@ public class GameManager: MonoBehaviour {
             foreach (var upgrade in UpgradeTracker.GetUpgrades()) {
                 int randomInt = UnityEngine.Random.Range(0, 10);
                 if (randomInt <= outage.getSeverityMultiplier() - 1) {
-                    upgrade.isEnabled = false;
+                    UpgradeTracker.disableUpgrade(upgrade);
                 }
             }
-        } else {
-            UpgradeTracker.enableAllUpgrades();
-        }
-    }
-
-    private void handleShatteredSwordChallenge() {
-        Challenge challenge = ChallengeTracker.getChallenge();
-        if (challenge != null && challenge.effect == Challenge.ChallengeEffect.ShatteredSword) {
-            UpgradeTracker.removeLastAcquiredUpgrade();
         }
     }
 }

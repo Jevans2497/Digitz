@@ -19,6 +19,7 @@ public class Challenge: MenuItem {
     }
 
     public enum ChallengeRarity {
+        always,
         common,
         uncommon,
         rare,
@@ -84,6 +85,7 @@ public class Challenge: MenuItem {
 
     public int GetRarityWeight() {
         switch (rarity) {
+            case ChallengeRarity.always: return 1000; //Exclusively for testing, guarantees upgrade will appear
             case ChallengeRarity.godly: return 1;
             case ChallengeRarity.rare: return 3;
             case ChallengeRarity.uncommon: return 5;

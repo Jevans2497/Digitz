@@ -90,7 +90,7 @@ public class FeedbackData {
 
         if (modifiedThreshold == banditThreshold) {
             feedbackForScore = FeedbackType.bandit;
-            calculatedScore = banditDefaultScore;
+            calculatedScore = banditDefaultScore * gameManager.getLevel();
         } else if (modifiedThreshold <= perfectThreshold) {
             feedbackForScore = FeedbackType.perfect;
             calculatedScore = defaultPerfectScore;
@@ -123,7 +123,7 @@ public class FeedbackData {
 
             //Goalie
             if (upgrade.effect == UpgradeEffect.Goalie && !UpgradeTracker.hasUpgrade(UpgradeEffect.LoadedDice)) {
-                if (modifiedThreshold > stinkyThreshold) {
+                if (modifiedThreshold > stinkyThreshold && modifiedThreshold != banditThreshold) {
                     modifiedThreshold = stinkyThreshold;
                     mostRecentFeedback = FeedbackType.miss;
                 }
