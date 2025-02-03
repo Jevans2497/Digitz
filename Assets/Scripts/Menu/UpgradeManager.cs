@@ -22,10 +22,15 @@ public class UpgradeManager : MenuItemManager {
 
 public static class UpgradeTracker {
     private static List<Upgrade> currentActiveUpgrades = new List<Upgrade>();
+    private static UpgradeDisplayManager upgradeDisplayManager;
+
+    public static void setUpgradeDisplayManager(UpgradeDisplayManager udm) {
+        upgradeDisplayManager = udm;
+    }
 
     public static void addUpgrade(Upgrade upgrade) {
-        Debug.Log("Adding upgrade: " + upgrade.name);
         currentActiveUpgrades.Add(upgrade);
+        upgradeDisplayManager.upgradeAdded(upgrade);
 
         if (upgrade.effect == Upgrade.UpgradeEffect.LoadedDice) {
             FeedbackData.loadedDiceCounter = 25;
