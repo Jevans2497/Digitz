@@ -10,6 +10,7 @@ public class GameManager: MonoBehaviour {
     [SerializeField] TextMeshProUGUI scoreDisplay;
     [SerializeField] AudioSource audioSource;
     [SerializeField] MenuCanvasManager menuCanvasManager;
+    [SerializeField] SpriteRenderer blackBackgroundOverlay;
 
     [SerializeField] Arrow leftArrow;
     [SerializeField] Arrow upArrow;
@@ -59,17 +60,18 @@ public class GameManager: MonoBehaviour {
 
     private void startSongLoop() {
         inSongLoop = true;
-        level += 1;
+        level += 1;        
         setupLevel();
+        countdown.enabled = true;
         handleUpgradesAndChallenges();
+        StartCoroutine(showAndFadeLevelName(countdown, delayStartSeconds));
+        StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 1.0f, 1.5f, 0.9f));
     }
 
     private void manageSongLoop() {
         songTime += Time.deltaTime * audioSource.pitch;
         displayTimer.text = songTime.ToString("F2");
         scoreDisplay.text = score.ToString("N0");
-
-        manageDelayCountdown();
 
         if (!hasArrowsStarted) {
             startSpawningArrows();
@@ -136,43 +138,10 @@ public class GameManager: MonoBehaviour {
         setupSong();
     }
 
-    private void manageDelayCountdown() {
-        if (delayStartSeconds >= 0.0f) {
-            countdown.enabled = true;
-            delayStartSeconds -= Time.deltaTime * audioSource.pitch;
-        } else if (delayStartSeconds <= 0.0f) {
-            StartCoroutine(AnimateCountdown());
-            //countdown.enabled = false;
-        }
-    }
-
-    private IEnumerator AnimateCountdown() {
-        float duration = 1.0f; // Fade duration
-        float elapsedTime = 0f;
-
-        Vector3 originalScale = countdown.transform.localScale;
-        Vector3 targetScale = originalScale * 1.5f;
-
-        Color originalColor = countdown.color;
-        Color targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
-
-        while (elapsedTime < duration) {
-            float t = elapsedTime / duration;
-            countdown.transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
-            countdown.color = Color.Lerp(originalColor, targetColor, t);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        countdown.enabled = false;
-        countdown.transform.localScale = originalScale; // Reset scale
-        countdown.color = originalColor; // Reset color
-    }
-
-
     private void songFinished() {
         resetSongLoop();
         menuCanvasManager.startMenuLoop();
+        StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 0.5f, 1.0f));
     }
 
     private void resetSongLoop() {
@@ -236,6 +205,57 @@ public class GameManager: MonoBehaviour {
                     UpgradeTracker.disableUpgrade(upgrade);
                 }
             }
+        }
+    }
+
+    private IEnumerator showAndFadeLevelName(TextMeshProUGUI textMeshObject, float duration) {
+        Color white = Color.white;
+        Color transparentColor = new Color(white.r, white.g, white.b, 0);
+        textMeshObject.color = transparentColor;
+
+        float elapsedTime = 0f;
+        float fifthOfDuration = duration / 5.0f;
+
+        textMeshObject.enabled = true;
+
+        //Fade in
+        while (elapsedTime < (fifthOfDuration * 2.0f)) {
+            float t = elapsedTime / (fifthOfDuration * 2.0f);
+            textMeshObject.color = Color.Lerp(transparentColor, white, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        textMeshObject.color = white;
+
+        yield return new WaitForSeconds(fifthOfDuration * 2);
+        elapsedTime = 0.0f;
+
+        while (elapsedTime < fifthOfDuration) {
+            float t = elapsedTime / fifthOfDuration;
+            textMeshObject.color = Color.Lerp(white, transparentColor, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        textMeshObject.color = transparentColor;
+
+        textMeshObject.enabled = false;
+    }
+
+    private IEnumerator changeSpriteAlpha(SpriteRenderer spriteRenderer, float delay, float duration, float alpha) {
+        yield return new WaitForSeconds(delay);
+
+        float elapsedTime = 0f;
+
+        Color originalColor = spriteRenderer.color;
+        Color targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+
+        while (elapsedTime < duration) {
+            float t = elapsedTime / duration;
+            spriteRenderer.color = Color.Lerp(originalColor, targetColor, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
     }
 }

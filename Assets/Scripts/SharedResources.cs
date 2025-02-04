@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 public class SharedResources: MonoBehaviour {
 
@@ -26,13 +27,13 @@ public class SharedResources: MonoBehaviour {
         int randomInt = UnityEngine.Random.Range(0, 4);
         switch (randomInt) {
             case 0:
-                return "left";
+            return "left";
             case 1:
-                return "up";
+            return "up";
             case 2:
-                return "right";
+            return "right";
             case 3:
-                return "down";
+            return "down";
         }
         return "right";
     }
