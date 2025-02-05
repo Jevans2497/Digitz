@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 using UnityEngine.UI;
+using System;
 
 public class MenuCanvasManager: MonoBehaviour {
 
@@ -94,7 +95,8 @@ public class MenuCanvasManager: MonoBehaviour {
     }
 
     private void addUpgrade(Upgrade upgrade) {
-        UpgradeTracker.addUpgrade(upgrade);
+        Upgrade clonedUniqueUpgrade = upgrade.Clone();
+        UpgradeTracker.addUpgrade(clonedUniqueUpgrade);
         presentChallengeOptions();
     }
 

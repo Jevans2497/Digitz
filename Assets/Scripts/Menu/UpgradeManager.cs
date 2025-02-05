@@ -29,8 +29,10 @@ public static class UpgradeTracker {
     }
 
     public static void addUpgrade(Upgrade upgrade) {
-        currentActiveUpgrades.Add(upgrade);
-        upgradeDisplayManager.upgradeAdded(upgrade);
+        // We want to clone upgrade so it uses a unique guid in case of duplicates. Otherwise, duplicate upgrades will reference same object
+        Upgrade clonedUniqueUpgrade = upgrade.Clone();
+        currentActiveUpgrades.Add(clonedUniqueUpgrade);
+        upgradeDisplayManager.upgradeAdded(clonedUniqueUpgrade);
 
         if (upgrade.effect == Upgrade.UpgradeEffect.LoadedDice) {
             FeedbackData.loadedDiceCounter = 25;

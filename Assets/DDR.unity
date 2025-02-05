@@ -828,7 +828,7 @@ GameObject:
   - component: {fileID: 598260947}
   - component: {fileID: 598260948}
   m_Layer: 0
-  m_Name: BlackBars
+  m_Name: BlackBackgroundOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -891,7 +891,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a6dabc6e25fb04f44a5d24fc8db9b7b0, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.9019608}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -972,8 +972,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 16777215
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -990,8 +990,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56
-  m_fontSizeBase: 56
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1543,6 +1543,7 @@ MonoBehaviour:
   scoreDisplay: {fileID: 1217143851}
   audioSource: {fileID: 1212903696}
   menuCanvasManager: {fileID: 1212903698}
+  blackBackgroundOverlay: {fileID: 598260948}
   leftArrow: {fileID: 363619989}
   upArrow: {fileID: 1275209478}
   rightArrow: {fileID: 1048482151}

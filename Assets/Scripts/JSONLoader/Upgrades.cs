@@ -52,6 +52,7 @@ public class Upgrade: MenuItem {
     public string description;
     public int numOfTimesTriggered;
     public bool isEnabled = true;
+    public Guid guid;
 
     public string Name => name;
     public string SpriteName => sprite_name;
@@ -76,6 +77,25 @@ public class Upgrade: MenuItem {
             effect = UpgradeEffect.None;
         }
     }
+
+    public Upgrade Clone() {
+        // Creates a clone with a different guid so duplicate upgrades will not be viewed as equal
+        return new Upgrade {
+            name = this.name,
+            sprite_name = this.sprite_name,
+            upgrade_type_string = this.upgrade_type_string,
+            upgrade_type = this.upgrade_type,
+            color = this.color,
+            rarity_string = this.rarity_string,
+            rarity = this.rarity,
+            effect = this.effect,
+            description = this.description,
+            numOfTimesTriggered = this.numOfTimesTriggered,
+            isEnabled = this.isEnabled,
+            guid = Guid.NewGuid() // Assign a new GUID for the copy
+        };
+    }
+
 
     public int GetRarityWeight() {
         switch (rarity) {
