@@ -5,7 +5,7 @@
             "sprite_name": "TwoPerfect",
             "upgrade_type_string": "feedback",
             "color": "#007FFF",
-            "rarity_string": "always",
+            "rarity_string": "common",
             "description": "Perfects are worth 2x points"
         },
         {

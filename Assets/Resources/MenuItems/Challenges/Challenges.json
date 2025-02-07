@@ -77,7 +77,7 @@
             "sprite_name": "Outage",
             "challenge_type_string": "other",
             "color": "#00D903",
-            "rarity_string": "always",
+            "rarity_string": "uncommon",
             "hasSeverity": true,
             "description": "Chance for each upgrade to be disabled for the round"
         },

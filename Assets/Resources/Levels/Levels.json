@@ -3,6 +3,7 @@
         {
             "name": "The Beach",
             "level_number": 1,
+            "completion_percent": 60.0,
             "level_sprites": [
                 {
                     "sprite_name": "TheBeach",
@@ -13,6 +14,7 @@
         {
             "name": "The Field",
             "level_number": 2,
+            "completion_percent": 80.0,
             "level_sprites": [
                 {
                     "sprite_name": "TheField",
@@ -23,6 +25,7 @@
         {
             "name": "Dusk",
             "level_number": 3,
+            "completion_percent": 110.0,
             "level_sprites": [
                 {
                     "sprite_name": "Dusk",
@@ -33,6 +36,7 @@
         {
             "name": "The Crevasse",
             "level_number": 4,
+            "completion_percent": 140.0,
             "level_sprites": [
                 {
                     "sprite_name": "TheCrevasse",
@@ -43,6 +47,7 @@
         {
             "name": "The Cave",
             "level_number": 5,
+            "completion_percent": 170.0,
             "level_sprites": [
                 {
                     "sprite_name": "TheCave",
@@ -53,6 +58,7 @@
         {
             "name": "Shipwreck",
             "level_number": 6,
+            "completion_percent": 210.0,
             "level_sprites": [
                 {
                     "sprite_name": "Shipwreck",
@@ -63,6 +69,7 @@
         {
             "name": "Tundra",
             "level_number": 7,
+            "completion_percent": 250.0,
             "level_sprites": [
                 {
                     "sprite_name": "Tundra",
@@ -73,6 +80,7 @@
         {
             "name": "The City",
             "level_number": 8,
+            "completion_percent": 300.0,
             "level_sprites": [
                 {
                     "sprite_name": "TheCityDay",

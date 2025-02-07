@@ -23,10 +23,11 @@ public class SpawnedArrowManager: MonoBehaviour {
     float defaultSpeed = 1f;
     private List<ArrowSpawnData> arrowSpawnDataList = new List<ArrowSpawnData>();
     private int currentArrowIndex;
-    private bool isSetup;
+    private bool shouldSpawnArrows;
+    private float maximumBasePointsForSong; // The score for the song assuming no upgrades and every feedback is perfect. 
 
     private void Update() {
-        if (isSetup) {
+        if (shouldSpawnArrows) {
             float songTime = gameManager.getSongTime();
             if (currentArrowIndex < arrowSpawnDataList.Count && arrowSpawnDataList[currentArrowIndex].arrowData.timestamp <= songTime) {
                 spawnArrow(arrowSpawnDataList[currentArrowIndex]);
@@ -38,7 +39,7 @@ public class SpawnedArrowManager: MonoBehaviour {
     public void resetSpawnedArrowManager() {
         arrowSpawnDataList = new List<ArrowSpawnData>();
         currentArrowIndex = 0;
-        isSetup = false;
+        shouldSpawnArrows = false;
     }
 
     public void setup(SongPreset song) {
@@ -46,7 +47,15 @@ public class SpawnedArrowManager: MonoBehaviour {
         createArrowSpawnDataList(song);
         preproccessArrowTimestampForArrivalTime();
         preprocessArrowsForArrowEffects();
-        isSetup = true;
+        maximumBasePointsForSong = arrowSpawnDataList.Count * 100.0f;
+    }
+
+    public void setShouldSpawnArrows(bool value) {
+        shouldSpawnArrows = value;
+    }
+
+    public float getMaximumBasePointsForCurrentSong() {
+        return maximumBasePointsForSong;
     }
 
     private void createArrowSpawnDataList(SongPreset song) {

@@ -10,6 +10,7 @@ public class LevelsList {
 public class Level {
     public string name;
     public int level_number;
+    public float completion_percent;
     public List<LevelSprite> level_sprites;
 }
 

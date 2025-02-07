@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public partial class GameManager: MonoBehaviour {
 
     [SerializeField] TextMeshProUGUI displayTimer;
-    [SerializeField] TextMeshProUGUI countdown;
+    [SerializeField] TextMeshProUGUI levelNameDisplay;
     [SerializeField] TextMeshProUGUI scoreDisplay;
     [SerializeField] AudioSource audioSource;
     [SerializeField] MenuCanvasManager menuCanvasManager;
     [SerializeField] SpriteRenderer blackBackgroundOverlay;
+    [SerializeField] Slider progressBar;
 
     [SerializeField] Arrow leftArrow;
     [SerializeField] Arrow upArrow;
@@ -59,12 +61,13 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void startSongLoop() {
+        setupSpawnedArrowManager();
         inSongLoop = true;
-        level += 1;        
+        level += 1;
         setupLevel();
-        countdown.enabled = true;
+        levelNameDisplay.enabled = true;
         handleUpgradesAndChallenges();
-        StartCoroutine(showAndFadeLevelName(countdown, delayStartSeconds));
+        StartCoroutine(showAndFadeLevelName(levelNameDisplay, delayStartSeconds));
         StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 1.0f, 1.5f, 0.9f));
     }
 
@@ -100,12 +103,18 @@ public partial class GameManager: MonoBehaviour {
         }
     }
 
-    private void startSpawningArrows() {
-        hasArrowsStarted = true;
+    private void setupSpawnedArrowManager() {
         SongPreset song = jsonLoader.LoadSong(currentSong);
-
         if (!isInGenerateSongJSONMode) {
             spawnedArrowManager.setup(song);
+        }
+    }
+
+    private void startSpawningArrows() {
+        hasArrowsStarted = true;
+
+        if (!isInGenerateSongJSONMode) {
+            spawnedArrowManager.setShouldSpawnArrows(true);
         }
     }
 
@@ -119,10 +128,12 @@ public partial class GameManager: MonoBehaviour {
 
     public void addToScore(float points) {
         score += points;
+        progressBar.value = score;
     }
 
     public void multiplyScore(float multiplier) {
         score *= multiplier;
+        progressBar.value = score;
     }
 
     public bool isInSongLoop() {
@@ -150,6 +161,7 @@ public partial class GameManager: MonoBehaviour {
         hasSongStarted = false;
         spawnedArrowManager.resetSpawnedArrowManager();
         score = 0.0f;
+        scoreDisplay.text = score.ToString("N0");
         delayStartSeconds = 3.0f;
         songTime = 0.0f;
         resetArrows();
@@ -157,12 +169,18 @@ public partial class GameManager: MonoBehaviour {
 
     private void setupLevel() {
         if (level < levels.Count) {
-            Level currentLevel = levels[level];
+            Level currentLevel = levels[level - 1];
             Sprite background = Resources.Load<Sprite>($"Levels/Backgrounds/{currentLevel.level_sprites[0].sprite_name}");
             SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = background;
-            countdown.text = currentLevel.name;
+            levelNameDisplay.text = currentLevel.name;
+            setupLevelProgress(currentLevel);
         }
+    }
+
+    private void setupLevelProgress(Level currentLevel) {
+        progressBar.value = 0.0f;
+        progressBar.maxValue = (currentLevel.completion_percent / 100.0f) * spawnedArrowManager.getMaximumBasePointsForCurrentSong();
     }
 
     private void handleUpgradesAndChallenges() {

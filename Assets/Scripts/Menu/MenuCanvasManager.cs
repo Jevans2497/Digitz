@@ -95,8 +95,7 @@ public class MenuCanvasManager: MonoBehaviour {
     }
 
     private void addUpgrade(Upgrade upgrade) {
-        Upgrade clonedUniqueUpgrade = upgrade.Clone();
-        UpgradeTracker.addUpgrade(clonedUniqueUpgrade);
+        UpgradeTracker.addUpgrade(upgrade);
         presentChallengeOptions();
     }
 
