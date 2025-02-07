@@ -35,6 +35,8 @@ public partial class GameManager: MonoBehaviour {
     private int level;
     private List<Level> levels;
 
+    private float scoreNeededToClearLevel;
+
     [SerializeField] JSONLoader jsonLoader;
     [SerializeField] SpawnedArrowManager spawnedArrowManager;
 
@@ -74,7 +76,7 @@ public partial class GameManager: MonoBehaviour {
     private void manageSongLoop() {
         songTime += Time.deltaTime * audioSource.pitch;
         displayTimer.text = songTime.ToString("F2");
-        scoreDisplay.text = score.ToString("N0");
+        scoreDisplay.text = score.ToString("N0") + " / " + scoreNeededToClearLevel.ToString("N0");
 
         if (!hasArrowsStarted) {
             startSpawningArrows();
@@ -174,13 +176,14 @@ public partial class GameManager: MonoBehaviour {
             SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = background;
             levelNameDisplay.text = currentLevel.name;
+            scoreNeededToClearLevel = (currentLevel.completion_percent / 100.0f) * spawnedArrowManager.getMaximumBasePointsForCurrentSong();
             setupLevelProgress(currentLevel);
         }
     }
 
     private void setupLevelProgress(Level currentLevel) {
         progressBar.value = 0.0f;
-        progressBar.maxValue = (currentLevel.completion_percent / 100.0f) * spawnedArrowManager.getMaximumBasePointsForCurrentSong();
+        progressBar.maxValue = scoreNeededToClearLevel;
     }
 
     private void handleUpgradesAndChallenges() {
