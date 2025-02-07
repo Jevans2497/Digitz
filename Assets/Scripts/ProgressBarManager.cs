@@ -14,6 +14,8 @@ public class ProgressBarManager: MonoBehaviour {
     private float rainbowDuration;
     private float rainbowSpeed = 3.5f;
 
+    Gradient gradient = new Gradient();
+
     private List<ProgressBarProgressMarker> progressMarkers = new List<ProgressBarProgressMarker> {
         //new(0.25f),
         //new(0.5f),
@@ -23,24 +25,7 @@ public class ProgressBarManager: MonoBehaviour {
 
     private void Start() {
         fill = progressBar.transform.Find("Fill Area").gameObject.transform.Find("Fill").GetComponent<Image>();
-    }
 
-    void Update() {
-        if (!isCurrentlyRainbow) {
-            setColorForProgressBar();
-        } else {
-            applyRainbowEffect();
-        }
-    }
-
-
-    private void setColorForProgressBar() {
-        float progress = progressBar.value / progressBar.maxValue; // Assuming value is between 0 and 1
-
-        triggerRainbowEffectIfExpected(progress);
-
-        // Define a smooth gradient from cool to intense colors
-        Gradient gradient = new Gradient();
         gradient.SetKeys(
             new GradientColorKey[] {
             new GradientColorKey(new Color(0.4f, 1f, 0.6f), 0.0f),   // Minty Green
@@ -57,9 +42,26 @@ public class ProgressBarManager: MonoBehaviour {
             new GradientAlphaKey(1f, 1.0f)
             }
         );
+    }
 
-        // Get color from gradient based on progress
-        currentColor = gradient.Evaluate(progress);
+    void Update() {
+        if (!isCurrentlyRainbow) {
+            setColorForProgressBar();
+        } else {
+            applyRainbowEffect();
+        }
+    }
+
+
+    private void setColorForProgressBar() {
+        float progress = progressBar.value / progressBar.maxValue;
+        Color progressBarColor = gradient.Evaluate(progress);
+
+        float oscillationSpeed = progress * 10f;
+        float alpha = 1 - ((Mathf.Sin(Time.time * oscillationSpeed) + 1f) / 5.0f); // oscillates alpha between 1f and 0.8f
+        progressBarColor.a = alpha;
+
+        currentColor = progressBarColor;
         fill.color = currentColor;
     }
 

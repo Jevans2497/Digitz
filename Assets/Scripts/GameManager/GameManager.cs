@@ -60,6 +60,10 @@ public partial class GameManager: MonoBehaviour {
         if (inSongLoop) {
             manageSongLoop();
         }
+
+        if (Input.GetKeyDown(KeyCode.P)) {
+            score += 1000f;
+        }
     }
 
     private void startSongLoop() {
