@@ -57,7 +57,7 @@ public class ProgressBarManager: MonoBehaviour {
         float progress = progressBar.value / progressBar.maxValue;
         Color progressBarColor = gradient.Evaluate(progress);
 
-        float oscillationSpeed = progress * 10f;
+        float oscillationSpeed = Mathf.Max(progress * 10f, 4f);
         float alpha = 1 - ((Mathf.Sin(Time.time * oscillationSpeed) + 1f) / 5.0f); // oscillates alpha between 1f and 0.8f
         progressBarColor.a = alpha;
 

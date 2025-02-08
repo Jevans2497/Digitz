@@ -684,7 +684,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -10}
+  m_SizeDelta: {x: -10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &487849231
 GameObject:
@@ -955,7 +955,7 @@ GameObject:
   - component: {fileID: 639769988}
   - component: {fileID: 639769987}
   m_Layer: 5
-  m_Name: Countdown
+  m_Name: LevelNameDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1576,7 +1576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayTimer: {fileID: 2056429447}
-  levelNameDisplay: {fileID: 0}
+  levelNameDisplay: {fileID: 639769987}
   scoreDisplay: {fileID: 1217143851}
   audioSource: {fileID: 1212903696}
   menuCanvasManager: {fileID: 1212903698}
@@ -1775,7 +1775,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 800, y: 480}
+  m_AnchoredPosition: {x: -750, y: 480}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1217143851
@@ -1827,14 +1827,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
-  m_fontSizeBase: 48
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2194,6 +2194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1566090788}
   - component: {fileID: 1566090789}
+  - component: {fileID: 1566090790}
   m_Layer: 5
   m_Name: ProgressBar
   m_TagString: Untagged
@@ -2219,8 +2220,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -600, y: 460}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: -910, y: 320}
+  m_SizeDelta: {x: 18, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1566090789
 MonoBehaviour:
@@ -2265,14 +2266,27 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1709792965}
   m_HandleRect: {fileID: 0}
-  m_Direction: 0
+  m_Direction: 2
   m_MinValue: 0
   m_MaxValue: 9000
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 3930
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1566090790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566090787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb07166688e5643d0a890306ee0c1157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressBar: {fileID: 1566090789}
 --- !u!1 &1680790515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2424,8 +2438,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1566090788}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMin: {x: 0.25, y: 0}
+  m_AnchorMax: {x: 0.75, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2442,7 +2456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_Color: {r: 0.5471698, g: 0.53426486, b: 0.53426486, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -61,8 +61,13 @@ public partial class GameManager: MonoBehaviour {
             manageSongLoop();
         }
 
+        // Cheat codes for debugging
         if (Input.GetKeyDown(KeyCode.P)) {
             score += 1000f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.N)) {
+            songFinished();
         }
     }
 
@@ -80,7 +85,7 @@ public partial class GameManager: MonoBehaviour {
     private void manageSongLoop() {
         songTime += Time.deltaTime * audioSource.pitch;
         displayTimer.text = songTime.ToString("F2");
-        scoreDisplay.text = score.ToString("N0") + " / " + scoreNeededToClearLevel.ToString("N0");
+        scoreDisplay.text = $"<size=200%>{score.ToString("N0")}</size> / {scoreNeededToClearLevel.ToString("N0")}";
 
         if (!hasArrowsStarted) {
             startSpawningArrows();

@@ -36,7 +36,7 @@ public class UpgradeDisplayManager: MonoBehaviour {
 
         // Set Tooltip
         Tooltip tooltip = upgradeDisplayObject.GetComponent<Tooltip>();
-        tooltip.message = upgrade.name + "\n" + upgrade.description;
+        tooltip.message = upgrade.name + ":\n\n" + upgrade.description;
     }
 
     public void upgradeRemoved(Upgrade upgrade) {
