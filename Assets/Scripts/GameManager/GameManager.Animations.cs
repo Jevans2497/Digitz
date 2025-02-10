@@ -51,4 +51,25 @@ public partial class GameManager {
             yield return null;
         }
     }
+
+    private IEnumerator animateMultiplierDisplay() {
+        multiplierDisplay.gameObject.SetActive(true);
+
+        float duration = 1.5f;
+        float elapsedTime = 0f;
+
+        Vector3 startPosition = multiplierDisplay.transform.position;
+        Vector3 targetPosition = startPosition + new Vector3(0, 50, 0); 
+
+        while (elapsedTime < duration) {
+            float t = elapsedTime / duration;
+            multiplierDisplay.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        multiplierDisplay.transform.position = startPosition;
+        multiplierDisplay.gameObject.SetActive(false);
+    }
+
 }

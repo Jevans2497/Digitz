@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using static SharedResources;
 using static GameManager;
 
@@ -24,7 +25,9 @@ public class SpawnedArrowManager: MonoBehaviour {
     private List<ArrowSpawnData> arrowSpawnDataList = new List<ArrowSpawnData>();
     private int currentArrowIndex;
     private bool shouldSpawnArrows;
-    private float maximumBasePointsForSong; // The score for the song assuming no upgrades and every feedback is perfect. 
+    private float maximumBasePointsForSong; // The score for the song assuming no upgrades and every feedback is perfect.
+
+    private List<GameObject> currentlyExistingArrows = new List<GameObject>();
 
     private void Update() {
         if (shouldSpawnArrows) {
@@ -105,6 +108,7 @@ public class SpawnedArrowManager: MonoBehaviour {
     private void spawnArrow(ArrowSpawnData arrowSpawnData) {
         if (arrowSpawnData.spawnPoint != null && arrowSpawnData.arrowPrefab != null) {
             GameObject spawnedArrow = Instantiate(arrowSpawnData.arrowPrefab, arrowSpawnData.spawnPoint.position, Quaternion.identity);
+            currentlyExistingArrows.Add(spawnedArrow);
             SpriteRenderer spriteRenderer = spawnedArrow.GetComponent<SpriteRenderer>();
             spriteRenderer.color = arrowSpawnData.arrowData.color;
             spawnedArrow.layer = arrowSpawnData.arrowData.layer;
@@ -223,6 +227,14 @@ public class SpawnedArrowManager: MonoBehaviour {
             }
             Destroy(arrowTransform.gameObject);
         }
+    }
+
+    public void destroyCurrentExistingArrows() {
+        foreach (GameObject arrow in currentlyExistingArrows.Where(arrow => arrow != null).ToList()) {
+            Destroy(arrow);
+        }
+
+        currentlyExistingArrows = new List<GameObject>();
     }
 
     private ArrowSpawnData GetSpawnData(Direction direction, ArrowData arrowData) {

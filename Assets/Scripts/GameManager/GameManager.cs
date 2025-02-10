@@ -20,6 +20,9 @@ public partial class GameManager: MonoBehaviour {
     [SerializeField] Arrow downArrow;
     List<Arrow> arrowsList;
 
+    [SerializeField] TextMeshProUGUI multiplierDisplay;
+    [SerializeField] TextMeshProUGUI songCompleteDisplay;
+
     public bool isInGenerateSongJSONMode = false;
     public float skipToTime = 0.0f; // Used while making arrow jsons to skip to a certain part. 
     private bool hasArrowsStarted;
@@ -65,7 +68,6 @@ public partial class GameManager: MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.P)) {
             score += 1000f;
         }
-
         if (Input.GetKeyDown(KeyCode.N)) {
             songFinished();
         }
@@ -98,7 +100,7 @@ public partial class GameManager: MonoBehaviour {
             }
         }
 
-        if (!audioSource.isPlaying && hasSongStarted == true) {
+        if (isSongComplete()) {
             songFinished();
         }
     }
@@ -145,6 +147,8 @@ public partial class GameManager: MonoBehaviour {
     public void multiplyScore(float multiplier) {
         score *= multiplier;
         progressBar.value = score;
+        multiplierDisplay.text = "x" + multiplier;
+        StartCoroutine(animateMultiplierDisplay());
     }
 
     public bool isInSongLoop() {
@@ -160,10 +164,37 @@ public partial class GameManager: MonoBehaviour {
         setupSong();
     }
 
+    private bool isSongComplete() {
+        bool didPlayerBeatSong = score >= scoreNeededToClearLevel;
+        bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
+        return didPlayerBeatSong || didSongReachEnd;
+    }
+
     private void songFinished() {
+        spawnedArrowManager.destroyCurrentExistingArrows();
+
+        bool didPlayerBeatSong = score >= scoreNeededToClearLevel;
+        bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
+
+        if (didSongReachEnd) {
+            gameOver();
+        } else if (didPlayerBeatSong) {
+            playerBeatSong();
+        } else {
+            //For debugging purposes, default to playerBeatSong
+            playerBeatSong();
+        }
+
         resetSongLoop();
-        menuCanvasManager.startMenuLoop();
+    }
+
+    private void playerBeatSong() {
         StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 0.5f, 1.0f));
+        menuCanvasManager.startMenuLoop();
+    }
+
+    private void gameOver() {
+
     }
 
     private void resetSongLoop() {

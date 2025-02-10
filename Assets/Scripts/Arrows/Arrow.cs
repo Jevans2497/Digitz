@@ -90,7 +90,7 @@ public class Arrow: MonoBehaviour {
     }
 
     public void handleScoring(float threshold, bool isGoldenArrow) {
-        GameObject canvas = GameObject.Find("FeedbackCanvas");
+        GameObject canvas = GameObject.Find("MainCanvas");
         if (canvas != null) {
             ArrowFeedback arrowFeedbackInstance = Instantiate(arrowFeedbackPrefab, canvas.transform);
 

@@ -110,6 +110,10 @@ public class MenuCanvasManager: MonoBehaviour {
         isMenuLoopFinished = true;
     }
 
+    private void presentSongComplete() {
+
+    }
+
     private void presentUpgradeOptions() {
         destroyPreexistingMenuObjects();
         menuGameObjects = upgradeManager.createUpgradeOptions(menuCanvas.transform, menuObjectPrefab);
