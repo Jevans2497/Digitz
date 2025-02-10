@@ -22,6 +22,8 @@ public partial class GameManager: MonoBehaviour {
 
     [SerializeField] TextMeshProUGUI multiplierDisplay;
     [SerializeField] TextMeshProUGUI songCompleteDisplay;
+    [SerializeField] GameObject pressSpaceButton;
+    [SerializeField] ParticleSystem particleSystem;
 
     public bool isInGenerateSongJSONMode = false;
     public float skipToTime = 0.0f; // Used while making arrow jsons to skip to a certain part. 
@@ -57,16 +59,24 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space) && menuCanvasManager.isMenuLoopFinished) {
-            startSongLoop();
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            if (songCompleteDisplay.enabled) {
+                songCompleteDisplay.enabled = false;
+                pressSpaceButton.SetActive(false);
+                menuCanvasManager.startMenuLoop();
+            }
+            if (menuCanvasManager.isMenuLoopFinished) {
+                startSongLoop();
+            }
         }
+
         if (inSongLoop) {
             manageSongLoop();
         }
 
         // Cheat codes for debugging
         if (Input.GetKeyDown(KeyCode.P)) {
-            score += 1000f;
+            score += 5000f;
         }
         if (Input.GetKeyDown(KeyCode.N)) {
             songFinished();
@@ -74,6 +84,7 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void startSongLoop() {
+        pressSpaceButton.SetActive(false);
         setupSpawnedArrowManager();
         inSongLoop = true;
         level += 1;
@@ -125,7 +136,6 @@ public partial class GameManager: MonoBehaviour {
 
     private void startSpawningArrows() {
         hasArrowsStarted = true;
-
         if (!isInGenerateSongJSONMode) {
             spawnedArrowManager.setShouldSpawnArrows(true);
         }
@@ -167,38 +177,62 @@ public partial class GameManager: MonoBehaviour {
     private bool isSongComplete() {
         bool didPlayerBeatSong = score >= scoreNeededToClearLevel;
         bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
-        return didPlayerBeatSong || didSongReachEnd;
+        return (didPlayerBeatSong || didSongReachEnd) && inSongLoop;
     }
 
     private void songFinished() {
+        inSongLoop = false;
         spawnedArrowManager.destroyCurrentExistingArrows();
 
         bool didPlayerBeatSong = score >= scoreNeededToClearLevel;
         bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
 
         if (didSongReachEnd) {
-            gameOver();
+            StartCoroutine(gameOver());
         } else if (didPlayerBeatSong) {
-            playerBeatSong();
+            StartCoroutine(playerBeatSong());
         } else {
-            //For debugging purposes, default to playerBeatSong
-            playerBeatSong();
+            StartCoroutine(playerBeatSong());
         }
 
         resetSongLoop();
     }
 
-    private void playerBeatSong() {
-        StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 0.5f, 1.0f));
-        menuCanvasManager.startMenuLoop();
+    private IEnumerator playerBeatSong() {
+        StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 1.0f, 1.0f));
+        yield return StartCoroutine(fadeOutAudio(1.0f));
+        songCompleteDisplay.text = "Song Complete!";
+        songCompleteDisplay.color = new Color32(0, 236, 117, 255);
+        songCompleteDisplay.enabled = true;
+        pressSpaceButton.SetActive(true);
     }
 
-    private void gameOver() {
+    private IEnumerator fadeOutAudio(float fadeDuration) {
+        float startVolume = audioSource.volume;
+        float targetVolume = 0f; 
 
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration) {
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null; 
+        }
+
+        audioSource.volume = targetVolume;
+        audioSource.Stop();
+        audioSource.volume = startVolume; //reset
+    }
+
+    private IEnumerator gameOver() {
+        StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 0.5f, 1.0f));
+        yield return new WaitForSeconds(1.0f);
+        songCompleteDisplay.text = "Game Over";
+        songCompleteDisplay.color = Color.red;
+        songCompleteDisplay.enabled = true;
+        pressSpaceButton.SetActive(true);
     }
 
     private void resetSongLoop() {
-        inSongLoop = false;
         hasArrowsStarted = false;
         hasSongStarted = false;
         spawnedArrowManager.resetSpawnedArrowManager();
