@@ -47,9 +47,14 @@ public class ChallengeManager: MenuItemManager {
 
 public static class ChallengeTracker {
     private static Challenge currentActiveChallenge;
+    private static ChallengeDisplayManager challengeDisplayManager;
 
     //A special challenge that increases the severity of all future challenges, store it if the player has taken the curse. 
     private static Challenge theCurse;
+
+    public static void setChallengeDisplayManager(ChallengeDisplayManager cdm) {
+        challengeDisplayManager = cdm;
+    }
 
     public static void addChallenge(Challenge challenge) {
         Debug.Log("Adding challenge: " + challenge.name);
@@ -61,6 +66,8 @@ public static class ChallengeTracker {
         if (challenge.effect == Challenge.ChallengeEffect.ShatteredSword) {
             UpgradeTracker.removeLastAcquiredUpgrade();
         }
+
+        challengeDisplayManager.challengeAdded(challenge);
 
         currentActiveChallenge = challenge;
     }
