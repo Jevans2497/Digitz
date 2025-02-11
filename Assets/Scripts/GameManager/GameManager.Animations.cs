@@ -1,8 +1,17 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
 
 public partial class GameManager {
+
+    [SerializeField] ParticleSystem firework1;
+    [SerializeField] ParticleSystem firework2;
+    [SerializeField] ParticleSystem firework3;
+    [SerializeField] ParticleSystem firework4;
+    List<ParticleSystem> fireworks = new List<ParticleSystem>();
+
     private IEnumerator showAndFadeLevelName(TextMeshProUGUI textMeshObject, float duration) {
         Color white = Color.white;
         Color transparentColor = new Color(white.r, white.g, white.b, 0);
@@ -72,4 +81,25 @@ public partial class GameManager {
         multiplierDisplay.gameObject.SetActive(false);
     }
 
+    private void setupFireworks() {
+        fireworks.AddRange(new ParticleSystem[] { firework1, firework2, firework3, firework4 });
+    }
+
+    private void showFireworks() {
+        float randomHue = Random.Range(0.0f, 1.0f);
+        foreach (var firework in fireworks) {
+            Color brightFunColor = Color.HSVToRGB(randomHue, 1.0f, 1.0f);
+            ParticleSystem.MainModule main = firework.main;
+            main.startColor = brightFunColor;
+            randomHue += 0.21f;
+
+            firework.Play();
+        }
+    }
+
+    private void stopFireworks() {
+        foreach (var firework in fireworks) {
+            firework.Stop();
+        }
+    }
 }

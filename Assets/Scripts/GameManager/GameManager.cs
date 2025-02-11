@@ -23,7 +23,6 @@ public partial class GameManager: MonoBehaviour {
     [SerializeField] TextMeshProUGUI multiplierDisplay;
     [SerializeField] TextMeshProUGUI songCompleteDisplay;
     [SerializeField] GameObject pressSpaceButton;
-    [SerializeField] ParticleSystem particleSystem;
 
     public bool isInGenerateSongJSONMode = false;
     public float skipToTime = 0.0f; // Used while making arrow jsons to skip to a certain part. 
@@ -50,6 +49,7 @@ public partial class GameManager: MonoBehaviour {
     private void Start() {
         songs = jsonLoader.loadSongs();
         levels = jsonLoader.loadLevels();
+        setupFireworks();
         currentSong = "FreakingOutTheNeighborhood";
         arrowsList = new List<Arrow> { leftArrow, upArrow, rightArrow, downArrow };
         if (skipToTime > 0.0f) {
@@ -190,17 +190,18 @@ public partial class GameManager: MonoBehaviour {
         if (didSongReachEnd) {
             StartCoroutine(gameOver());
         } else if (didPlayerBeatSong) {
-            StartCoroutine(playerBeatSong());
+            playerBeatSong();
         } else {
-            StartCoroutine(playerBeatSong());
+            playerBeatSong();
         }
 
         resetSongLoop();
     }
 
-    private IEnumerator playerBeatSong() {
+    private void playerBeatSong() {
         StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 1.0f, 1.0f));
-        yield return StartCoroutine(fadeOutAudio(1.0f));
+        StartCoroutine(fadeOutAudio(1.0f));
+        showFireworks();
         songCompleteDisplay.text = "Song Complete!";
         songCompleteDisplay.color = new Color32(0, 236, 117, 255);
         songCompleteDisplay.enabled = true;
