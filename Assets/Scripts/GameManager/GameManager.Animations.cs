@@ -88,7 +88,7 @@ public partial class GameManager {
     private void showFireworks() {
         float randomHue = Random.Range(0.0f, 1.0f);
         foreach (var firework in fireworks) {
-            Color brightFunColor = Color.HSVToRGB(randomHue, 1.0f, 1.0f);
+            Color brightFunColor = Color.HSVToRGB(randomHue, 1.0f, 1.0f, true);
             ParticleSystem.MainModule main = firework.main;
             main.startColor = brightFunColor;
             randomHue += 0.21f;

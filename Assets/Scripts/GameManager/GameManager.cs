@@ -61,9 +61,7 @@ public partial class GameManager: MonoBehaviour {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (songCompleteDisplay.enabled) {
-                songCompleteDisplay.enabled = false;
-                pressSpaceButton.SetActive(false);
-                menuCanvasManager.startMenuLoop();
+                startMenuLoop();
             }
             if (menuCanvasManager.isMenuLoopFinished) {
                 startSongLoop();
@@ -81,6 +79,13 @@ public partial class GameManager: MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.N)) {
             songFinished();
         }
+    }
+
+    private void startMenuLoop() {
+        songCompleteDisplay.enabled = false;
+        pressSpaceButton.SetActive(false);
+        stopFireworks();
+        menuCanvasManager.startMenuLoop();
     }
 
     private void startSongLoop() {
@@ -199,9 +204,9 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void playerBeatSong() {
+        showFireworks();
         StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 1.0f, 1.0f));
         StartCoroutine(fadeOutAudio(1.0f));
-        showFireworks();
         songCompleteDisplay.text = "Song Complete!";
         songCompleteDisplay.color = new Color32(0, 236, 117, 255);
         songCompleteDisplay.enabled = true;
