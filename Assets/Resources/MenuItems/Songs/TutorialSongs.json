@@ -1,0 +1,14 @@
+{
+    "songs": [
+        {
+            "name": "Mary Had a Little Lamb",
+            "song_file_name": "MaryHadALittleLamb",
+            "sprite_name": "MaryHadALittleLamb",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "",
+            "difficulty_string": "veryEasy"
+        }
+    ]
+}

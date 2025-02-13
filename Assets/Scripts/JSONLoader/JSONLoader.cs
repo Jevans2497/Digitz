@@ -35,8 +35,40 @@ public class JSONLoader: MonoBehaviour {
         return null;
     }
 
+    public List<Level> loadLevelsTutorial() {
+        string filePath = $"Levels/TutorialLevels";
+        TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
+
+        if (jsonFile != null) {
+            return JsonUtility.FromJson<LevelsList>(jsonFile.text).levels;
+        } else {
+            Debug.LogError($"Levels file not found at {filePath}");
+        }
+
+        return null;
+    }
+
     public List<Song> loadSongs() {
         string filePath = $"MenuItems/Songs/Songs";
+        TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
+
+        if (jsonFile != null) {
+            SongList songList = JsonUtility.FromJson<SongList>(jsonFile.text);
+
+            foreach (var song in songList.songs) {
+                song.InitializeFromJSON();
+            }
+
+            return songList.songs;
+        } else {
+            Debug.LogError($"Songs file not found at {filePath}");
+        }
+
+        return null;
+    }
+
+    public List<Song> loadSongsTutorial() {
+        string filePath = $"MenuItems/Songs/TutorialSongs";
         TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
 
         if (jsonFile != null) {

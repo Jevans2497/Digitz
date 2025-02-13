@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public partial class GameManager: MonoBehaviour {
 
@@ -48,12 +49,15 @@ public partial class GameManager: MonoBehaviour {
 
     private void Start() {
         songs = jsonLoader.loadSongs();
-        levels = jsonLoader.loadLevels();
+        levels = jsonLoader.loadLevels();        
         setupFireworks();
         currentSong = "FreakingOutTheNeighborhood";
         arrowsList = new List<Arrow> { leftArrow, upArrow, rightArrow, downArrow };
         if (skipToTime > 0.0f) {
             songTime = skipToTime;
+        }
+        if (SceneManager.GetActiveScene().name == "Tutorial") {
+            setupForTutorial();
         }
         setupSong();
     }

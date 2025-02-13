@@ -1,0 +1,15 @@
+{
+    "levels": [
+        {
+            "name": "",
+            "level_number": 1,
+            "completion_percent": 60.0,
+            "level_sprites": [
+                {
+                    "sprite_name": "BlackBackground",
+                    "alternate_name": ""
+                }
+            ]
+        }
+    ]
+}
