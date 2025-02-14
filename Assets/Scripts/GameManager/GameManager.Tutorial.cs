@@ -26,6 +26,8 @@ public partial class GameManager: MonoBehaviour {
         tutorialTextManager.pressSpaceButton = pressSpaceButton;
         tutorialTextManager.showMessage(TutorialTextManager.TutorialMessage.introduction);
 
+        progressBar.gameObject.SetActive(false);
+
         setupTutorialSteps();
     }
 

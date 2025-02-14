@@ -54,7 +54,7 @@ public partial class GameManager: MonoBehaviour {
         } else {
             songs = jsonLoader.loadSongs();
             levels = jsonLoader.loadLevels();
-            currentSong = "FreakingOutTheNeighborhood";            
+            currentSong = "BigBandExplosion";            
         }
 
         setupFireworks();
@@ -116,7 +116,12 @@ public partial class GameManager: MonoBehaviour {
     private void manageSongLoop() {
         songTime += Time.deltaTime * audioSource.pitch;
         displayTimer.text = songTime.ToString("F2");
-        scoreDisplay.text = $"<size=200%>{score.ToString("N0")}</size> / {scoreNeededToClearLevel.ToString("N0")}";
+
+        if (isTutorial) {
+            scoreDisplay.text = $"<size=200%>{score.ToString("N0")}</size>";
+        } else {
+            scoreDisplay.text = $"<size=200%>{score.ToString("N0")}</size> / {scoreNeededToClearLevel.ToString("N0")}";
+        }
 
         if (!hasArrowsStarted) {
             startSpawningArrows();
@@ -193,7 +198,8 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private bool isSongComplete() {
-        bool didPlayerBeatSong = score >= scoreNeededToClearLevel;
+        if (isInGenerateSongJSONMode) { return false; }
+        bool didPlayerBeatSong = score >= scoreNeededToClearLevel && !isTutorial;
         bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
         return (didPlayerBeatSong || didSongReachEnd) && inSongLoop;
     }
@@ -205,7 +211,7 @@ public partial class GameManager: MonoBehaviour {
         bool didPlayerBeatSong = score >= scoreNeededToClearLevel;
         bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
 
-        if (didSongReachEnd) {
+        if (didSongReachEnd && !isTutorial) {
             StartCoroutine(gameOver());
         } else if (didPlayerBeatSong) {
             playerBeatSong();
@@ -256,7 +262,8 @@ public partial class GameManager: MonoBehaviour {
         hasSongStarted = false;
         spawnedArrowManager.resetSpawnedArrowManager();
         score = 0.0f;
-        scoreDisplay.text = score.ToString("N0");
+        //scoreDisplay.text = score.ToString("N0");
+        scoreDisplay.text = "";
         delayStartSeconds = 3.0f;
         songTime = 0.0f;
         resetArrows();

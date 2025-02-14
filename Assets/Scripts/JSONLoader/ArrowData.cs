@@ -5,7 +5,7 @@ using UnityEngine;
 public class ArrowData {
 
     public enum ArrowEffect {
-        regular, multiple, golden, rainbow
+        regular, simultaneous, golden, rainbow
     }
 
     public float timestamp;
@@ -47,7 +47,7 @@ public class ArrowData {
                 color = Color.white;
                 layer = 0;
                 break;
-            case ArrowEffect.multiple:
+            case ArrowEffect.simultaneous:
                 color = Color.magenta;
                 layer = 6;
                 break;
@@ -64,8 +64,8 @@ public class ArrowData {
 
     private ArrowEffect convertEffectStringToEffect() {
         switch (arrow_effect) {
-            case "multiple":
-            return ArrowEffect.multiple;
+            case "simultaneous":
+            return ArrowEffect.simultaneous;
             case "golden":
             return ArrowEffect.golden;
             case "rainbow":

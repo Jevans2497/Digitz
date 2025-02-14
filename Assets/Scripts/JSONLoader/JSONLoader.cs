@@ -7,7 +7,6 @@ public class JSONLoader: MonoBehaviour {
     private SongPreset songPreset;
 
     public SongPreset LoadSong(string songName) {
-        Debug.Log(songName);
         string filePath = $"SongJSONs/{songName}";
         TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
 

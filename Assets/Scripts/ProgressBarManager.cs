@@ -16,12 +16,12 @@ public class ProgressBarManager: MonoBehaviour {
 
     Gradient gradient = new Gradient();
 
-    private List<ProgressBarProgressMarker> progressMarkers = new List<ProgressBarProgressMarker> {
-        //new(0.25f),
-        //new(0.5f),
-        //new(0.75f),
-        //new(1.0f),
-    };
+    //private List<ProgressBarProgressMarker> progressMarkers = new List<ProgressBarProgressMarker> {
+    //    //new(0.25f),
+    //    //new(0.5f),
+    //    //new(0.75f),
+    //    //new(1.0f),
+    //};
 
     private void Start() {
         fill = progressBar.transform.Find("Fill Area").gameObject.transform.Find("Fill").GetComponent<Image>();
@@ -55,26 +55,28 @@ public class ProgressBarManager: MonoBehaviour {
 
     private void setColorForProgressBar() {
         float progress = progressBar.value / progressBar.maxValue;
-        Color progressBarColor = gradient.Evaluate(progress);
+        if (progress > 0.1f) {
+            Color progressBarColor = gradient.Evaluate(progress);
+            float oscillationSpeed = Mathf.Max(progress * 10f, 4f);
+            float alpha = 1 - ((Mathf.Sin(Time.time * oscillationSpeed) + 1f) / 5.0f); // oscillates alpha between 1f and 0.8f
+            progressBarColor.a = alpha;
 
-        float oscillationSpeed = Mathf.Max(progress * 10f, 4f);
-        float alpha = 1 - ((Mathf.Sin(Time.time * oscillationSpeed) + 1f) / 5.0f); // oscillates alpha between 1f and 0.8f
-        progressBarColor.a = alpha;
-
-        currentColor = progressBarColor;
-        fill.color = currentColor;
-    }
-
-    private void triggerRainbowEffectIfExpected(float progress) {
-        foreach (var progressMarker in progressMarkers) {
-            if (!progressMarker.hasTriggered && Mathf.Abs(progressMarker.progressTriggerAmount - progress) <= 0.05f) {
-                progressMarker.hasTriggered = true;
-                rainbowDuration = 1.5f;
-                rainbowElapsedTime = 0.0f;
-                isCurrentlyRainbow = true;
-            }
+            currentColor = progressBarColor;
+            fill.color = currentColor;
         }
+
     }
+
+    //private void triggerRainbowEffectIfExpected(float progress) {
+    //    foreach (var progressMarker in progressMarkers) {
+    //        if (!progressMarker.hasTriggered && Mathf.Abs(progressMarker.progressTriggerAmount - progress) <= 0.05f) {
+    //            progressMarker.hasTriggered = true;
+    //            rainbowDuration = 1.5f;
+    //            rainbowElapsedTime = 0.0f;
+    //            isCurrentlyRainbow = true;
+    //        }
+    //    }
+    //}
 
     private void applyRainbowEffect() {
         if (rainbowElapsedTime < rainbowDuration) {

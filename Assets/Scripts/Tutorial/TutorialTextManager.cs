@@ -8,8 +8,8 @@ using TMPro;
 public class TutorialTextManager : MonoBehaviour {
 
     public TextMeshProUGUI dialogueText;
-    //private float typingSpeed = 0.025f;
-    private float typingSpeed = 0.0001f;
+    private float typingSpeed = 0.025f;
+    //private float typingSpeed = 0.0001f;
     public GameObject pressSpaceButton;
 
     public enum TutorialMessage {
