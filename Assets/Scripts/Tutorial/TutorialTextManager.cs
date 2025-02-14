@@ -8,7 +8,8 @@ using TMPro;
 public class TutorialTextManager : MonoBehaviour {
 
     public TextMeshProUGUI dialogueText;
-    private float typingSpeed = 0.025f;
+    //private float typingSpeed = 0.025f;
+    private float typingSpeed = 0.0001f;
     public GameObject pressSpaceButton;
 
     public enum TutorialMessage {
@@ -26,7 +27,7 @@ public class TutorialTextManager : MonoBehaviour {
         messages[TutorialMessage.challenges3] = "Challenge Severity's increase as you progress through each level, but you'll get stronger as well.";
         messages[TutorialMessage.royaltyFree2] = "Let's try another song with your shiny new upgrade and challenge. Still royalty free, but a little jazzier.";
         messages[TutorialMessage.simultaneousArrows] = "This song includes some \"simultaneous arrows\" at the end, you can't miss em.";
-        messages[TutorialMessage.gameGoal1] = "Awesome! We're almost done. The goal of the game is to make it through every level (I know, cliche).";
+        messages[TutorialMessage.gameGoal1] = "Awesome! We're almost done. The goal of the game is to make it through every level (I know,<0.5f> <r>cliche).";
         messages[TutorialMessage.gameGoal2] = "Each Level has a completion score needed to clear it. The completion score is calculated based on the current level and the song chosen.";
         messages[TutorialMessage.gameGoal3] = "Alright, I think you're ready! You won't pick an upgrade in Level 1, just the challenge and the song. Have fun!";
     }
@@ -60,7 +61,7 @@ public class TutorialTextManager : MonoBehaviour {
                 manipulateTimeString += letter;
                 if (letter == '>') {
                     isManipulatingTime = false;
-                    if (manipulateTimeString.Contains("r")) {
+                    if (manipulateTimeString.Contains("r")) { //reset typing speed to default
                         currentTypingSpeed = typingSpeed;
                     } else {
                         currentTypingSpeed = extractFloatFromTag(manipulateTimeString);

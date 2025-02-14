@@ -1,9 +1,19 @@
 {
     "songs": [
         {
-            "name": "Mary Had a Little Lamb",
-            "song_file_name": "MaryHadALittleLamb",
-            "sprite_name": "MaryHadALittleLamb",
+            "name": "Happy Ukulele",
+            "song_file_name": "HappyUkulele",
+            "sprite_name": "HappyUkulele",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "",
+            "difficulty_string": "veryEasy"
+        },
+        {
+            "name": "Big Band Explosion",
+            "song_file_name": "BigBandExplosion",
+            "sprite_name": "BigBandExplosion",
             "color": "#007FFF",
             "rarity_string": "",
             "description": "",

@@ -44,9 +44,9 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
     void Start() {
         menuCanvas.enabled = false;
 
-        upgradeManager = new(jsonLoader, menuObjectPrefab);
-        challengeManager = new(jsonLoader, menuObjectPrefab);
-        songManager = new(jsonLoader, menuObjectPrefab);
+        upgradeManager = new(jsonLoader, menuObjectPrefab, true);
+        challengeManager = new(jsonLoader, menuObjectPrefab, true);
+        songManager = new(jsonLoader, menuObjectPrefab, true);
     }
 
     private void Update() {
@@ -123,7 +123,7 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
     }
 
     private void addSong(Song song) {
-        gameManager.setSong(song);
+        gameManager.setSong(song.song_file_name);
         menuCanvas.enabled = false;
         isMenuLoopFinished = true;
     }
@@ -147,7 +147,7 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
     private void presentSongOptions() {
         destroyPreexistingMenuObjects();
         menuGameObjects = songManager.createSongOptions(menuCanvas.transform, menuObjectPrefab);
-        if (menuGameObjects.Count >= 3) {
+        if (menuGameObjects.Count >= 1) {
             setMenuOptions();
         }
     }

@@ -9,10 +9,10 @@ public class SongManager: MenuItemManager {
     private JSONLoader jsonLoader;
     private GameObject menuObjectPrefab;
 
-    public SongManager(JSONLoader jsonLoader, GameObject menuObjectPrefab) {
+    public SongManager(JSONLoader jsonLoader, GameObject menuObjectPrefab, bool isTutorial = false) {
         this.jsonLoader = jsonLoader;
         this.menuObjectPrefab = menuObjectPrefab;
-        this.songs = jsonLoader.loadSongs();
+        this.songs = jsonLoader.loadSongs(isTutorial);
     }
 
     public List<MenuGameObjects> createSongOptions(Transform menuCanvasTransform, GameObject menuObjectPrefab) {

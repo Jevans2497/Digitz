@@ -187,8 +187,8 @@ public partial class GameManager: MonoBehaviour {
         return level;
     }
 
-    public void setSong(Song song) {
-        currentSong = song.song_file_name;
+    public void setSong(string songFileName) {
+        currentSong = songFileName;
         setupSong();
     }
 

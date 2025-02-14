@@ -1,0 +1,84 @@
+{
+    "upgrades": [
+        {
+            "name": "Two Perfect",
+            "sprite_name": "TwoPerfect",
+            "upgrade_type_string": "feedback",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "description": "Perfects are worth 2x points"
+        },
+        {
+            "name": "Repeat Offender",
+            "sprite_name": "RepeatOffender",
+            "upgrade_type_string": "feedback",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "description": "Feedback gets progressively stronger as it's repeated"
+        },
+        {
+            "name": "Anarchy",
+            "sprite_name": "Anarchy",
+            "upgrade_type_string": "feedback",
+            "color": "#007FFF",
+            "rarity_string": "uncommon",
+            "description": "Each time you score all 5 feedback types, multiply total score by 1.25x"
+        },
+        {
+            "name": "Goalie",
+            "sprite_name": "Goalie",
+            "upgrade_type_string": "avoidErrors",
+            "color": "#FF0011",
+            "rarity_string": "common",
+            "description": "Can't miss! Misses are scored as stinky ):"
+        },
+        {
+            "name": "Bandit",
+            "sprite_name": "Bandit",
+            "upgrade_type_string": "other",
+            "color": "#00D903",
+            "rarity_string": "common",
+            "description": "Hitting an arrow button at any time scores a small amount of points, increases each level"
+        },
+        {
+            "name": "Security Camera",
+            "sprite_name": "SecurityCamera",
+            "upgrade_type_string": "avoidErrors",
+            "color": "#FF0011",
+            "rarity_string": "uncommon",
+            "description": "One random direction each round is always \"Great!\""
+        },
+        {
+            "name": "Loaded Dice",
+            "sprite_name": "LoadedDice",
+            "upgrade_type_string": "avoidErrors",
+            "color": "#FF0011",
+            "rarity_string": "common",
+            "description": "The next 25 misses are scored as perfects"
+        },
+        {
+            "name": "Sharpshooter",
+            "sprite_name": "Sharpshooter",
+            "upgrade_type_string": "feedback",
+            "color": "#007FFF",
+            "rarity_string": "uncommon",
+            "description": "Perfects are easier to hit"
+        },
+        {
+            "name": "Fertilizer",
+            "sprite_name": "Fertilizer",
+            "upgrade_type_string": "feedback",
+            "color": "#007FFF",
+            "rarity_string": "uncommon",
+            "description": "All positive feedback scores worth 1.25x more"
+        },
+        {
+            "name": "Houston",
+            "sprite_name": "Houston",
+            "upgrade_type_string": "feedback",
+            "color": "#007FFF",
+            "rarity_string": "uncommon",
+            "description": "Last arrow of song multiplies total score greatly based on feedback"
+        }
+    ]
+}

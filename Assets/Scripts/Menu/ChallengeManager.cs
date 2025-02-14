@@ -9,10 +9,10 @@ public class ChallengeManager: MenuItemManager {
     private JSONLoader jsonLoader;
     private GameObject menuObjectPrefab;
 
-    public ChallengeManager(JSONLoader jsonLoader, GameObject menuObjectPrefab) {
+    public ChallengeManager(JSONLoader jsonLoader, GameObject menuObjectPrefab, bool isTutorial = false) {
         this.jsonLoader = jsonLoader;
         this.menuObjectPrefab = menuObjectPrefab;
-        this.challenges = jsonLoader.loadChallenges();
+        this.challenges = jsonLoader.loadChallenges(isTutorial);
     }
 
     public List<MenuGameObjects> createChallengeOptions(Transform menuCanvasTransform, GameObject menuObjectPrefab) {

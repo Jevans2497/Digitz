@@ -105,7 +105,7 @@ public class MenuCanvasManager: MonoBehaviour {
     }
 
     private void addSong(Song song) {
-        gameManager.setSong(song);
+        gameManager.setSong(song.song_file_name);
         menuCanvas.enabled = false;
         isMenuLoopFinished = true;
     }

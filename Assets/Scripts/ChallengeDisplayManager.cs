@@ -18,8 +18,6 @@ public class ChallengeDisplayManager: MonoBehaviour {
         GameObject challengeDisplayObject = Instantiate(challengeDisplayPrefab, challengeDisplayTransform);
         setChallengeDisplay(challenge, challengeDisplayObject);
         this.challengeDisplayObject = new KeyValuePair<Challenge, GameObject>(challenge, challengeDisplayObject);
-
-        Debug.Log("Parent of instantiated object: " + challengeDisplayObject.transform.parent.name);
     }
 
     private void setChallengeDisplay(Challenge challenge, GameObject challengeDisplayObject) {

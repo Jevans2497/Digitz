@@ -21,9 +21,7 @@ public partial class GameManager: MonoBehaviour {
 
         songs = jsonLoader.loadSongs(true);
         levels = jsonLoader.loadLevels(true);
-        currentSong = "MaryHadALittleLamb";
-
-        levelNameDisplay.gameObject.SetActive(false);
+        currentSong = "HappyUkulele";
 
         tutorialTextManager.pressSpaceButton = pressSpaceButton;
         tutorialTextManager.showMessage(TutorialTextManager.TutorialMessage.introduction);
@@ -34,7 +32,7 @@ public partial class GameManager: MonoBehaviour {
     private void setupTutorialSteps() {
         tutorialSteps = new List<TutorialStep> {
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.royaltyFree1)),
-            new TutorialStep(() => playNextExpectedSong()),
+            new TutorialStep(() => playSong("HappyUkulele")),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.upgrades)),
             new TutorialStep(() => showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep.upgrade)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.challenges1)),
@@ -42,7 +40,7 @@ public partial class GameManager: MonoBehaviour {
             new TutorialStep(() => showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep.challenge)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.royaltyFree2)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.simultaneousArrows)),
-            new TutorialStep(() => playNextExpectedSong()),
+            new TutorialStep(() => playSong("BigBandExplosion")),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.gameGoal1)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.gameGoal2)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.gameGoal3)),
@@ -64,9 +62,10 @@ public partial class GameManager: MonoBehaviour {
         } else {
             tutorialCompleted();
         }
-    }    
+    }
 
-    private void playNextExpectedSong() {
+    private void playSong(string songName) {
+        setSong(songName);
         startSongLoop();
         tutorialText.gameObject.SetActive(false);
     }
