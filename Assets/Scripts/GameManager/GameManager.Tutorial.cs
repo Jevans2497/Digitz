@@ -33,13 +33,15 @@ public partial class GameManager: MonoBehaviour {
 
     private void setupTutorialSteps() {
         tutorialSteps = new List<TutorialStep> {
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.royaltyFree1)),
             new TutorialStep(() => playNextExpectedSong()),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.upgrades)),
             new TutorialStep(() => showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep.upgrade)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.challenges1)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.challenges2)),
             new TutorialStep(() => showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep.challenge)),
-            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.multipleArrows)),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.royaltyFree2)),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.simultaneousArrows)),
             new TutorialStep(() => playNextExpectedSong()),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.gameGoal1)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.gameGoal2)),
