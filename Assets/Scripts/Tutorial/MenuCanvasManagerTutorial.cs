@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine.UI;
 using System;
 
-public class MenuCanvasManager: MonoBehaviour {
+public class MenuCanvasManagerTutorial: MonoBehaviour {
 
     [SerializeField] GameManager gameManager;
     [SerializeField] Canvas menuCanvas;
@@ -21,8 +21,22 @@ public class MenuCanvasManager: MonoBehaviour {
 
     public bool isMenuLoopFinished = true;
 
-    public void startMenuLoop() {
-        presentUpgradeOptions();
+    public enum TutorialMenuStep {
+        upgrade, challenge, song
+    }
+
+    public void startMenuLoop(TutorialMenuStep step) {
+        switch (step) {
+            case TutorialMenuStep.upgrade:
+            presentUpgradeOptions();
+            break;
+            case TutorialMenuStep.challenge:
+            presentChallengeOptions();
+            break;
+            case TutorialMenuStep.song:
+            presentSongOptions();
+            break;
+        }
         isMenuLoopFinished = false;
         menuCanvas.enabled = true;
     }
@@ -96,12 +110,16 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void addUpgrade(Upgrade upgrade) {
         UpgradeTracker.addUpgrade(upgrade);
-        presentChallengeOptions();
+        menuCanvas.enabled = false;
+        isMenuLoopFinished = true;
+        gameManager.executeNextTutorialStep();
     }
 
     private void addChallenge(Challenge challenge) {
         ChallengeTracker.addChallenge(challenge);
-        presentSongOptions();
+        menuCanvas.enabled = false;
+        isMenuLoopFinished = true;
+        gameManager.executeNextTutorialStep();
     }
 
     private void addSong(Song song) {
@@ -161,7 +179,7 @@ public class MenuCanvasManager: MonoBehaviour {
             Tooltip tooltip = gameObjects.background.GetComponent<Tooltip>();
             tooltip.message = menuItem.Description;
             if (menuItem is Challenge) {
-                tooltip.message = menuItem.Description + getSeverityString((Challenge) menuItem);
+                tooltip.message = menuItem.Description + getSeverityString((Challenge)menuItem);
             }
 
             currentMenuItemIndex += 1;

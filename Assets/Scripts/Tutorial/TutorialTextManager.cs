@@ -7,7 +7,7 @@ using TMPro;
 public class TutorialTextManager : MonoBehaviour {
 
     public TextMeshProUGUI dialogueText;
-    public float typingSpeed = 0.03f;
+    public float typingSpeed = 0.01f;
     public GameObject pressSpaceButton;
 
     public enum TutorialMessage {
@@ -25,7 +25,7 @@ public class TutorialTextManager : MonoBehaviour {
         messages[TutorialMessage.multipleArrows] = "Let's try another song with your shiny new upgrade and challenge. This song includes some \"parallel arrows,\" you can't miss em.";
         messages[TutorialMessage.gameGoal1] = "Awesome! We're almost done. The goal of the game is to make it through every Level.";
         messages[TutorialMessage.gameGoal2] = "Each Level has a completion score needed to clear it. The completion score is calculated based on the current level and the song chosen.";
-        messages[TutorialMessage.gameGoal3] = "Alright, I think you're ready! You'll only pick a challenge and the song in Level 1 and then you're off the races. Have fun!";
+        messages[TutorialMessage.gameGoal3] = "Alright, I think you're ready! You won't pick an upgrade in Level 1, just the challenge and the song. Have fun!";
     }
 
     public void showMessage(TutorialMessage tutorialMessage) {

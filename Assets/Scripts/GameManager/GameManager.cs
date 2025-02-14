@@ -48,21 +48,21 @@ public partial class GameManager: MonoBehaviour {
     private bool inSongLoop = false;
 
     private void Start() {
-        if (SceneManager.GetActiveScene().name == "Tutorial") {
-            Debug.Log("In tutorial");
+        isTutorial = SceneManager.GetActiveScene().name == "Tutorial";
+        if (isTutorial) {
             setupForTutorial();
         } else {
-            Debug.Log("not in tutorial");
             songs = jsonLoader.loadSongs();
             levels = jsonLoader.loadLevels();
             currentSong = "FreakingOutTheNeighborhood";
         }
+
         setupFireworks();
         arrowsList = new List<Arrow> { leftArrow, upArrow, rightArrow, downArrow };
         if (skipToTime > 0.0f) {
             songTime = skipToTime;
         }
-        
+
         setupSong();
     }
 
@@ -78,19 +78,20 @@ public partial class GameManager: MonoBehaviour {
                     startSongLoop();
                 }
             }
-
-            if (inSongLoop) {
-                manageSongLoop();
-            }
-
-            // Cheat codes for debugging
-            if (Input.GetKeyDown(KeyCode.P)) {
-                score += 5000f;
-            }
-            if (Input.GetKeyDown(KeyCode.N)) {
-                songFinished();
-            }
         }
+
+        if (inSongLoop) {
+            manageSongLoop();
+        }
+
+        // Cheat codes for debugging
+        if (Input.GetKeyDown(KeyCode.P)) {
+            score += 5000f;
+        }
+        if (Input.GetKeyDown(KeyCode.N)) {
+            songFinished();
+        }
+
     }
 
     private void startMenuLoop() {
@@ -227,13 +228,13 @@ public partial class GameManager: MonoBehaviour {
 
     private IEnumerator fadeOutAudio(float fadeDuration) {
         float startVolume = audioSource.volume;
-        float targetVolume = 0f; 
+        float targetVolume = 0f;
 
         float elapsedTime = 0f;
         while (elapsedTime < fadeDuration) {
             audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
             elapsedTime += Time.deltaTime;
-            yield return null; 
+            yield return null;
         }
 
         audioSource.volume = targetVolume;
@@ -262,7 +263,7 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void setupLevel() {
-        if (level < levels.Count) {
+        if (level - 1 < levels.Count) {
             Level currentLevel = levels[level - 1];
             Sprite background = Resources.Load<Sprite>($"Levels/Backgrounds/{currentLevel.level_sprites[0].sprite_name}");
             SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();

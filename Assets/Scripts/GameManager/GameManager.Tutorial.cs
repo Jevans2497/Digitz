@@ -1,16 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public partial class GameManager : MonoBehaviour {
+public partial class GameManager: MonoBehaviour {
 
     private bool isTutorial;
     [SerializeField] TextMeshProUGUI tutorialText;
     private TutorialTextManager tutorialTextManager;
+    [SerializeField] MenuCanvasManagerTutorial menuCanvasManagerTutorial;
 
-    private bool playerHasSeenInitialMessage;
-    private bool playerHasCompletedInitialSong;
+    private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
 
     private void setupForTutorial() {
         isTutorial = true;
@@ -24,14 +27,79 @@ public partial class GameManager : MonoBehaviour {
 
         tutorialTextManager.pressSpaceButton = pressSpaceButton;
         tutorialTextManager.showMessage(TutorialTextManager.TutorialMessage.introduction);
-        playerHasSeenInitialMessage = true;
+
+        setupTutorialSteps();
+    }
+
+    private void setupTutorialSteps() {
+        tutorialSteps = new List<TutorialStep> {
+            new TutorialStep(() => playNextExpectedSong()),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.upgrades)),
+            new TutorialStep(() => showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep.upgrade)),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.challenges1)),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.challenges2)),
+            new TutorialStep(() => showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep.challenge)),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.multipleArrows)),
+            new TutorialStep(() => playNextExpectedSong()),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.gameGoal1)),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.gameGoal2)),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.gameGoal3)),
+        };
     }
 
     private void updateForTutorial() {
         if (Input.GetKeyDown(KeyCode.Space) && pressSpaceButton.activeInHierarchy) {
-            if (playerHasSeenInitialMessage) {
-                startSongLoop();
-            }
+            executeNextTutorialStep();
         }
+    }
+
+    public void executeNextTutorialStep() {
+        resetForTutorialText();
+        TutorialStep currentStep = tutorialSteps.FirstOrDefault(step => !step.isCompleted);
+        if (currentStep != null) {
+            currentStep.execute();
+            currentStep.isCompleted = true;
+        } else {
+            tutorialCompleted();
+        }
+    }
+
+    private void tutorialCompleted() {
+        SceneManager.LoadSceneAsync("DDR");
+    }
+
+    private void playNextExpectedSong() {
+        startSongLoop();
+        tutorialText.gameObject.SetActive(false);
+    }
+
+    private void showTutorialMessage(TutorialTextManager.TutorialMessage message) {
+        tutorialText.gameObject.SetActive(true);
+        tutorialTextManager.showMessage(message);
+    }
+
+    private void showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep menuTutorialStep) {
+        resetForTutorialText();
+        menuCanvasManagerTutorial.startMenuLoop(menuTutorialStep);
+        tutorialText.gameObject.SetActive(false);
+    }
+
+    private void resetForTutorialText() {
+        songCompleteDisplay.enabled = false;
+        pressSpaceButton.SetActive(false);
+        stopFireworks();
+    }
+}
+
+class TutorialStep {
+    public bool isCompleted;
+    private Action action;
+
+    public TutorialStep(Action action) {
+        this.action = action;
+    }
+
+    public void execute() {
+        action?.Invoke();
     }
 }
