@@ -67,6 +67,10 @@ public static class UpgradeTracker {
         }
     }
 
+    public static void reset() {
+        currentActiveUpgrades = new List<Upgrade>();
+    }
+
     public static void upgradeTriggered(Upgrade upgrade) {
         if (currentActiveUpgrades.Contains(upgrade)) {
             upgrade.numOfTimesTriggered += 1;

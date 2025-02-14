@@ -22,8 +22,9 @@ public class JSONLoader: MonoBehaviour {
         return null;
     }
 
-    public List<Level> loadLevels() {
-        string filePath = $"Levels/Levels";
+    public List<Level> loadLevels(bool isTutorial = false) {
+        string fileName = isTutorial ? "TutorialLevels" : "Levels";
+        string filePath = $"Levels/{fileName}";
         TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
 
         if (jsonFile != null) {
@@ -35,21 +36,9 @@ public class JSONLoader: MonoBehaviour {
         return null;
     }
 
-    public List<Level> loadLevelsTutorial() {
-        string filePath = $"Levels/TutorialLevels";
-        TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
-
-        if (jsonFile != null) {
-            return JsonUtility.FromJson<LevelsList>(jsonFile.text).levels;
-        } else {
-            Debug.LogError($"Levels file not found at {filePath}");
-        }
-
-        return null;
-    }
-
-    public List<Song> loadSongs() {
-        string filePath = $"MenuItems/Songs/Songs";
+    public List<Song> loadSongs(bool isTutorial = false) {
+        string fileName = isTutorial ? "TutorialSongs" : "Songs";
+        string filePath = $"MenuItems/Songs/{fileName}";
         TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
 
         if (jsonFile != null) {
@@ -67,27 +56,9 @@ public class JSONLoader: MonoBehaviour {
         return null;
     }
 
-    public List<Song> loadSongsTutorial() {
-        string filePath = $"MenuItems/Songs/TutorialSongs";
-        TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
-
-        if (jsonFile != null) {
-            SongList songList = JsonUtility.FromJson<SongList>(jsonFile.text);
-
-            foreach (var song in songList.songs) {
-                song.InitializeFromJSON();
-            }
-
-            return songList.songs;
-        } else {
-            Debug.LogError($"Songs file not found at {filePath}");
-        }
-
-        return null;
-    }
-
-    public List<Upgrade> loadUpgrades() {
-        string filePath = $"MenuItems/Upgrades/Upgrades";
+    public List<Upgrade> loadUpgrades(bool isTutorial = false) {
+        string fileName = isTutorial ? "TutorialUpgrades" : "Upgrades";
+        string filePath = $"MenuItems/Upgrades/{fileName}";
         TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
 
         if (jsonFile != null) {
@@ -105,8 +76,9 @@ public class JSONLoader: MonoBehaviour {
         return null;
     }
 
-    public List<Challenge> loadChallenges() {
-        string filePath = $"MenuItems/Challenges/Challenges";
+    public List<Challenge> loadChallenges(bool isTutorial = false) {
+        string fileName = isTutorial ? "TutorialChallenges" : "Challenges";
+        string filePath = $"MenuItems/Challenges/{fileName}";
         TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
 
         if (jsonFile != null) {

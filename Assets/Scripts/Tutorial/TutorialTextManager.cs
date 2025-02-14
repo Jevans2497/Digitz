@@ -17,11 +17,11 @@ public class TutorialTextManager : MonoBehaviour {
     Dictionary<TutorialMessage, string> messages = new Dictionary<TutorialMessage, string>();
 
     private void Start() {
-        messages[TutorialMessage.introduction] = "Welcome to Digitz! Let's start with the basics. Use the arrow keys to hit the spawned arrows as they enter.";
-        messages[TutorialMessage.upgrades] = "Great job! After each song, you get to select a permanent upgrade. Hover your mouse over the upgrades to see what they do.";
+        messages[TutorialMessage.introduction] = "Welcome to Digitz! Let's start with the basics. Use the arrow keys to hit the spawned arrows at the proper time.";
+        messages[TutorialMessage.upgrades] = "Great job! After each song, you'll select a permanent upgrade. Hover your mouse over the upgrades to see what they do.";
         messages[TutorialMessage.challenges1] = "You'll also need to select a challenge. Challenges only affect the next song.";
         messages[TutorialMessage.challenges2] = "Keep an eye out for the challenge's Severity. Challenges with higher Severity are harder.";
-        messages[TutorialMessage.challenges3] = "Severity increases as you progress through each level, but you'll get stronger as you go too.";
+        messages[TutorialMessage.challenges3] = "Challenge Severity's increase as you progress through each level, but you'll get stronger as well.";
         messages[TutorialMessage.multipleArrows] = "Let's try another song with your shiny new upgrade and challenge. This song includes some \"parallel arrows,\" you can't miss em.";
         messages[TutorialMessage.gameGoal1] = "Awesome! We're almost done. The goal of the game is to make it through every Level.";
         messages[TutorialMessage.gameGoal2] = "Each Level has a completion score needed to clear it. The completion score is calculated based on the current level and the song chosen.";

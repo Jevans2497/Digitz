@@ -76,6 +76,10 @@ public static class ChallengeTracker {
         return currentActiveChallenge;
     }
 
+    public static void reset() {
+        currentActiveChallenge = null;
+    }
+
     public static bool hasChallenge(string name) {
         if (currentActiveChallenge == null) {
             return false;

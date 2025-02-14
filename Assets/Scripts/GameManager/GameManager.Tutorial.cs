@@ -19,8 +19,8 @@ public partial class GameManager: MonoBehaviour {
         isTutorial = true;
         tutorialTextManager = tutorialText.GetComponent<TutorialTextManager>();
 
-        songs = jsonLoader.loadSongsTutorial();
-        levels = jsonLoader.loadLevelsTutorial();
+        songs = jsonLoader.loadSongs(true);
+        levels = jsonLoader.loadLevels(true);
         currentSong = "MaryHadALittleLamb";
 
         levelNameDisplay.gameObject.SetActive(false);
@@ -62,11 +62,7 @@ public partial class GameManager: MonoBehaviour {
         } else {
             tutorialCompleted();
         }
-    }
-
-    private void tutorialCompleted() {
-        SceneManager.LoadSceneAsync("DDR");
-    }
+    }    
 
     private void playNextExpectedSong() {
         startSongLoop();
@@ -82,6 +78,12 @@ public partial class GameManager: MonoBehaviour {
         resetForTutorialText();
         menuCanvasManagerTutorial.startMenuLoop(menuTutorialStep);
         tutorialText.gameObject.SetActive(false);
+    }
+
+    private void tutorialCompleted() {
+        UpgradeTracker.reset();
+        ChallengeTracker.reset();
+        SceneManager.LoadSceneAsync("DDR");
     }
 
     private void resetForTutorialText() {
