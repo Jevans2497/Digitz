@@ -481,19 +481,19 @@
             "timestamp": 44.470425446834064,
             "arrow_direction": "down",
             "arrow_speed": 0.0,
-            "arrow_effect": "multiple"
+            "arrow_effect": "simultaneous"
         },
         {
             "timestamp": 44.470425446834064,
             "arrow_direction": "right",
             "arrow_speed": 0.0,
-            "arrow_effect": "multiple"
+            "arrow_effect": "simultaneous"
         },
         {
             "timestamp": 44.470425446834064,
             "arrow_direction": "left",
             "arrow_speed": 0.0,
-            "arrow_effect": "multiple"
+            "arrow_effect": "simultaneous"
         },
         {
             "timestamp": 45.36712344488094,
@@ -574,19 +574,19 @@
             "timestamp": 56.992981751765704,
             "arrow_direction": "left",
             "arrow_speed": 0.0,
-            "arrow_effect": "multiple"
+            "arrow_effect": "simultaneous"
         },
         {
             "timestamp": 56.992981751765704,
             "arrow_direction": "up",
             "arrow_speed": 0.0,
-            "arrow_effect": "multiple"
+            "arrow_effect": "simultaneous"
         },
         {
             "timestamp": 56.992981751765704,
             "arrow_direction": "right",
             "arrow_speed": 0.0,
-            "arrow_effect": "multiple"
+            "arrow_effect": "simultaneous"
         },
         {
             "timestamp": 60.31696017583797,

@@ -13,7 +13,7 @@ public class TutorialTextManager : MonoBehaviour {
     public GameObject pressSpaceButton;
 
     public enum TutorialMessage {
-        introduction, royaltyFree1, upgrades, challenges1, challenges2, challenges3, simultaneousArrows, royaltyFree2, gameGoal1, gameGoal2, gameGoal3
+        introduction, royaltyFree1, gameBasics1, gameBasics2, upgrades1, upgrades2, challenges1, challenges2, challenges3, simultaneousArrows, royaltyFree2, gameGoal1, gameGoal2, gameGoal3
     }
 
     Dictionary<TutorialMessage, string> messages = new Dictionary<TutorialMessage, string>();
@@ -21,14 +21,17 @@ public class TutorialTextManager : MonoBehaviour {
     private void Start() {
         messages[TutorialMessage.introduction] = "Welcome to Digitz! Let's start with the basics. Use the arrow keys to hit the spawned arrows at the proper time.";
         messages[TutorialMessage.royaltyFree1] = "We'll start you off with some corny royalty free music and see how you do before hitting the big leagues.";
-        messages[TutorialMessage.upgrades] = "That was<1f>... <r>really good!<1f> <r>For your first time.<0.85f> <r>After each song, you'll select a permanent upgrade. Hover your mouse over the upgrades to see what they do.";
+        messages[TutorialMessage.gameBasics1] = "That was<1f>... <r>really good!<1f> <0.015f>For your first time.<0.85f> <r>You may have noticed that when you hit the arrows, you received \"feedback.\"";
+        messages[TutorialMessage.gameBasics2] = "There are 5 main feedback types, each with a default score. But wait! That's just the start...";
+        messages[TutorialMessage.upgrades1] = "After each song, you'll select a permanent upgrade. Upgrades can affect feedback, how fast arrows move, and a whole lot more!";
+        messages[TutorialMessage.upgrades2] = "Hover your mouse over the upgrades to see what they do. Don't worry too much about the details for now.";
         messages[TutorialMessage.challenges1] = "You'll also need to select a challenge. Challenges only affect the next song.";
         messages[TutorialMessage.challenges2] = "Keep an eye out for the challenge's Severity. Challenges with higher Severity are harder.";
         messages[TutorialMessage.challenges3] = "Challenge Severity's increase as you progress through each level, but you'll get stronger as well.";
-        messages[TutorialMessage.royaltyFree2] = "Let's try another song with your shiny new upgrade and challenge. Still royalty free, but a little jazzier.";
+        messages[TutorialMessage.royaltyFree2] = "Let's try another song with your shiny new upgrade and challenge. Still royalty free, but a little jazzier. Full disclosure, this one's tough.";
         messages[TutorialMessage.simultaneousArrows] = "This song includes some \"simultaneous arrows\" at the end, you can't miss em.";
-        messages[TutorialMessage.gameGoal1] = "Awesome! We're almost done. The goal of the game is to make it through every level (I know,<0.5f> <r>cliche).";
-        messages[TutorialMessage.gameGoal2] = "Each Level has a completion score needed to clear it. The completion score is calculated based on the current level and the song chosen.";
+        messages[TutorialMessage.gameGoal1] = "Awesome! We're almost done. The goal of the game is to make it through every level<0.45f> <r>(I know,<0.45f> <r>cliche).";
+        messages[TutorialMessage.gameGoal2] = "Each Level has a completion score needed to clear it, viewable in the top left. The completion score is based on the current level and the song chosen.";
         messages[TutorialMessage.gameGoal3] = "Alright, I think you're ready! You won't pick an upgrade in Level 1, just the challenge and the song. Have fun!";
     }
 

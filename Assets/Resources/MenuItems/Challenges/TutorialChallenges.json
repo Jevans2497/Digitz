@@ -1,51 +1,6 @@
 {
     "challenges": [
         {
-            "name": "Early Bird",
-            "sprite_name": "EarlyBird",
-            "challenge_type_string": "arrowSpeed",
-            "color": "#007FFF",
-            "rarity_string": "common",
-            "hasSeverity": true,
-            "description": "Every note is shifted slightly early"
-        },
-        {
-            "name": "Later Gator",
-            "sprite_name": "LaterGator",
-            "challenge_type_string": "arrowSpeed",
-            "color": "#007FFF",
-            "rarity_string": "common",
-            "hasSeverity": true,
-            "description": "Every note is shifted slightly late"
-        },
-        {
-            "name": "Broken Tape",
-            "sprite_name": "BrokenTape",
-            "challenge_type_string": "arrowSpeed",
-            "color": "#007FFF",
-            "rarity_string": "common",
-            "hasSeverity": true,
-            "description": "Half of arrows are shifted either late or early."
-        },
-        {
-            "name": "Bombardment",
-            "sprite_name": "Bombardment",
-            "challenge_type_string": "other",
-            "color": "#00D903",
-            "rarity_string": "common",
-            "hasSeverity": true,
-            "description": "Random speedy arrows will spawn"
-        },
-        {
-            "name": "Overclock",
-            "sprite_name": "Overclock",
-            "challenge_type_string": "arrowSpeed",
-            "color": "#007FFF",
-            "rarity_string": "common",
-            "hasSeverity": true,
-            "description": "Everything is sped up"
-        },
-        {
             "name": "Supersonic",
             "sprite_name": "Supersonic",
             "challenge_type_string": "arrowSpeed",
@@ -64,24 +19,6 @@
             "description": "Miss and Stinky ): score lowered"
         },
         {
-            "name": "Opposite Day",
-            "sprite_name": "OppositeDay",
-            "challenge_type_string": "feedback",
-            "color": "#007FFF",
-            "rarity_string": "rare",
-            "hasSeverity": false,
-            "description": "All positive feedback is in reverse order, Misses unaffected"
-        },
-        {
-            "name": "Outage",
-            "sprite_name": "Outage",
-            "challenge_type_string": "other",
-            "color": "#00D903",
-            "rarity_string": "uncommon",
-            "hasSeverity": true,
-            "description": "Chance for each upgrade to be disabled for the round"
-        },
-        {
             "name": "Graveyard",
             "sprite_name": "Graveyard",
             "challenge_type_string": "other",
@@ -89,33 +26,6 @@
             "rarity_string": "common",
             "hasSeverity": true,
             "description": "Spawned arrows start invisible and increase in visibility as they approach"
-        },
-        {
-            "name": "Shattered Sword",
-            "sprite_name": "ShatteredSword",
-            "challenge_type_string": "other",
-            "color": "#00D903",
-            "rarity_string": "uncommon",
-            "hasSeverity": false,
-            "description": "Permanently removes the last upgrade received"
-        },
-        {
-            "name": "The Curse",
-            "sprite_name": "TheCurse",
-            "challenge_type_string": "other",
-            "color": "#00D903",
-            "rarity_string": "uncommon",
-            "hasSeverity": true,
-            "description": "Higher chance of future challenges having increased severity"
-        },
-        {
-            "name": "The Middle Path",
-            "sprite_name": "TheMiddlePath",
-            "challenge_type_string": "feedback",
-            "color": "#007FFF",
-            "rarity_string": "common",
-            "hasSeverity": false,
-            "description": "No Perfects, no Misses"
         }
     ]
 }
