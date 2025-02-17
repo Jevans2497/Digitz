@@ -80,6 +80,20 @@ public class MenuCanvasManager: MonoBehaviour {
                 activateMenuItem(menuGameObjects[2].menuItem);
             }
         }
+
+        if (Input.GetMouseButtonDown(0)) { // 0 = Left Mouse Button
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+            if (hit.collider != null) {
+                foreach (var menuObject in menuGameObjects) {
+                    if (menuObject != null && hit.collider.gameObject == menuObject.background) {
+                        activateMenuItem(menuObject.menuItem);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     private void activateMenuItem(MenuItem menuItem) {

@@ -54,7 +54,7 @@ public partial class GameManager: MonoBehaviour {
         } else {
             songs = jsonLoader.loadSongs();
             levels = jsonLoader.loadLevels();
-            currentSong = "BigBandExplosion";            
+            currentSong = "FreakingOutTheNeighborhood";            
         }
 
         setupFireworks();
@@ -262,7 +262,6 @@ public partial class GameManager: MonoBehaviour {
         hasSongStarted = false;
         spawnedArrowManager.resetSpawnedArrowManager();
         score = 0.0f;
-        //scoreDisplay.text = score.ToString("N0");
         scoreDisplay.text = "";
         delayStartSeconds = 3.0f;
         songTime = 0.0f;

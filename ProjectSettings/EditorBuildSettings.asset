@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DDR.unity
     guid: e2f7831de065a4dc696aa3b712142435
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: d06a800482370466781caea8d5012196
   m_configObjects: {}
