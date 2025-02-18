@@ -58,7 +58,9 @@ public class Challenge: MenuItem {
     public ChallengeEffect effect;
     public bool hasSeverity;
     public ChallengeSeverity severity;
+    public bool hasSeverityBeenSet;
     public string description;
+    public bool isInitiallyHidden;
 
     public string Name => name;
     public string SpriteName => sprite_name;
@@ -85,7 +87,7 @@ public class Challenge: MenuItem {
 
     public int GetRarityWeight() {
         switch (rarity) {
-            case ChallengeRarity.always: return 1000; //Exclusively for testing, guarantees upgrade will appear
+            case ChallengeRarity.always: return 1000; //Exclusively for testing, guarantees challenge will appear
             case ChallengeRarity.godly: return 1;
             case ChallengeRarity.rare: return 3;
             case ChallengeRarity.uncommon: return 5;

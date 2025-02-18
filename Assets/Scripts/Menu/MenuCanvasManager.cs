@@ -13,6 +13,9 @@ public class MenuCanvasManager: MonoBehaviour {
     [SerializeField] JSONLoader jsonLoader;
     [SerializeField] GameObject menuObjectPrefab;
 
+    [SerializeField] GameObject levelBonusOption;
+    private bool isLevelBonusOptionAvailable;
+
     List<MenuGameObjects> menuGameObjects = new List<MenuGameObjects>();
 
     UpgradeManager upgradeManager;
@@ -52,17 +55,23 @@ public class MenuCanvasManager: MonoBehaviour {
             float yOffset = Mathf.Sin(animationTime) * animationHeight;
 
             foreach (var gameObjects in menuGameObjects) {
-                GameObject background = gameObjects.background;
-
-                if (background != null) {
-                    Vector3 originalPosition = background.transform.position;
-                    background.transform.position = new Vector3(
-                        originalPosition.x,
-                        originalPosition.y + yOffset,
-                        originalPosition.z
-                    );
-                }
+                animateObjectMovingUpAndDown(gameObjects.background, yOffset);
             }
+
+            if (levelBonusOption.activeInHierarchy) {
+                animateObjectMovingUpAndDown(levelBonusOption.gameObject, yOffset);
+            }
+        }
+    }
+
+    private void animateObjectMovingUpAndDown(GameObject gameObject, float yOffset) {
+        if (gameObject != null) {
+            Vector3 originalPosition = gameObject.transform.position;
+            gameObject.transform.position = new Vector3(
+                originalPosition.x,
+                originalPosition.y + yOffset,
+                originalPosition.z
+            );
         }
     }
 
@@ -80,31 +89,32 @@ public class MenuCanvasManager: MonoBehaviour {
                 activateMenuItem(menuGameObjects[2].menuItem);
             }
         }
-
-        if (Input.GetMouseButtonDown(0)) { // 0 = Left Mouse Button
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-
-            if (hit.collider != null) {
-                foreach (var menuObject in menuGameObjects) {
-                    if (menuObject != null && hit.collider.gameObject == menuObject.background) {
-                        activateMenuItem(menuObject.menuItem);
-                        break;
-                    }
-                }
-            }
-        }
     }
 
     private void activateMenuItem(MenuItem menuItem) {
         if (menuItem is Upgrade upgrade) {
             addUpgrade(upgrade);
         } else if (menuItem is Challenge challenge) {
-            addChallenge(challenge);
+            activateChallengeMenuItem(challenge);
         } else if (menuItem is Song song) {
             addSong(song);
         } else {
             Debug.LogWarning("Unknown MenuItem type");
+        }
+    }
+
+    private void activateChallengeMenuItem(Challenge challenge) {
+        if (challenge.isInitiallyHidden) {
+            menuGameObjects.ForEach(menuGameObjects => {
+                if (menuGameObjects.menuItem is Challenge challenge) {
+                    challenge.isInitiallyHidden = false;
+                    levelBonusOption.SetActive(false);
+                    isLevelBonusOptionAvailable = false;
+                }
+            });
+            setMenuOptions();
+        } else {
+            addChallenge(challenge);
         }
     }
 
@@ -115,6 +125,8 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void addChallenge(Challenge challenge) {
         ChallengeTracker.addChallenge(challenge);
+        levelBonusOption.SetActive(false);
+        isLevelBonusOptionAvailable = false;
         presentSongOptions();
     }
 
@@ -134,6 +146,8 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void presentChallengeOptions() {
         destroyPreexistingMenuObjects();
+        levelBonusOption.SetActive(true);
+        isLevelBonusOptionAvailable = true;
         menuGameObjects = challengeManager.createChallengeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
             setMenuOptions();
@@ -158,34 +172,53 @@ public class MenuCanvasManager: MonoBehaviour {
         int currentMenuItemIndex = 0;
         foreach (var gameObjects in menuGameObjects) {
             MenuItem menuItem = gameObjects.menuItem;
+            if (menuItem is Challenge challenge && challenge.isInitiallyHidden) {
+                setMenuOptionsForHiddenMenuItem(gameObjects);
+            } else {
+                if (menuItem is Challenge) {
+                    setupMenuItemForChallenge(menuItem);
+                }
 
-            if (menuItem is Challenge) {
-                setupMenuItemForChallenge(menuItem);
-            }
+                //Text and background color
+                gameObjects.text.GetComponent<TextMeshProUGUI>().text = menuItem.Name;
+                gameObjects.background.GetComponent<Image>().color = SharedResources.hexToColor(menuItem.Color);
 
-            //Text and background color
-            gameObjects.text.GetComponent<TextMeshProUGUI>().text = menuItem.Name;
-            gameObjects.background.GetComponent<Image>().color = SharedResources.hexToColor(menuItem.Color);
+                //Sprite
+                Sprite sprite = Resources.Load<Sprite>(gameObjects.path);
+                gameObjects.image.GetComponent<Image>().sprite = sprite;
 
-            //Sprite
-            Sprite sprite = Resources.Load<Sprite>(gameObjects.path);
-            gameObjects.image.GetComponent<Image>().sprite = sprite;
-
-            //Tooltip
-            Tooltip tooltip = gameObjects.background.GetComponent<Tooltip>();
-            tooltip.message = menuItem.Description;
-            if (menuItem is Challenge) {
-                tooltip.message = menuItem.Description + getSeverityString((Challenge) menuItem);
-            }
-
+                //Tooltip
+                Tooltip tooltip = gameObjects.background.GetComponent<Tooltip>();
+                tooltip.message = menuItem.Description;
+                if (menuItem is Challenge) {
+                    tooltip.message = menuItem.Description + getSeverityString((Challenge)menuItem);
+                }
+            }          
             currentMenuItemIndex += 1;
         }
     }
 
+    private void setMenuOptionsForHiddenMenuItem(MenuGameObjects gameObjects) {
+        //Text and background color
+        gameObjects.text.GetComponent<TextMeshProUGUI>().text = "???";
+        gameObjects.background.GetComponent<Image>().color = SharedResources.hexToColor("#DEDEDE");
+
+        //Sprite
+        Sprite sprite = Resources.Load<Sprite>($"MenuItems/Challenges/ChallengeIcons/QuestionMark");
+        gameObjects.image.GetComponent<Image>().sprite = sprite;
+
+        //Tooltip
+        Tooltip tooltip = gameObjects.background.GetComponent<Tooltip>();
+        tooltip.message = "";
+    }
+
     private void setupMenuItemForChallenge(MenuItem menuItem) {
         Challenge challenge = (Challenge)menuItem;
-        challenge.severity = challengeManager.getSeverityForChallenge(gameManager.getLevel(), challenge.hasSeverity);
-        challenge.color = challenge.hexForSeverity(challenge.severity);
+        if (!challenge.hasSeverityBeenSet) {
+            challenge.severity = challengeManager.getSeverityForChallenge(gameManager.getLevel(), challenge.hasSeverity);
+            challenge.color = challenge.hexForSeverity(challenge.severity);
+            challenge.hasSeverityBeenSet = true;
+        }
     }
 
     private string getSeverityString(Challenge challenge) {
