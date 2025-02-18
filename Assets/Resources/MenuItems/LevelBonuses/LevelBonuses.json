@@ -1,0 +1,53 @@
+{
+    "levelBonuses": [
+        {
+            "level_number": 1,
+            "level_bonus_name": "Slow Arrows",
+            "level_bonus_sprite": "SlowArrows",
+            "level_bonus_string": "arrowSpeedLowered",
+            "level_bonus_description": "Spawned arrows are slightly slowed"
+        },
+        {
+            "level_number": 2,
+            "level_bonus_name": "10% Coupon",
+            "level_bonus_sprite": "TenPercentCoupon",
+            "level_bonus_string": "tenPercentCoupon",
+            "level_bonus_description": "Start song with 10% of total points"
+        },
+        {
+            "level_number": 3,
+            "level_bonus_name": "Easy Street",
+            "level_bonus_sprite": "EasyStreet",
+            "level_bonus_string": "easyStreet",
+            "level_bonus_description": "Lowers challenge severity by one grade"
+        },
+        {
+            "level_number": 4,
+            "level_bonus_name": "Rainbow Road",
+            "level_bonus_sprite": "RainbowRoad",
+            "level_bonus_string": "rainbowRoad",
+            "level_bonus_description": "Rainbow arrows 2x likely to appear"
+        },
+        {
+            "level_number": 5,
+            "level_bonus_name": "Double Down",
+            "level_bonus_sprite": "DoubleDown",
+            "level_bonus_string": "doubleDown",
+            "level_bonus_description": "Randomly duplicate one upgrade"
+        },
+        {
+            "level_number": 6,
+            "level_bonus_name": "Yellow Brick",
+            "level_bonus_sprite": "YellowBrick",
+            "level_bonus_string": "yellowBrick",
+            "level_bonus_description": "Golden arrows 2x likely to appear"
+        },
+        {
+            "level_number": 7,
+            "level_bonus_name": "Ain't Broke",
+            "level_bonus_sprite": "AintBroke",
+            "level_bonus_string": "aintbroke",
+            "level_bonus_description": "Feedback received the most in this run worth 25% more"
+        }
+    ]
+}

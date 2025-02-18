@@ -80,6 +80,8 @@ public class MenuGameObjects {
             return $"MenuItems/Challenges/ChallengeIcons/{menuItem.SpriteName}";
         } else if (menuItem is Song song) {
             return $"MenuItems/Songs/SongIcons/{menuItem.SpriteName}";
+        } else if (menuItem is LevelBonus levelBonus) {
+            return $"MenuItems/LevelBonuses/LevelBonusIcons/{menuItem.SpriteName}";
         } else {
             Debug.LogWarning("Unknown MenuItem type");
             return null;

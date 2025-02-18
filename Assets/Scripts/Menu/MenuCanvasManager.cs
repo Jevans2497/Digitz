@@ -19,6 +19,7 @@ public class MenuCanvasManager: MonoBehaviour {
     List<MenuGameObjects> menuGameObjects = new List<MenuGameObjects>();
 
     UpgradeManager upgradeManager;
+    LevelBonusManager levelBonusManager;
     ChallengeManager challengeManager;
     SongManager songManager;
 
@@ -26,6 +27,7 @@ public class MenuCanvasManager: MonoBehaviour {
 
     public void startMenuLoop() {
         LevelBonusTracker.reset();
+        isLevelBonusOptionAvailable = false;
         presentUpgradeOptions();
         isMenuLoopFinished = false;
         menuCanvas.enabled = true;
@@ -35,6 +37,7 @@ public class MenuCanvasManager: MonoBehaviour {
         menuCanvas.enabled = false;
 
         upgradeManager = new(jsonLoader, menuObjectPrefab);
+        levelBonusManager = new(jsonLoader, levelBonusGameObject);
         challengeManager = new(jsonLoader, menuObjectPrefab);
         songManager = new(jsonLoader, menuObjectPrefab);
     }
@@ -115,7 +118,17 @@ public class MenuCanvasManager: MonoBehaviour {
             });
             setupMenuOptions();
         } else {
+            if (isLevelBonusOptionAvailable) {
+                addLevelBonus();
+            }
             addChallenge(challenge);
+        }
+    }
+
+    private void addLevelBonus() {
+        MenuItem levelBonusMenuItem = levelBonusManager.getLevelBonusMenuItemForLevel(gameManager.getLevelNumber());
+        if (levelBonusMenuItem is LevelBonus levelBonus) {
+            LevelBonusTracker.addLevelBonusEffect(levelBonus.levelBonusEffect);
         }
     }
 
@@ -125,12 +138,8 @@ public class MenuCanvasManager: MonoBehaviour {
     }
 
     private void addChallenge(Challenge challenge) {
-        //if (isLevelBonusOptionAvailable) {
-        //    LevelBonusTracker.addLevelBonusEffect(gameManager.getUpcomingLevelBonusEffect());
-        //}
         ChallengeTracker.addChallenge(challenge);
         levelBonusGameObject.SetActive(false);
-        isLevelBonusOptionAvailable = false;
         presentSongOptions();
     }
 
@@ -160,12 +169,10 @@ public class MenuCanvasManager: MonoBehaviour {
     private void setupLevelBonusOption() {
         levelBonusGameObject.SetActive(true);
         isLevelBonusOptionAvailable = true;
-        Level currentLevel = gameManager.getCurrentLevel();
-        string name = currentLevel.level_bonus_name;
-        string color = "#0084FF";
-        string spritePath = "";
-        string tooltipMessage = currentLevel.level_bonus_description;
-        customizeMenuOption(levelBonusGameObject, name, color, "", tooltipMessage);
+        MenuItem menuItem = levelBonusManager.getLevelBonusMenuItemForLevel(gameManager.getLevelNumber());
+        MenuGameObjects levelBonusGameObjects = levelBonusManager.createLevelBonusOption(menuItem, levelBonusGameObject);
+        Debug.Log(menuItem.SpriteName);
+        customizeMenuOption(levelBonusGameObjects, menuItem.Name, menuItem.Color, levelBonusGameObjects.path, menuItem.Description);
     }
 
     private void presentSongOptions() {

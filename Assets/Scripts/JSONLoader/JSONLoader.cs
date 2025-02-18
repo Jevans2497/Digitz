@@ -28,9 +28,7 @@ public class JSONLoader: MonoBehaviour {
         TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
 
         if (jsonFile != null) {
-            List<Level> levelsList = JsonUtility.FromJson<LevelsList>(jsonFile.text).levels;
-            levelsList.ForEach(level => level.InitializeFromJSON());
-            return levelsList;
+            return JsonUtility.FromJson<LevelsList>(jsonFile.text).levels;
         } else {
             Debug.LogError($"Levels file not found at {filePath}");
         }
@@ -38,21 +36,23 @@ public class JSONLoader: MonoBehaviour {
         return null;
     }
 
-    //public List<LevelBonus> loadLevelBonuses(bool isTutorial = false) {
-    //    string fileName = isTutorial ? "TutorialLevelBonuses" : "LevelBonuses";
-    //    string filePath = $"Levels/{fileName}";
-    //    TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
+    public List<LevelBonus> loadLevelBonuses(bool isTutorial = false) {
+        string fileName = isTutorial ? "TutorialLevelBonuses" : "LevelBonuses";
+        string filePath = $"MenuItems/LevelBonuses/{fileName}";
+        TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
 
-    //    if (jsonFile != null) {
-    //        List<LevelBonus> levelBonusesList = JsonUtility.FromJson<LevelBonus>(jsonFile.text).levelBonuses;
-    //        levelBonusesList.ForEach(levelBonus => levelBonus.InitializeFromJSON());
-    //        return levelBonusesList;
-    //    } else {
-    //        Debug.LogError($"LevelBonuses file not found at {filePath}");
-    //    }
+        if (jsonFile != null) {
+            LevelBonusesList levelBonusesList = JsonUtility.FromJson<LevelBonusesList>(jsonFile.text);
+            foreach (var levelBonus in levelBonusesList.levelBonuses) {
+                levelBonus.InitializeFromJSON();
+            }
+            return levelBonusesList.levelBonuses;
+        } else {
+            Debug.LogError($"LevelBonuses file not found at {filePath}");
+        }
 
-    //    return null;
-    //}
+        return null;
+    }
 
     public List<Song> loadSongs(bool isTutorial = false) {
         string fileName = isTutorial ? "TutorialSongs" : "Songs";
