@@ -147,6 +147,7 @@ public class MenuCanvasManager: MonoBehaviour {
         gameManager.setSong(song.song_file_name);
         menuCanvas.enabled = false;
         isMenuLoopFinished = true;
+        gameManager.setPressSpaceButtonActive(true);
     }
 
     private void presentUpgradeOptions() {

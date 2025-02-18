@@ -16,11 +16,7 @@ public class LevelBonusManager: MenuItemManager {
     }
 
     public MenuItem getLevelBonusMenuItemForLevel(int level) {
-        if (level < levelBonuses.Count) {
-            return levelBonuses[level];
-        }
-
-        return null;
+        return levelBonuses.FirstOrDefault(levelBonus => levelBonus.level_number == level);
     }
 
     public MenuGameObjects createLevelBonusOption(MenuItem levelBonusMenuItem, GameObject levelBonusPrefab) {

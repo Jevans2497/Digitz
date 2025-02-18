@@ -21,6 +21,7 @@ public class LevelBonus: MenuItem {
         aintBroke
     }
 
+    public int level_number;
     public string level_bonus_name;
     public string level_bonus_string;
     public LevelBonusEffect levelBonusEffect;

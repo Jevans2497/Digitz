@@ -206,6 +206,10 @@ public partial class GameManager: MonoBehaviour {
         setupSong();
     }
 
+    public void setPressSpaceButtonActive(bool isActive) {
+        pressSpaceButton.SetActive(isActive);
+    }
+
     private bool isSongComplete() {
         if (isInGenerateSongJSONMode) { return false; }
         bool didPlayerBeatSong = score >= scoreNeededToClearLevel && !isTutorial && !isInTestSongMode;
