@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class LevelsList {
@@ -8,10 +9,30 @@ public class LevelsList {
 
 [System.Serializable]
 public class Level {
+
+    public enum LevelBonusEffect {
+        arrowSpeedLowered,
+        tenPercentPoints,
+        challengeSeverityLowered,
+        rainbowArrowBoost,
+        randomUpgradeDuplicated,
+        goldenArrowBoost,
+        favoriteFeedbackBoost
+    }
+
     public string name;
     public int level_number;
+    public string level_bonus_string;
+    public LevelBonusEffect levelBonusEffect;
     public float completion_percent;
     public List<LevelSprite> level_sprites;
+
+    public void InitializeFromJSON() {
+        if (!Enum.TryParse(level_bonus_string, true, out levelBonusEffect)) {
+            Debug.LogWarning($"Invalid upgrade_type: {level_bonus_string} for LevelBonus {name}. Defaulting to 'arrowSpeedLowered'.");
+            levelBonusEffect = LevelBonusEffect.arrowSpeedLowered;
+        }
+    }
 }
 
 [System.Serializable]

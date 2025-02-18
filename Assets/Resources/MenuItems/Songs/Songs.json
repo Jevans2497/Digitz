@@ -68,7 +68,7 @@
             "rarity_string": "",
             "description": "",
             "artist": "Abba",
-            "difficulty_string": "medium"
+            "difficulty_string": "veryHard"
         },
         {
             "name": "Waves",
@@ -78,7 +78,7 @@
             "rarity_string": "",
             "description": "",
             "artist": "Electric Guest",
-            "difficulty_string": "easy"
+            "difficulty_string": "hard"
         }
     ]
 }
