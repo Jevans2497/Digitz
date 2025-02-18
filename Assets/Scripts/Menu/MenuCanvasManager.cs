@@ -124,6 +124,9 @@ public class MenuCanvasManager: MonoBehaviour {
     }
 
     private void addChallenge(Challenge challenge) {
+        if (isLevelBonusOptionAvailable) {
+            //Activate levelBonusOption
+        }
         ChallengeTracker.addChallenge(challenge);
         levelBonusOption.SetActive(false);
         isLevelBonusOptionAvailable = false;
@@ -146,12 +149,17 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void presentChallengeOptions() {
         destroyPreexistingMenuObjects();
-        levelBonusOption.SetActive(true);
-        isLevelBonusOptionAvailable = true;
+        setupLevelBonusOption();
         menuGameObjects = challengeManager.createChallengeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
             setMenuOptions();
         }
+    }
+
+    private void setupLevelBonusOption() {
+        levelBonusOption.SetActive(true);
+        isLevelBonusOptionAvailable = true;
+        //Get data here
     }
 
     private void presentSongOptions() {
