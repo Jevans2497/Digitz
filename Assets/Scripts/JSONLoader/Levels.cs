@@ -11,6 +11,7 @@ public class LevelsList {
 public class Level {
 
     public enum LevelBonusEffect {
+        none,
         arrowSpeedLowered,
         tenPercentPoints,
         challengeSeverityLowered,
@@ -29,7 +30,7 @@ public class Level {
 
     public void InitializeFromJSON() {
         if (!Enum.TryParse(level_bonus_string, true, out levelBonusEffect)) {
-            Debug.LogWarning($"Invalid upgrade_type: {level_bonus_string} for LevelBonus {name}. Defaulting to 'arrowSpeedLowered'.");
+            Debug.LogWarning($"Invalid level_bonus_effect: {level_bonus_string} for LevelBonus {name}. Defaulting to 'arrowSpeedLowered'.");
             levelBonusEffect = LevelBonusEffect.arrowSpeedLowered;
         }
     }

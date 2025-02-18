@@ -28,7 +28,9 @@ public class JSONLoader: MonoBehaviour {
         TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
 
         if (jsonFile != null) {
-            return JsonUtility.FromJson<LevelsList>(jsonFile.text).levels;
+            List<Level> levelsList = JsonUtility.FromJson<LevelsList>(jsonFile.text).levels;
+            levelsList.ForEach(level => level.InitializeFromJSON());
+            return levelsList;
         } else {
             Debug.LogError($"Levels file not found at {filePath}");
         }

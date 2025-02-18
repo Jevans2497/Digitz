@@ -25,6 +25,7 @@ public class MenuCanvasManager: MonoBehaviour {
     public bool isMenuLoopFinished = true;
 
     public void startMenuLoop() {
+        LevelBonusTracker.reset();
         presentUpgradeOptions();
         isMenuLoopFinished = false;
         menuCanvas.enabled = true;
@@ -125,7 +126,7 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void addChallenge(Challenge challenge) {
         if (isLevelBonusOptionAvailable) {
-            //Activate levelBonusOption
+            LevelBonusTracker.addLevelBonusEffect(gameManager.getUpcomingLevelBonusEffect());
         }
         ChallengeTracker.addChallenge(challenge);
         levelBonusOption.SetActive(false);

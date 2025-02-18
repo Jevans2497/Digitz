@@ -3,7 +3,7 @@
         {
             "name": "The Beach",
             "level_number": 1,
-            "level_bonus": "arrowSpeedLowered",
+            "level_bonus_string": "arrowSpeedLowered",
             "completion_percent": 60.0,
             "level_sprites": [
                 {
@@ -15,7 +15,7 @@
         {
             "name": "The Field",
             "level_number": 2,
-            "level_bonus": "tenPercentPoints",
+            "level_bonus_string": "tenPercentPoints",
             "completion_percent": 80.0,
             "level_sprites": [
                 {
@@ -27,7 +27,7 @@
         {
             "name": "Dusk",
             "level_number": 3,
-            "level_bonus": "challengeSeverityLowered",
+            "level_bonus_string": "challengeSeverityLowered",
             "completion_percent": 110.0,
             "level_sprites": [
                 {
@@ -39,7 +39,7 @@
         {
             "name": "The Crevasse",
             "level_number": 4,
-            "level_bonus": "rainbowArrowBoost",
+            "level_bonus_string": "rainbowArrowBoost",
             "completion_percent": 140.0,
             "level_sprites": [
                 {
@@ -51,7 +51,7 @@
         {
             "name": "Shipwreck",
             "level_number": 5,
-            "level_bonus": "randomUpgradeDuplicated",
+            "level_bonus_string": "randomUpgradeDuplicated",
             "completion_percent": 210.0,
             "level_sprites": [
                 {
@@ -63,7 +63,7 @@
         {
             "name": "Tundra",
             "level_number": 6,
-            "level_bonus": "goldenArrowBoost",
+            "level_bonus_string": "goldenArrowBoost",
             "completion_percent": 250.0,
             "level_sprites": [
                 {
@@ -75,7 +75,7 @@
         {
             "name": "The City",
             "level_number": 7,
-            "level_bonus": "favoriteFeedbackBoost",
+            "level_bonus_string": "favoriteFeedbackBoost",
             "completion_percent": 300.0,
             "level_sprites": [
                 {

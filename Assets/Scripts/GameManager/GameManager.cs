@@ -41,6 +41,7 @@ public partial class GameManager: MonoBehaviour {
 
     private int level;
     private List<Level> levels;
+    private Level.LevelBonusEffect currentLevelBonusEffect = Level.LevelBonusEffect.none;
 
     private float scoreNeededToClearLevel;
 
@@ -56,7 +57,8 @@ public partial class GameManager: MonoBehaviour {
         } else {
             songs = jsonLoader.loadSongs();
             levels = jsonLoader.loadLevels();
-            currentSong = "Waves";            
+            levels.ForEach(level => Debug.Log(level.levelBonusEffect.ToString()));
+            currentSong = "FreakingOutTheNeighborhood";            
         }
 
         setupFireworks();
@@ -194,6 +196,13 @@ public partial class GameManager: MonoBehaviour {
         return level;
     }
 
+    public Level.LevelBonusEffect getUpcomingLevelBonusEffect() {
+        if (level + 1 < levels.Count) {
+            return levels[level + 1].levelBonusEffect;
+        }
+        return Level.LevelBonusEffect.none;
+    }
+
     public void setSong(string songFileName) {
         currentSong = songFileName;
         setupSong();
@@ -277,12 +286,12 @@ public partial class GameManager: MonoBehaviour {
             SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = background;
             levelNameDisplay.text = currentLevel.name;
-            scoreNeededToClearLevel = (currentLevel.completion_percent / 100.0f) * spawnedArrowManager.getMaximumBasePointsForCurrentSong();
             setupLevelProgress(currentLevel);
         }
     }
 
     private void setupLevelProgress(Level currentLevel) {
+        scoreNeededToClearLevel = (currentLevel.completion_percent / 100.0f) * spawnedArrowManager.getMaximumBasePointsForCurrentSong();
         progressBar.value = 0.0f;
         progressBar.maxValue = scoreNeededToClearLevel;
     }
