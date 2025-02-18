@@ -19,11 +19,11 @@ public class ChallengeManager: MenuItemManager {
         List<MenuGameObjects> challengeMenuOptions = createMenuOptions<Challenge>(menuCanvasTransform, menuObjectPrefab, challenges);
 
         if (challengeMenuOptions.Count > 1 && challengeMenuOptions[1].menuItem is Challenge topChallenge) {
-            topChallenge.isInitiallyHidden = true;
+            topChallenge.isConcealed = true;
         }
 
         if (challengeMenuOptions.Count > 2 && challengeMenuOptions[2].menuItem is Challenge rightChallenge) {
-            rightChallenge.isInitiallyHidden = true;
+            rightChallenge.isConcealed = true;
         }
 
         return challengeMenuOptions;

@@ -39,9 +39,8 @@ public partial class GameManager: MonoBehaviour {
     private string currentSong;
     private List<Song> songs;
 
-    private int level;
     private List<Level> levels;
-    private Level.LevelBonusEffect currentLevelBonusEffect = Level.LevelBonusEffect.none;
+    private Level currentLevel;
 
     private float scoreNeededToClearLevel;
 
@@ -57,8 +56,11 @@ public partial class GameManager: MonoBehaviour {
         } else {
             songs = jsonLoader.loadSongs();
             levels = jsonLoader.loadLevels();
-            levels.ForEach(level => Debug.Log(level.levelBonusEffect.ToString()));
-            currentSong = "FreakingOutTheNeighborhood";            
+            currentSong = "FreakingOutTheNeighborhood";
+        }
+
+        if (levels.Count > 0) {
+            currentLevel = levels[0];
         }
 
         setupFireworks();
@@ -109,7 +111,6 @@ public partial class GameManager: MonoBehaviour {
         pressSpaceButton.SetActive(false);
         setupSpawnedArrowManager();
         inSongLoop = true;
-        level += 1;
         setupLevel();
         levelNameDisplay.enabled = true;
         handleUpgradesAndChallenges();
@@ -192,15 +193,12 @@ public partial class GameManager: MonoBehaviour {
         return inSongLoop;
     }
 
-    public int getLevel() {
-        return level;
+    public Level getCurrentLevel() {
+        return currentLevel;
     }
 
-    public Level.LevelBonusEffect getUpcomingLevelBonusEffect() {
-        if (level + 1 < levels.Count) {
-            return levels[level + 1].levelBonusEffect;
-        }
-        return Level.LevelBonusEffect.none;
+    public int getLevelNumber() {
+        return currentLevel.level_number;
     }
 
     public void setSong(string songFileName) {
@@ -219,18 +217,24 @@ public partial class GameManager: MonoBehaviour {
         inSongLoop = false;
         spawnedArrowManager.destroyCurrentExistingArrows();
 
-        bool didPlayerBeatSong = score >= scoreNeededToClearLevel;
-        bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
+        int currentLevelIndex = levels.FindIndex(level => level == currentLevel);
+        if (currentLevelIndex + 1 < levels.Count) {
+            currentLevel = levels[currentLevelIndex + 1];
+            bool didPlayerBeatSong = score >= scoreNeededToClearLevel;
+            bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
 
-        if (didSongReachEnd && !isTutorial) {
-            StartCoroutine(gameOver());
-        } else if (didPlayerBeatSong) {
-            playerBeatSong();
+            if (didSongReachEnd && !isTutorial) {
+                StartCoroutine(gameOver());
+            } else if (didPlayerBeatSong) {
+                playerBeatSong();
+            } else {
+                playerBeatSong();
+            }
+
+            resetSongLoop();
         } else {
-            playerBeatSong();
+            gameWon();
         }
-
-        resetSongLoop();
     }
 
     private void playerBeatSong() {
@@ -243,22 +247,6 @@ public partial class GameManager: MonoBehaviour {
         pressSpaceButton.SetActive(true);
     }
 
-    private IEnumerator fadeOutAudio(float fadeDuration) {
-        float startVolume = audioSource.volume;
-        float targetVolume = 0f;
-
-        float elapsedTime = 0f;
-        while (elapsedTime < fadeDuration) {
-            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        audioSource.volume = targetVolume;
-        audioSource.Stop();
-        audioSource.volume = startVolume; //reset
-    }
-
     private IEnumerator gameOver() {
         StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 0.5f, 1.0f));
         yield return new WaitForSeconds(1.0f);
@@ -266,6 +254,10 @@ public partial class GameManager: MonoBehaviour {
         songCompleteDisplay.color = Color.red;
         songCompleteDisplay.enabled = true;
         pressSpaceButton.SetActive(true);
+    }
+
+    private void gameWon() {
+        // The player beat the whole game!
     }
 
     private void resetSongLoop() {
@@ -280,14 +272,12 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void setupLevel() {
-        if (level - 1 < levels.Count) {
-            Level currentLevel = levels[level - 1];
-            Sprite background = Resources.Load<Sprite>($"Levels/Backgrounds/{currentLevel.level_sprites[0].sprite_name}");
-            SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = background;
-            levelNameDisplay.text = currentLevel.name;
-            setupLevelProgress(currentLevel);
-        }
+        Sprite background = Resources.Load<Sprite>($"Levels/Backgrounds/{currentLevel.level_sprites[0].sprite_name}");
+        SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = background;
+        levelNameDisplay.text = currentLevel.name;
+        setupLevelProgress(currentLevel);
+
     }
 
     private void setupLevelProgress(Level currentLevel) {

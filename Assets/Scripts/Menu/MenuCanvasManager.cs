@@ -13,7 +13,7 @@ public class MenuCanvasManager: MonoBehaviour {
     [SerializeField] JSONLoader jsonLoader;
     [SerializeField] GameObject menuObjectPrefab;
 
-    [SerializeField] GameObject levelBonusOption;
+    [SerializeField] GameObject levelBonusGameObject;
     private bool isLevelBonusOptionAvailable;
 
     List<MenuGameObjects> menuGameObjects = new List<MenuGameObjects>();
@@ -59,8 +59,8 @@ public class MenuCanvasManager: MonoBehaviour {
                 animateObjectMovingUpAndDown(gameObjects.background, yOffset);
             }
 
-            if (levelBonusOption.activeInHierarchy) {
-                animateObjectMovingUpAndDown(levelBonusOption.gameObject, yOffset);
+            if (levelBonusGameObject.activeInHierarchy) {
+                animateObjectMovingUpAndDown(levelBonusGameObject.gameObject, yOffset);
             }
         }
     }
@@ -105,15 +105,15 @@ public class MenuCanvasManager: MonoBehaviour {
     }
 
     private void activateChallengeMenuItem(Challenge challenge) {
-        if (challenge.isInitiallyHidden) {
+        if (challenge.isConcealed) {
             menuGameObjects.ForEach(menuGameObjects => {
                 if (menuGameObjects.menuItem is Challenge challenge) {
-                    challenge.isInitiallyHidden = false;
-                    levelBonusOption.SetActive(false);
+                    challenge.isConcealed = false;
+                    levelBonusGameObject.SetActive(false);
                     isLevelBonusOptionAvailable = false;
                 }
             });
-            setMenuOptions();
+            setupMenuOptions();
         } else {
             addChallenge(challenge);
         }
@@ -125,11 +125,11 @@ public class MenuCanvasManager: MonoBehaviour {
     }
 
     private void addChallenge(Challenge challenge) {
-        if (isLevelBonusOptionAvailable) {
-            LevelBonusTracker.addLevelBonusEffect(gameManager.getUpcomingLevelBonusEffect());
-        }
+        //if (isLevelBonusOptionAvailable) {
+        //    LevelBonusTracker.addLevelBonusEffect(gameManager.getUpcomingLevelBonusEffect());
+        //}
         ChallengeTracker.addChallenge(challenge);
-        levelBonusOption.SetActive(false);
+        levelBonusGameObject.SetActive(false);
         isLevelBonusOptionAvailable = false;
         presentSongOptions();
     }
@@ -144,7 +144,7 @@ public class MenuCanvasManager: MonoBehaviour {
         destroyPreexistingMenuObjects();
         menuGameObjects = upgradeManager.createUpgradeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
-            setMenuOptions();
+            setupMenuOptions();
         }
     }
 
@@ -153,21 +153,26 @@ public class MenuCanvasManager: MonoBehaviour {
         setupLevelBonusOption();
         menuGameObjects = challengeManager.createChallengeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
-            setMenuOptions();
+            setupMenuOptions();
         }
     }
 
     private void setupLevelBonusOption() {
-        levelBonusOption.SetActive(true);
+        levelBonusGameObject.SetActive(true);
         isLevelBonusOptionAvailable = true;
-        //Get data here
+        Level currentLevel = gameManager.getCurrentLevel();
+        string name = currentLevel.level_bonus_name;
+        string color = "#0084FF";
+        string spritePath = "";
+        string tooltipMessage = currentLevel.level_bonus_description;
+        customizeMenuOption(levelBonusGameObject, name, color, "", tooltipMessage);
     }
 
     private void presentSongOptions() {
         destroyPreexistingMenuObjects();
         menuGameObjects = songManager.createSongOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
-            setMenuOptions();
+            setupMenuOptions();
         }
     }
 
@@ -177,54 +182,44 @@ public class MenuCanvasManager: MonoBehaviour {
         }
     }
 
-    private void setMenuOptions() {
-        int currentMenuItemIndex = 0;
+    private void setupMenuOptions() {
         foreach (var gameObjects in menuGameObjects) {
             MenuItem menuItem = gameObjects.menuItem;
-            if (menuItem is Challenge challenge && challenge.isInitiallyHidden) {
-                setMenuOptionsForHiddenMenuItem(gameObjects);
+            if (menuItem is Challenge challenge && challenge.isConcealed) {
+                string hiddenItemSpritePath = "MenuItems/Challenges/ChallengeIcons/QuestionMark";
+                customizeMenuOption(gameObjects, "???", "#DEDEDE", hiddenItemSpritePath, "");
             } else {
                 if (menuItem is Challenge) {
                     setupMenuItemForChallenge(menuItem);
                 }
-
-                //Text and background color
-                gameObjects.text.GetComponent<TextMeshProUGUI>().text = menuItem.Name;
-                gameObjects.background.GetComponent<Image>().color = SharedResources.hexToColor(menuItem.Color);
-
-                //Sprite
-                Sprite sprite = Resources.Load<Sprite>(gameObjects.path);
-                gameObjects.image.GetComponent<Image>().sprite = sprite;
-
-                //Tooltip
-                Tooltip tooltip = gameObjects.background.GetComponent<Tooltip>();
-                tooltip.message = menuItem.Description;
-                if (menuItem is Challenge) {
-                    tooltip.message = menuItem.Description + getSeverityString((Challenge)menuItem);
-                }
-            }          
-            currentMenuItemIndex += 1;
+                customizeMenuOption(gameObjects, menuItem.Name, menuItem.Color, gameObjects.path, menuItem.Description);
+            }
         }
     }
 
-    private void setMenuOptionsForHiddenMenuItem(MenuGameObjects gameObjects) {
-        //Text and background color
-        gameObjects.text.GetComponent<TextMeshProUGUI>().text = "???";
-        gameObjects.background.GetComponent<Image>().color = SharedResources.hexToColor("#DEDEDE");
+
+    private void customizeMenuOption(MenuGameObjects gameObjects, string text, string color, string spritePath, string tooltipMessage) {
+        //Text and color
+        gameObjects.text.GetComponent<TextMeshProUGUI>().text = text;
+        gameObjects.background.GetComponent<Image>().color = SharedResources.hexToColor(color);
 
         //Sprite
-        Sprite sprite = Resources.Load<Sprite>($"MenuItems/Challenges/ChallengeIcons/QuestionMark");
+        Sprite sprite = Resources.Load<Sprite>(spritePath);
         gameObjects.image.GetComponent<Image>().sprite = sprite;
 
         //Tooltip
         Tooltip tooltip = gameObjects.background.GetComponent<Tooltip>();
-        tooltip.message = "";
+        tooltip.message = tooltipMessage;
+        if (gameObjects.menuItem is Challenge challenge && !challenge.isConcealed) {
+            tooltip.message = tooltipMessage + getSeverityString((Challenge)gameObjects.menuItem);
+        }
+
     }
 
     private void setupMenuItemForChallenge(MenuItem menuItem) {
         Challenge challenge = (Challenge)menuItem;
         if (!challenge.hasSeverityBeenSet) {
-            challenge.severity = challengeManager.getSeverityForChallenge(gameManager.getLevel(), challenge.hasSeverity);
+            challenge.severity = challengeManager.getSeverityForChallenge(gameManager.getLevelNumber(), challenge.hasSeverity);
             challenge.color = challenge.hexForSeverity(challenge.severity);
             challenge.hasSeverityBeenSet = true;
         }

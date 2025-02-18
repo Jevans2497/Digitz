@@ -38,6 +38,22 @@ public class JSONLoader: MonoBehaviour {
         return null;
     }
 
+    //public List<LevelBonus> loadLevelBonuses(bool isTutorial = false) {
+    //    string fileName = isTutorial ? "TutorialLevelBonuses" : "LevelBonuses";
+    //    string filePath = $"Levels/{fileName}";
+    //    TextAsset jsonFile = Resources.Load<TextAsset>(filePath);
+
+    //    if (jsonFile != null) {
+    //        List<LevelBonus> levelBonusesList = JsonUtility.FromJson<LevelBonus>(jsonFile.text).levelBonuses;
+    //        levelBonusesList.ForEach(levelBonus => levelBonus.InitializeFromJSON());
+    //        return levelBonusesList;
+    //    } else {
+    //        Debug.LogError($"LevelBonuses file not found at {filePath}");
+    //    }
+
+    //    return null;
+    //}
+
     public List<Song> loadSongs(bool isTutorial = false) {
         string fileName = isTutorial ? "TutorialSongs" : "Songs";
         string filePath = $"MenuItems/Songs/{fileName}";

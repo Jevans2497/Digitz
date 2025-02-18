@@ -188,7 +188,7 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
 
     private void setupMenuItemForChallenge(MenuItem menuItem) {
         Challenge challenge = (Challenge)menuItem;
-        challenge.severity = challengeManager.getSeverityForChallenge(gameManager.getLevel(), challenge.hasSeverity);
+        challenge.severity = challengeManager.getSeverityForChallenge(gameManager.getLevelNumber(), challenge.hasSeverity);
         challenge.color = challenge.hexForSeverity(challenge.severity);
     }
 

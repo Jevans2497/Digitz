@@ -90,7 +90,7 @@ public class FeedbackData {
 
         if (modifiedThreshold == banditThreshold) {
             feedbackForScore = FeedbackType.bandit;
-            calculatedScore = banditDefaultScore * gameManager.getLevel();
+            calculatedScore = banditDefaultScore * gameManager.getLevelNumber();
         } else if (modifiedThreshold <= perfectThreshold) {
             feedbackForScore = FeedbackType.perfect;
             calculatedScore = defaultPerfectScore;

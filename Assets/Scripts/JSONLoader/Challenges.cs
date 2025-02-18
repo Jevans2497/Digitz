@@ -60,7 +60,7 @@ public class Challenge: MenuItem {
     public ChallengeSeverity severity;
     public bool hasSeverityBeenSet;
     public string description;
-    public bool isInitiallyHidden;
+    public bool isConcealed;
 
     public string Name => name;
     public string SpriteName => sprite_name;
