@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: 
+  prefabType: 0
 --- !u!50 &4995956327122114669
 Rigidbody2D:
   serializedVersion: 4

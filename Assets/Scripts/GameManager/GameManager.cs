@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 
 public partial class GameManager: MonoBehaviour {
 
+    public bool isInGenerateSongJSONMode = false;
+    public bool isInTestSongMode = false;
+    public float skipToTime = 0.0f; // Used while making arrow jsons to skip to a certain part. 
+
     [SerializeField] TextMeshProUGUI displayTimer;
     [SerializeField] TextMeshProUGUI levelNameDisplay;
     [SerializeField] TextMeshProUGUI scoreDisplay;
@@ -25,8 +29,6 @@ public partial class GameManager: MonoBehaviour {
     [SerializeField] TextMeshProUGUI songCompleteDisplay;
     [SerializeField] GameObject pressSpaceButton;
 
-    public bool isInGenerateSongJSONMode = false;
-    public float skipToTime = 0.0f; // Used while making arrow jsons to skip to a certain part. 
     private bool hasArrowsStarted;
     private bool hasSongStarted;
 
@@ -54,7 +56,7 @@ public partial class GameManager: MonoBehaviour {
         } else {
             songs = jsonLoader.loadSongs();
             levels = jsonLoader.loadLevels();
-            currentSong = "FreakingOutTheNeighborhood";            
+            currentSong = "Waves";            
         }
 
         setupFireworks();
@@ -199,7 +201,7 @@ public partial class GameManager: MonoBehaviour {
 
     private bool isSongComplete() {
         if (isInGenerateSongJSONMode) { return false; }
-        bool didPlayerBeatSong = score >= scoreNeededToClearLevel && !isTutorial;
+        bool didPlayerBeatSong = score >= scoreNeededToClearLevel && !isTutorial && !isInTestSongMode;
         bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
         return (didPlayerBeatSong || didSongReachEnd) && inSongLoop;
     }
