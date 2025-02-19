@@ -147,6 +147,10 @@ public class MenuCanvasManager: MonoBehaviour {
     }
 
     private void addChallenge(Challenge challenge) {
+        if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.easyStreet) {
+            challenge.severity = challenge.reduceSeverityByOneGrade();
+            challenge.color = challenge.hexForSeverity(challenge.severity);
+        }
         ChallengeTracker.addChallenge(challenge);
         levelBonusGameObject.SetActive(false);
         presentSongOptions();

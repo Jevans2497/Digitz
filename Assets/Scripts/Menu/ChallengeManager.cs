@@ -16,6 +16,8 @@ public class ChallengeManager: MenuItemManager {
     }
 
     public List<MenuGameObjects> createChallengeOptions(Transform menuCanvasTransform, GameObject menuObjectPrefab) {
+        challenges.ForEach(challenge => challenge.isConcealed = false);
+
         List<MenuGameObjects> challengeMenuOptions = createMenuOptions<Challenge>(menuCanvasTransform, menuObjectPrefab, challenges);
 
         if (challengeMenuOptions.Count > 1 && challengeMenuOptions[1].menuItem is Challenge topChallenge) {

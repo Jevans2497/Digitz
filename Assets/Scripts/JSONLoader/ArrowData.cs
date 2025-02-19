@@ -30,17 +30,7 @@ public class ArrowData {
             arrowEffect = convertEffectStringToEffect();
         }
 
-        //Any arrow in the game has a small chance to be golden or rainbow
-        float randomGoldenArrowSpawnFloat = UnityEngine.Random.Range(0, 5000);
-        float randomRainbowArrowSpawnFloat = UnityEngine.Random.Range(0, 10000);
-
-        if (randomGoldenArrowSpawnFloat == 0) {
-            arrowEffect = ArrowEffect.golden;
-        }
-
-        if (randomRainbowArrowSpawnFloat == 0) {
-            arrowEffect = ArrowEffect.rainbow;
-        }
+        arrowEffect = rollForSpecialArrowEffect(arrowEffect);
 
         switch (arrowEffect) {
             case ArrowEffect.regular:
@@ -49,7 +39,7 @@ public class ArrowData {
                 break;
             case ArrowEffect.simultaneous:
                 color = Color.magenta;
-                layer = 6;
+            ; layer = 6;
                 break;
             case ArrowEffect.golden:
                 color = Color.yellow;
@@ -60,6 +50,33 @@ public class ArrowData {
                 layer = 8;
                 break;
         }
+    }
+
+    private ArrowEffect rollForSpecialArrowEffect(ArrowEffect originalEffect) {
+        //Any arrow in the game has a small chance to be golden or rainbow
+        int rainbowArrowSpawnRate = 10000;
+        int goldenArrowSpawnRate = 5000;
+
+        if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.rainbowRoad) {
+            rainbowArrowSpawnRate /= 4;
+        }
+
+        if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.yellowBrick) {
+            goldenArrowSpawnRate /= 2;
+        }
+
+        int randomRainbowArrowRoll = UnityEngine.Random.Range(0, rainbowArrowSpawnRate);
+        int randomGoldenArrowRoll = UnityEngine.Random.Range(0, goldenArrowSpawnRate);
+
+        if (randomRainbowArrowRoll == 0) {
+            return ArrowEffect.rainbow;
+        }
+
+        if (randomGoldenArrowRoll == 0) {
+            return ArrowEffect.golden;
+        }
+
+        return originalEffect;
     }
 
     private ArrowEffect convertEffectStringToEffect() {

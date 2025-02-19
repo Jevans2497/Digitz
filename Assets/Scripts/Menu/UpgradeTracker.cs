@@ -22,6 +22,13 @@ public static class UpgradeTracker {
         }
     }
 
+    public static void duplicateRandomUpgrade() {
+        if (currentActiveUpgrades.Count > 0) {
+            Upgrade randomDuplicate = currentActiveUpgrades[UnityEngine.Random.Range(0, currentActiveUpgrades.Count)];
+            addUpgrade(randomDuplicate);
+        }
+    }
+
     public static List<Upgrade> GetUpgrades() {
         return currentActiveUpgrades.FindAll(upgrade => upgrade.isEnabled);
     }

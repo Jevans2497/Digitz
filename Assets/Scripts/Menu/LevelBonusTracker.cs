@@ -9,7 +9,10 @@ public static class LevelBonusTracker {
 
     public static void addLevelBonusEffect(LevelBonusEffect newBonusEffect) {
         bonusEffect = newBonusEffect;
-        Debug.Log("adding effect" + newBonusEffect.ToString());
+
+        if (newBonusEffect == LevelBonusEffect.DoubleDown) {
+            UpgradeTracker.duplicateRandomUpgrade();
+        }
     }
 
     public static LevelBonusEffect getActiveBonusEffect() {

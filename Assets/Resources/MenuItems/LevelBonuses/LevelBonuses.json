@@ -26,7 +26,7 @@
             "level_bonus_name": "Rainbow Road",
             "level_bonus_sprite": "RainbowRoad",
             "level_bonus_string": "rainbowRoad",
-            "level_bonus_description": "Rainbow arrows 2x likely to appear"
+            "level_bonus_description": "Rainbow arrows 4x more likely to appear"
         },
         {
             "level_number": 5,
@@ -40,7 +40,7 @@
             "level_bonus_name": "Yellow Brick",
             "level_bonus_sprite": "YellowBrick",
             "level_bonus_string": "yellowBrick",
-            "level_bonus_description": "Golden arrows 2x likely to appear"
+            "level_bonus_description": "Golden arrows 2x more likely to appear"
         },
         {
             "level_number": 7,

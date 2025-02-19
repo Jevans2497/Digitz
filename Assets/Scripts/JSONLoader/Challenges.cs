@@ -98,6 +98,7 @@ public class Challenge: MenuItem {
 
     public float getSeverityMultiplier() {
         switch (severity) {
+            case ChallengeSeverity.none: return 0;
             case ChallengeSeverity.veryLow: return 1;
             case ChallengeSeverity.low: return 2;
             case ChallengeSeverity.medium: return 3;
@@ -139,6 +140,18 @@ public class Challenge: MenuItem {
             return "Very High";
             default:
             return "None";
+        }
+    }
+
+    public ChallengeSeverity reduceSeverityByOneGrade () {
+        switch (severity) {
+            case ChallengeSeverity.none: return ChallengeSeverity.none;
+            case ChallengeSeverity.veryLow: return ChallengeSeverity.none;
+            case ChallengeSeverity.low: return ChallengeSeverity.veryLow;
+            case ChallengeSeverity.medium: return ChallengeSeverity.low;
+            case ChallengeSeverity.high: return ChallengeSeverity.medium;
+            case ChallengeSeverity.veryHigh: return ChallengeSeverity.high;
+            default: return ChallengeSeverity.none;
         }
     }
 }
