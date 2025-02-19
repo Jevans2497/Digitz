@@ -14,8 +14,6 @@ public static class ChallengeTracker {
     }
 
     public static void addChallenge(Challenge challenge) {
-        Debug.Log("Adding challenge: " + challenge.name);
-
         if (challenge.effect == Challenge.ChallengeEffect.TheCurse) {
             theCurse = challenge;
         }

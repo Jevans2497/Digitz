@@ -5,7 +5,7 @@ using TMPro;
 using System.Linq;
 using UpgradeEffect = Upgrade.UpgradeEffect;
 
-enum FeedbackType {
+public enum FeedbackType {
     bandit, perfect, great, good, stinky, miss
 }
 
@@ -42,6 +42,8 @@ public class FeedbackData {
 
     private static HashSet<FeedbackType> anarchyUpgradeFeedbackTracker = new HashSet<FeedbackType>();
 
+    public static Dictionary<FeedbackType, int> feedbackCounter = new Dictionary<FeedbackType, int>();
+
     public FeedbackData(float baseThreshold, GameManager gameManager, bool isGoldenArrow) {
         this.gameManager = gameManager;
 
@@ -49,6 +51,7 @@ public class FeedbackData {
         modifiedThreshold = modifyThresholdForChallenge(modifiedThreshold);
 
         modifyDefaultScoresForChallenge();
+        modifyDefaultScoresForLevelBonus();
         score = calculateScore(modifiedThreshold);
 
         string scoreSign = score >= 0 ? " +" : " -";
@@ -111,9 +114,19 @@ public class FeedbackData {
         feedbackStreak = mostRecentFeedback == feedbackForScore ? feedbackStreak + 1 : 0;
         mostRecentFeedback = feedbackForScore;
 
+        incrementFeedbackCounter(feedbackForScore);
+
         float modifiedScore = modifyScoreForUpgrades(calculatedScore, feedbackForScore);
 
         return modifiedScore;
+    }
+
+    private void incrementFeedbackCounter(FeedbackType feedbackForScore) {
+        if (!feedbackCounter.Keys.Contains(feedbackForScore)) {
+            feedbackCounter[feedbackForScore] = 0;
+        }
+        feedbackCounter[feedbackForScore] += 1;
+
     }
 
     private float modifyThresholdForUpgrades(float baseThreshold) {
@@ -198,6 +211,32 @@ public class FeedbackData {
             float multiplier = challenge.getSeverityMultiplier();
             defaultStinkyScore = -25 * multiplier;
             defaultMissScore = -125 * multiplier;
+        }
+    }
+
+    private void modifyDefaultScoresForLevelBonus() {
+        if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.aintBroke) {
+            FeedbackType mostReceivedFeedback = FeedbackData.feedbackCounter.OrderByDescending(kvp => kvp.Value).First().Key;
+            switch (mostReceivedFeedback) {
+                case FeedbackType.bandit:
+                banditDefaultScore *= 1.25f;
+                break;
+                case FeedbackType.perfect:
+                defaultPerfectScore *= 1.25f;
+                break;
+                case FeedbackType.great:
+                defaultGreatScore *= 1.25f;
+                break;
+                case FeedbackType.good:
+                defaultGoodScore *= 1.25f;
+                break;
+                case FeedbackType.stinky:
+                defaultStinkyScore *= 1.25f;
+                break;
+                default:
+                defaultPerfectScore *= 1.25f;
+                break;
+            }
         }
     }
 
