@@ -16558,7 +16558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2012566412}
+  m_Material: {fileID: 2026754973}
   m_Color: {r: 0.6123621, g: 0.6498058, b: 0.9339623, a: 0.12156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -17021,7 +17021,7 @@ MonoBehaviour:
   firework3: {fileID: 699171580}
   firework4: {fileID: 663928065}
   isInGenerateSongJSONMode: 0
-  isInTestSongMode: 1
+  isInTestSongMode: 0
   skipToTime: 0
   displayTimer: {fileID: 2056429447}
   levelNameDisplay: {fileID: 639769987}
@@ -18235,7 +18235,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981796297}
   m_CullTransparentMesh: 1
---- !u!21 &2012566412
+--- !u!21 &2026754973
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
