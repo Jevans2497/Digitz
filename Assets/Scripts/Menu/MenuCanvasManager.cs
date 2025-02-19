@@ -27,6 +27,8 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private bool isInitialMenuLoop = true;
 
+    private bool isUserInteractionEnabled = true;
+
     public void startMenuLoop() {
         LevelBonusTracker.reset();
         isLevelBonusOptionAvailable = false;        
@@ -77,18 +79,10 @@ public class MenuCanvasManager: MonoBehaviour {
         }
     }
 
-    private void animateObjectMovingUpAndDown(GameObject gameObject, float yOffset) {
-        if (gameObject != null) {
-            Vector3 originalPosition = gameObject.transform.position;
-            gameObject.transform.position = new Vector3(
-                originalPosition.x,
-                originalPosition.y + yOffset,
-                originalPosition.z
-            );
-        }
-    }
-
     private void checkForInput() {
+        if (!isUserInteractionEnabled) {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.LeftArrow)) {
             if (menuGameObjects[0] != null) {
                 activateMenuItem(menuGameObjects[0].menuItem);
@@ -111,6 +105,8 @@ public class MenuCanvasManager: MonoBehaviour {
             activateChallengeMenuItem(challenge);
         } else if (menuItem is Song song) {
             addSong(song);
+        } else if (menuItem is LevelBonus levelBonus) {
+            activateChallengeMenuItem((Challenge)menuGameObjects[0].menuItem);
         } else {
             Debug.LogWarning("Unknown MenuItem type");
         }
@@ -169,6 +165,7 @@ public class MenuCanvasManager: MonoBehaviour {
         if (menuGameObjects.Count >= 3) {
             setupMenuOptions();
         }
+        menuGameObjects.ForEach(menuGameObject => StartCoroutine(animateMenuOptionGrowing(menuGameObject.background)));
     }
 
     private void presentChallengeOptions() {
@@ -178,6 +175,7 @@ public class MenuCanvasManager: MonoBehaviour {
         if (menuGameObjects.Count >= 3) {
             setupMenuOptions();
         }
+        menuGameObjects.ForEach(menuGameObject => StartCoroutine(animateMenuOptionGrowing(menuGameObject.background)));
     }
 
     private void setupLevelBonusOption() {
@@ -187,6 +185,7 @@ public class MenuCanvasManager: MonoBehaviour {
         MenuGameObjects levelBonusGameObjects = levelBonusManager.createLevelBonusOption(menuItem, levelBonusGameObject);
         Debug.Log(menuItem.SpriteName);
         customizeMenuOption(levelBonusGameObjects, menuItem.Name, menuItem.Color, levelBonusGameObjects.path, menuItem.Description);
+        StartCoroutine(animateMenuOptionGrowing(levelBonusGameObjects.background));
     }
 
     private void presentSongOptions() {
@@ -195,6 +194,7 @@ public class MenuCanvasManager: MonoBehaviour {
         if (menuGameObjects.Count >= 3) {
             setupMenuOptions();
         }
+        menuGameObjects.ForEach(menuGameObject => StartCoroutine(animateMenuOptionGrowing(menuGameObject.background)));
     }
 
     private void destroyPreexistingMenuObjects() {
@@ -235,7 +235,12 @@ public class MenuCanvasManager: MonoBehaviour {
             string message = tooltipMessage + getSeverityString((Challenge)gameObjects.menuItem);
             tooltip.message = message;
             tooltip.manuallySetMessage(message);            
-        } 
+        }
+
+        //Button
+        Button button = gameObjects.background.GetComponent<Button>();
+        button.onClick.AddListener(() => activateMenuItem(gameObjects.menuItem));
+
     }
 
     private void setupMenuItemForChallenge(MenuItem menuItem) {
@@ -250,5 +255,40 @@ public class MenuCanvasManager: MonoBehaviour {
     private string getSeverityString(Challenge challenge) {
         string severityColor = challenge.hexForSeverity(challenge.severity);
         return $"\n\nSeverity: <b><size=120%><color={severityColor}>{challenge.severityAsString(challenge.severity)}</color></size></b>";
+    }
+
+    // Animations
+    private void animateObjectMovingUpAndDown(GameObject gameObject, float yOffset) {
+        if (gameObject != null) {
+            Vector3 originalPosition = gameObject.transform.position;
+            gameObject.transform.position = new Vector3(
+                originalPosition.x,
+                originalPosition.y + yOffset,
+                originalPosition.z
+            );
+        }
+    }
+
+    private IEnumerator animateMenuOptionGrowing(GameObject gameObject) {
+        isUserInteractionEnabled = false;
+        float startTime = 0.0f;
+        float duration = 0.25f;
+        Vector3 originalScale = gameObject.transform.localScale;
+
+        gameObject.transform.localScale = new Vector3(0, 0, 0);
+
+        while (startTime < duration) {
+            startTime += Time.deltaTime;
+            if (gameObject != null) {
+                gameObject.transform.localScale = Vector3.Lerp(Vector3.zero, originalScale, startTime / duration);
+            }
+            yield return null;
+        }
+
+        if (gameObject != null) {
+            gameObject.transform.localScale = originalScale;
+        }
+
+        isUserInteractionEnabled = true;
     }
 }
