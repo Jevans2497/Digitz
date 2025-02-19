@@ -12,6 +12,7 @@ public class MenuCanvasManager: MonoBehaviour {
     [SerializeField] Canvas menuCanvas;
     [SerializeField] JSONLoader jsonLoader;
     [SerializeField] GameObject menuObjectPrefab;
+    [SerializeField] TextMeshProUGUI menuOptionExplanationText;
 
     [SerializeField] GameObject levelBonusGameObject;
     private bool isLevelBonusOptionAvailable;
@@ -42,6 +43,8 @@ public class MenuCanvasManager: MonoBehaviour {
         } else {
             presentUpgradeOptions();
         }
+
+        menuOptionExplanationText.gameObject.SetActive(true);
     }
 
     void Start() {
@@ -57,25 +60,6 @@ public class MenuCanvasManager: MonoBehaviour {
         if (menuCanvas.enabled) {
             checkForInput();
             animateMenuItems();
-        }
-    }
-
-    private float animationSpeed = 5f; // Speed of the up and down motion
-    private float animationHeight = 0.035f; // Height of the motion
-    private float animationTime = 0f; // Tracks time for the sine wave
-
-    private void animateMenuItems() {
-        if (menuGameObjects.Count > 0) {
-            animationTime += Time.deltaTime * animationSpeed;
-            float yOffset = Mathf.Sin(animationTime) * animationHeight;
-
-            foreach (var gameObjects in menuGameObjects) {
-                animateObjectMovingUpAndDown(gameObjects.background, yOffset);
-            }
-
-            if (levelBonusGameObject.activeInHierarchy) {
-                animateObjectMovingUpAndDown(levelBonusGameObject.gameObject, yOffset);
-            }
         }
     }
 
@@ -161,6 +145,7 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void presentUpgradeOptions() {
         destroyPreexistingMenuObjects();
+        menuOptionExplanationText.text = "Select Upgrade";        
         menuGameObjects = upgradeManager.createUpgradeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
             setupMenuOptions();
@@ -170,6 +155,7 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void presentChallengeOptions() {
         destroyPreexistingMenuObjects();
+        menuOptionExplanationText.text = "Select Challenge";
         setupLevelBonusOption();
         menuGameObjects = challengeManager.createChallengeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
@@ -190,6 +176,7 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void presentSongOptions() {
         destroyPreexistingMenuObjects();
+        menuOptionExplanationText.text = "Select Song";
         menuGameObjects = songManager.createSongOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
             setupMenuOptions();
@@ -255,6 +242,25 @@ public class MenuCanvasManager: MonoBehaviour {
     private string getSeverityString(Challenge challenge) {
         string severityColor = challenge.hexForSeverity(challenge.severity);
         return $"\n\nSeverity: <b><size=120%><color={severityColor}>{challenge.severityAsString(challenge.severity)}</color></size></b>";
+    }
+
+    private float animationSpeed = 5f; // Speed of the up and down motion
+    private float animationHeight = 0.035f; // Height of the motion
+    private float animationTime = 0f; // Tracks time for the sine wave
+
+    private void animateMenuItems() {
+        if (menuGameObjects.Count > 0) {
+            animationTime += Time.deltaTime * animationSpeed;
+            float yOffset = Mathf.Sin(animationTime) * animationHeight;
+
+            foreach (var gameObjects in menuGameObjects) {
+                animateObjectMovingUpAndDown(gameObjects.background, yOffset);
+            }
+
+            if (levelBonusGameObject.activeInHierarchy) {
+                animateObjectMovingUpAndDown(levelBonusGameObject.gameObject, yOffset);
+            }
+        }
     }
 
     // Animations
