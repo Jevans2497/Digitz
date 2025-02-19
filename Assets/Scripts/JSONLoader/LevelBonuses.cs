@@ -12,7 +12,7 @@ public class LevelBonus: MenuItem {
 
     public enum LevelBonusEffect {
         none,
-        arrowSpeedLowered,
+        slowArrows,
         tenPercentCoupon,
         easyStreet,
         rainbowRoad,
@@ -36,8 +36,8 @@ public class LevelBonus: MenuItem {
 
     public void InitializeFromJSON() {
         if (!Enum.TryParse(level_bonus_string, true, out levelBonusEffect)) {
-            Debug.LogWarning($"Invalid level_bonus_effect: {level_bonus_string} for LevelBonus {level_bonus_name}. Defaulting to 'arrowSpeedLowered'.");
-            levelBonusEffect = LevelBonusEffect.arrowSpeedLowered;
+            Debug.LogWarning($"Invalid level_bonus_effect: {level_bonus_string} for LevelBonus {level_bonus_name}. Defaulting to 'none'.");
+            levelBonusEffect = LevelBonusEffect.none;
         }
     }
 

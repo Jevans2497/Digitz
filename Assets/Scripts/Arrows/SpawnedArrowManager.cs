@@ -81,15 +81,22 @@ public class SpawnedArrowManager: MonoBehaviour {
             float journeyLength = Vector3.Distance(startPosition, targetPosition);
 
             float arrowSpeed = spawnData.arrowData.arrow_speed != 0 ? spawnData.arrowData.arrow_speed : defaultSpeed;
-            if (ChallengeTracker.hasChallenge(Challenge.ChallengeEffect.Supersonic)) {
+
+            //We have to check for arrowSpeed modifiers here before the timestamps are processed.
+            if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.slowArrows) {
+                arrowSpeed -= 0.7f;
+            }
+
+            if (ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.Supersonic) {
                 arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.25f;
             }
+
             spawnData.arrowData.arrow_speed = arrowSpeed;
 
             float travelTime = journeyLength / arrowSpeed;
-
             spawnData.arrowData.timestamp -= travelTime;
         }
+
 
         alterSpawnedArrowsForChallengeIfNeeded();
 

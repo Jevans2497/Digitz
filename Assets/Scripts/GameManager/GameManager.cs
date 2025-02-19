@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 
 public partial class GameManager: MonoBehaviour {
 
-    public bool isInGenerateSongJSONMode = false;
-    public bool isInTestSongMode = false;
-    public float skipToTime = 0.0f; // Used while making arrow jsons to skip to a certain part. 
+    public bool isInGenerateSongJSONMode = false; // Set to true when generating spawned Arrow JSON files
+    public bool isInTestSongMode = false; // Prevents game from being won/lost
+    public float skipToTime = 0.0f; // Skip to x amount of seconds in song track
 
     [SerializeField] TextMeshProUGUI displayTimer;
     [SerializeField] TextMeshProUGUI levelNameDisplay;
@@ -49,6 +49,8 @@ public partial class GameManager: MonoBehaviour {
 
     private bool inSongLoop = false;
 
+    private bool isInitialGameStart = true;
+
     private void Start() {
         isTutorial = SceneManager.GetActiveScene().name == "Tutorial";
         if (isTutorial) {
@@ -75,8 +77,12 @@ public partial class GameManager: MonoBehaviour {
     private void Update() {
         if (isTutorial) {
             updateForTutorial();
-        } else {
+        } else {       
             if (Input.GetKeyDown(KeyCode.Space)) {
+                if (!isTutorial && isInitialGameStart) {
+                    startMenuLoop();
+                    isInitialGameStart = false;
+                }
                 if (songCompleteDisplay.enabled) {
                     startMenuLoop();
                 }
@@ -97,7 +103,6 @@ public partial class GameManager: MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.N)) {
             songFinished();
         }
-
     }
 
     private void startMenuLoop() {
@@ -210,60 +215,6 @@ public partial class GameManager: MonoBehaviour {
         pressSpaceButton.SetActive(isActive);
     }
 
-    private bool isSongComplete() {
-        if (isInGenerateSongJSONMode) { return false; }
-        bool didPlayerBeatSong = score >= scoreNeededToClearLevel && !isTutorial && !isInTestSongMode;
-        bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
-        return (didPlayerBeatSong || didSongReachEnd) && inSongLoop;
-    }
-
-    private void songFinished() {
-        inSongLoop = false;
-        spawnedArrowManager.destroyCurrentExistingArrows();
-
-        int currentLevelIndex = levels.FindIndex(level => level == currentLevel);
-        if (currentLevelIndex + 1 < levels.Count) {
-            currentLevel = levels[currentLevelIndex + 1];
-            bool didPlayerBeatSong = score >= scoreNeededToClearLevel;
-            bool didSongReachEnd = !audioSource.isPlaying && hasSongStarted == true;
-
-            if (didSongReachEnd && !isTutorial) {
-                StartCoroutine(gameOver());
-            } else if (didPlayerBeatSong) {
-                playerBeatSong();
-            } else {
-                playerBeatSong();
-            }
-
-            resetSongLoop();
-        } else {
-            gameWon();
-        }
-    }
-
-    private void playerBeatSong() {
-        showFireworks();
-        StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 1.0f, 1.0f));
-        StartCoroutine(fadeOutAudio(1.0f));
-        songCompleteDisplay.text = "Song Complete!";
-        songCompleteDisplay.color = new Color32(0, 236, 117, 255);
-        songCompleteDisplay.enabled = true;
-        pressSpaceButton.SetActive(true);
-    }
-
-    private IEnumerator gameOver() {
-        StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 0.5f, 1.0f));
-        yield return new WaitForSeconds(1.0f);
-        songCompleteDisplay.text = "Game Over";
-        songCompleteDisplay.color = Color.red;
-        songCompleteDisplay.enabled = true;
-        pressSpaceButton.SetActive(true);
-    }
-
-    private void gameWon() {
-        // The player beat the whole game!
-    }
-
     private void resetSongLoop() {
         hasArrowsStarted = false;
         hasSongStarted = false;
@@ -287,6 +238,12 @@ public partial class GameManager: MonoBehaviour {
     private void setupLevelProgress(Level currentLevel) {
         scoreNeededToClearLevel = (currentLevel.completion_percent / 100.0f) * spawnedArrowManager.getMaximumBasePointsForCurrentSong();
         progressBar.value = 0.0f;
+
+        if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.tenPercentCoupon) {
+            score = scoreNeededToClearLevel / 10.0f;
+            progressBar.value = score;
+        }
+
         progressBar.maxValue = scoreNeededToClearLevel;
     }
 

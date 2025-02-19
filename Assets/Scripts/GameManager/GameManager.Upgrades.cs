@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class GameManager : MonoBehaviour
-{
+public partial class GameManager : MonoBehaviour {
     private void handleSecurityCameraUpgrade() {
         if (UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.SecurityCamera)) {
             resetArrows();

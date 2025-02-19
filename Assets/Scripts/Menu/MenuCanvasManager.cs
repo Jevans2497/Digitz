@@ -25,12 +25,21 @@ public class MenuCanvasManager: MonoBehaviour {
 
     public bool isMenuLoopFinished = true;
 
+    private bool isInitialMenuLoop = true;
+
     public void startMenuLoop() {
         LevelBonusTracker.reset();
-        isLevelBonusOptionAvailable = false;
+        isLevelBonusOptionAvailable = false;        
         presentUpgradeOptions();
         isMenuLoopFinished = false;
         menuCanvas.enabled = true;
+
+        if (isInitialMenuLoop) {
+            isInitialMenuLoop = false;
+            presentChallengeOptions();
+        } else {
+            presentUpgradeOptions();
+        }
     }
 
     void Start() {
