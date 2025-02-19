@@ -232,9 +232,10 @@ public class MenuCanvasManager: MonoBehaviour {
         Tooltip tooltip = gameObjects.background.GetComponent<Tooltip>();
         tooltip.message = tooltipMessage;
         if (gameObjects.menuItem is Challenge challenge && !challenge.isConcealed) {
-            tooltip.message = tooltipMessage + getSeverityString((Challenge)gameObjects.menuItem);
-        }
-
+            string message = tooltipMessage + getSeverityString((Challenge)gameObjects.menuItem);
+            tooltip.message = message;
+            tooltip.manuallySetMessage(message);            
+        } 
     }
 
     private void setupMenuItemForChallenge(MenuItem menuItem) {

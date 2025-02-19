@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: 
-  prefabType: 1
+  prefabType: 3
 --- !u!1 &3928087772116811609
 GameObject:
   m_ObjectHideFlags: 0

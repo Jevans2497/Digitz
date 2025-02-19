@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Nobi.UiRoundedCorners;
 
 public class TooltipManager: MonoBehaviour {
 
     public static TooltipManager instance;
     [SerializeField] TextMeshProUGUI textComponent;
 
-    private Vector2 offset = new Vector2(100, 30);
+    private Vector2 offset = new Vector2(90, 20);
 
     public enum PrefabType {
-        menuOption, upgradeDisplay, challengeDisplay
+        menuOption, upgradeDisplay, challengeDisplay, levelBonusDisplay
     }
 
     private void Awake() {
@@ -24,12 +25,12 @@ public class TooltipManager: MonoBehaviour {
 
     void Start() {
         textComponent.raycastTarget = false;
-        gameObject.SetActive(false);
+        gameObject.SetActive(false);        
     }
 
     public void setAndShowTooltip(string message, Vector2 target, PrefabType prefabType) {
         gameObject.SetActive(true);
-        textComponent.text = message;
+        setTooltipMessage(message);
 
         RectTransform rectTransform = GetComponent<RectTransform>();
         if (prefabType == PrefabType.challengeDisplay) {
@@ -42,15 +43,21 @@ public class TooltipManager: MonoBehaviour {
         transform.SetAsLastSibling();
     }
 
+    public void setTooltipMessage(string message) {
+        textComponent.text = message;
+    }
+
 
     private Vector2 getOffsetForPrefabType(PrefabType prefabType) {
         switch (prefabType) {
             case PrefabType.menuOption:
-            return new Vector2(100, 30);
+            return new Vector2(90, 20);
             case PrefabType.upgradeDisplay:
             return new Vector2(25, 35);
             case PrefabType.challengeDisplay:
             return new Vector2(-25, -35);
+            case PrefabType.levelBonusDisplay:
+            return new Vector2(45, 45);
             default:
             return new Vector2(0, 0);
         }
