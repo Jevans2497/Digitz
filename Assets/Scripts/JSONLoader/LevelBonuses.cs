@@ -30,7 +30,7 @@ public class LevelBonus: MenuItem {
 
     public string Name => level_bonus_name;
     public string SpriteName => level_bonus_sprite;
-    public string Color => "#0084FF";
+    public string Color => "#FF4CD8";
     public string RarityString => throw new NotImplementedException();
     public string Description => level_bonus_description;
 

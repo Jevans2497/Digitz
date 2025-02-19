@@ -23,6 +23,7 @@ public class TooltipManager: MonoBehaviour {
     }
 
     void Start() {
+        textComponent.raycastTarget = false;
         gameObject.SetActive(false);
     }
 

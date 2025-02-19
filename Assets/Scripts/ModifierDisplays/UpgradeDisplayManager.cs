@@ -11,6 +11,8 @@ public class UpgradeDisplayManager: MonoBehaviour {
     private List<KeyValuePair<Upgrade, GameObject>> upgradeDisplayObjects = new();
     private float spacing = 85;
 
+    private bool isLevelBonusActive;
+
     private void Start() {
         UpgradeTracker.setUpgradeDisplayManager(this);
     }
@@ -23,7 +25,7 @@ public class UpgradeDisplayManager: MonoBehaviour {
 
     private void setUpgradeDisplay(Upgrade upgrade, GameObject upgradeDisplayObject) {
         // Set Xpos
-        float newXPosition = upgradeDisplayObjects.Count * spacing;
+        float newXPosition = (upgradeDisplayObjects.Count * spacing);
         upgradeDisplayObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(newXPosition, 0);
 
         GameObject foreground = upgradeDisplayObject.transform.Find("UpgradeDisplayForeground").gameObject;
@@ -37,6 +39,15 @@ public class UpgradeDisplayManager: MonoBehaviour {
         // Set Tooltip
         Tooltip tooltip = upgradeDisplayObject.GetComponent<Tooltip>();
         tooltip.message = upgrade.name + ":\n\n" + upgrade.description;
+    }
+
+    public void shiftToAccomodateLevelBonus() {
+        float levelBonusSpacer = LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.none ? 0.0f : 105.0f;
+        for (int i = 0; i < upgradeDisplayObjects.Count; i++) {
+            var upgradeDisplayObject = upgradeDisplayObjects[i];
+            float newXPosition =  (i * spacing) + levelBonusSpacer;
+            upgradeDisplayObject.Value.GetComponent<RectTransform>().anchoredPosition = new Vector2(newXPosition, 0);
+        }
     }
 
     public void upgradeRemoved(Upgrade upgrade) {

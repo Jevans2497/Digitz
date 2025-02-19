@@ -5,28 +5,31 @@ using static LevelBonus;
 using static LevelBonus.LevelBonusEffect;
 
 public static class LevelBonusTracker {
-    private static LevelBonusEffect bonusEffect = none;
+    private static LevelBonus levelBonus;
     private static LevelBonusDisplayManager levelBonusDisplayManager;
 
     public static void setLevelBonusDisplayManager(LevelBonusDisplayManager ldm) {
         levelBonusDisplayManager = ldm;
     }
 
-    public static void addLevelBonusEffect(LevelBonusEffect newBonusEffect) {
-        bonusEffect = newBonusEffect;
-
-        if (newBonusEffect == LevelBonusEffect.DoubleDown) {
+    public static void addLevelBonus(LevelBonus newLevelBonus) {
+        levelBonus = newLevelBonus;
+        if (newLevelBonus.levelBonusEffect == LevelBonusEffect.DoubleDown) {
             UpgradeTracker.duplicateRandomUpgrade();
         }
 
-        levelBonusDisplayManager.levelBonusAdded(bonusEffect);
+        levelBonusDisplayManager.levelBonusAdded(newLevelBonus);
     }
 
     public static LevelBonusEffect getActiveBonusEffect() {
-        return bonusEffect;
+        if (levelBonus == null) {
+            return none;
+        }
+        return levelBonus.levelBonusEffect;
     }
 
     public static void reset() {
-        bonusEffect = none;
+        levelBonus = null;
+        levelBonusDisplayManager.levelBonusRemoved();
     }
 }

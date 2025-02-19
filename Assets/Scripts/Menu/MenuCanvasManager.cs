@@ -137,7 +137,7 @@ public class MenuCanvasManager: MonoBehaviour {
     private void addLevelBonus() {
         MenuItem levelBonusMenuItem = levelBonusManager.getLevelBonusMenuItemForLevel(gameManager.getLevelNumber());
         if (levelBonusMenuItem is LevelBonus levelBonus) {
-            LevelBonusTracker.addLevelBonusEffect(levelBonus.levelBonusEffect);
+            LevelBonusTracker.addLevelBonus(levelBonus);
         }
     }
 

@@ -7,8 +7,9 @@ public class LevelBonusDisplayManager: MonoBehaviour {
 
     [SerializeField] GameObject levelBonusDisplayPrefab;
     [SerializeField] Transform levelBonusDisplayTransform;
+    [SerializeField] UpgradeDisplayManager upgradeDisplayManager;
 
-    private KeyValuePair<LevelBonus, GameObject> levelBonusDisplayObject = new();
+    private KeyValuePair<LevelBonus, GameObject> levelBonusDisplayObject = new();    
 
     private void Start() {
         LevelBonusTracker.setLevelBonusDisplayManager(this);
@@ -18,6 +19,8 @@ public class LevelBonusDisplayManager: MonoBehaviour {
         GameObject levelBonusDisplayObject = Instantiate(levelBonusDisplayPrefab, levelBonusDisplayTransform);
         setLevelBonusDisplay(levelBonus, levelBonusDisplayObject);
         this.levelBonusDisplayObject = new KeyValuePair<LevelBonus, GameObject>(levelBonus, levelBonusDisplayObject);
+
+        upgradeDisplayManager.shiftToAccomodateLevelBonus();
     }
 
     private void setLevelBonusDisplay(LevelBonus levelBonus, GameObject levelBonusDisplayObject) {
@@ -34,7 +37,8 @@ public class LevelBonusDisplayManager: MonoBehaviour {
         tooltip.message = levelBonus.Name + ":\n\n" + levelBonus.Description;
     }
 
-    public void levelBonusRemoved(LevelBonus levelBonus) {
+    public void levelBonusRemoved() {
         Destroy(levelBonusDisplayObject.Value);
+        upgradeDisplayManager.shiftToAccomodateLevelBonus();
     }
 }
