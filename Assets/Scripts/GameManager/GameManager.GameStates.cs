@@ -51,9 +51,17 @@ public partial class GameManager: MonoBehaviour {
         songCompleteDisplay.color = Color.red;
         songCompleteDisplay.enabled = true;
         pressSpaceButton.SetActive(true);
+        isGameComplete = true;
     }
 
     private void gameWon() {
-        // The player beat the whole game!
+        isGameComplete = true;
+        setupFireworksFinale();
+        showFireworks();
+        StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 1.0f, 1.0f));
+        StartCoroutine(fadeOutAudio(1.0f));
+        songCompleteDisplay.text = "YOU WON!";
+        songCompleteDisplay.color = new Color32(0, 236, 117, 255);
+        songCompleteDisplay.enabled = true;
     }
 }

@@ -10,6 +10,10 @@ public partial class GameManager {
     [SerializeField] ParticleSystem firework2;
     [SerializeField] ParticleSystem firework3;
     [SerializeField] ParticleSystem firework4;
+    [SerializeField] ParticleSystem finaleFirework1;
+    [SerializeField] ParticleSystem finaleFirework2;
+    [SerializeField] ParticleSystem finaleFirework3;
+    [SerializeField] ParticleSystem finaleFirework4;
     List<ParticleSystem> fireworks = new List<ParticleSystem>();
 
     private IEnumerator showAndFadeLevelName(TextMeshProUGUI textMeshObject, float duration) {
@@ -111,6 +115,14 @@ public partial class GameManager {
 
             firework.Play();
         }
+    }
+
+    private void setupFireworksFinale() {
+        fireworks.ForEach(firework => {
+            ParticleSystem.MainModule main = firework.main;
+            main.duration /= 2.0f;
+        });
+        fireworks.AddRange(new ParticleSystem[] { finaleFirework1, finaleFirework2, finaleFirework3, finaleFirework4 });
     }
 
     private void stopFireworks() {

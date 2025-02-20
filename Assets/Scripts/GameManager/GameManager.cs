@@ -50,6 +50,7 @@ public partial class GameManager: MonoBehaviour {
     private bool inSongLoop = false;
 
     private bool isInitialGameStart = true;
+    private bool isGameComplete;
 
     private void Start() {
         isTutorial = SceneManager.GetActiveScene().name == "Tutorial";
@@ -73,37 +74,43 @@ public partial class GameManager: MonoBehaviour {
 
         pressSpaceButton.SetActive(true);
 
+        setupFireworksFinale();
+
         setupSong();
     }
 
     private void Update() {
         if (isTutorial) {
             updateForTutorial();
-        } else {       
+        } else {
             if (Input.GetKeyDown(KeyCode.Space)) {
-                if (!isTutorial && isInitialGameStart) {
-                    startMenuLoop();
-                    isInitialGameStart = false;
-                }
-                if (songCompleteDisplay.enabled) {
-                    startMenuLoop();
-                }
-                if (menuCanvasManager.isMenuLoopFinished) {
-                    startSongLoop();
+                if (isGameComplete) {
+                    SceneManager.LoadScene("Main Menu");
+                } else {
+                    if (!isTutorial && isInitialGameStart) {
+                        startMenuLoop();
+                        isInitialGameStart = false;
+                    }
+                    if (songCompleteDisplay.enabled) {
+                        startMenuLoop();
+                    }
+                    if (menuCanvasManager.isMenuLoopFinished) {
+                        startSongLoop();
+                    }
                 }
             }
-        }
 
-        if (inSongLoop) {
-            manageSongLoop();
-        }
+            if (inSongLoop) {
+                manageSongLoop();
+            }
 
-        // Cheat codes for debugging
-        if (Input.GetKeyDown(KeyCode.P)) {
-            score += 5000f;
-        }
-        if (Input.GetKeyDown(KeyCode.N)) {
-            songFinished();
+            // Cheat codes for debugging
+            if (Input.GetKeyDown(KeyCode.P)) {
+                score += 5000f;
+            }
+            if (Input.GetKeyDown(KeyCode.N)) {
+                songFinished();
+            }
         }
     }
 
