@@ -116,10 +116,11 @@ public partial class GameManager: MonoBehaviour {
         songCompleteDisplay.enabled = false;
         pressSpaceButton.SetActive(false);
         stopFireworks();
-        menuCanvasManager.startMenuLoop();
+        menuCanvasManager.startMenuLoop();        
     }
 
     private void startSongLoop() {
+        AudioManager.Instance.stopMenuMusic();
         pressSpaceButton.SetActive(false);
         setupSpawnedArrowManager();
         inSongLoop = true;

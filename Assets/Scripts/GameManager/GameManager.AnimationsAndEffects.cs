@@ -65,22 +65,6 @@ public partial class GameManager {
         }
     }
 
-    private IEnumerator fadeOutAudio(float fadeDuration) {
-        float startVolume = audioSource.volume;
-        float targetVolume = 0f;
-
-        float elapsedTime = 0f;
-        while (elapsedTime < fadeDuration) {
-            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        audioSource.volume = targetVolume;
-        audioSource.Stop();
-        audioSource.volume = startVolume; //reset
-    }
-
     private IEnumerator animateMultiplierDisplay() {
         multiplierDisplay.gameObject.SetActive(true);
 

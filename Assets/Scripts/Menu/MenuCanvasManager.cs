@@ -15,6 +15,11 @@ public class MenuCanvasManager: MonoBehaviour {
     [SerializeField] TextMeshProUGUI menuOptionExplanationText;
     [SerializeField] GameObject concealedChallengeExplanation;
 
+    public AudioClip upgradeSelectedClip;
+    public AudioClip challengeSelectedClip;
+    public AudioClip songSelectedClip;
+    public AudioClip levelBonusSelectedClip;
+
     [SerializeField] GameObject levelBonusGameObject;
     private bool isLevelBonusOptionAvailable;
 
@@ -100,6 +105,7 @@ public class MenuCanvasManager: MonoBehaviour {
     private void activateChallengeMenuItem(Challenge challenge) {
         concealedChallengeExplanation.SetActive(false);
         if (challenge.isConcealed) {
+            AudioManager.Instance.playSound(challengeSelectedClip);
             menuGameObjects.ForEach(menuGameObjects => {
                 if (menuGameObjects.menuItem is Challenge challenge) {
                     challenge.isConcealed = false;
@@ -110,6 +116,7 @@ public class MenuCanvasManager: MonoBehaviour {
             setupMenuOptions();
         } else {
             if (isLevelBonusOptionAvailable) {
+                AudioManager.Instance.playSound(levelBonusSelectedClip);
                 addLevelBonus();
             }
             addChallenge(challenge);
@@ -124,6 +131,7 @@ public class MenuCanvasManager: MonoBehaviour {
     }
 
     private void addUpgrade(Upgrade upgrade) {
+        AudioManager.Instance.playSound(upgradeSelectedClip);
         UpgradeTracker.addUpgrade(upgrade);
         presentChallengeOptions();
     }
@@ -133,12 +141,14 @@ public class MenuCanvasManager: MonoBehaviour {
             challenge.severity = challenge.reduceSeverityByOneGrade();
             challenge.color = challenge.hexForSeverity(challenge.severity);
         }
+        AudioManager.Instance.playSound(challengeSelectedClip);
         ChallengeTracker.addChallenge(challenge);
         levelBonusGameObject.SetActive(false);
         presentSongOptions();
     }
 
     private void addSong(Song song) {
+        AudioManager.Instance.playSound(songSelectedClip);
         gameManager.setSong(song.song_file_name);
         menuCanvas.enabled = false;
         isMenuLoopFinished = true;
@@ -172,7 +182,6 @@ public class MenuCanvasManager: MonoBehaviour {
         isLevelBonusOptionAvailable = true;
         MenuItem menuItem = levelBonusManager.getLevelBonusMenuItemForLevel(gameManager.getLevelNumber());
         MenuGameObjects levelBonusGameObjects = levelBonusManager.createLevelBonusOption(menuItem, levelBonusGameObject);
-        Debug.Log(menuItem.SpriteName);
         customizeMenuOption(levelBonusGameObjects, menuItem.Name, menuItem.Color, levelBonusGameObjects.path, menuItem.Description);
         StartCoroutine(animateMenuOptionGrowing(levelBonusGameObjects.background));
     }

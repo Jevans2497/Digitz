@@ -4,7 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour {
-    
+
+    private void Start() {
+        AudioManager.Instance.playMenuMusic(false);
+    }
+
     public void startGame() {
         SceneManager.LoadSceneAsync("DDR");
     }

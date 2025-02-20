@@ -47,4 +47,37 @@ public class SharedResources: MonoBehaviour {
             return Color.white;
         }
     }
+
+    public static IEnumerator fadeInAudio(float fadeDuration, AudioSource audioSource) {
+        float targetVolume = 1.0f;
+        float startVolume = 0f;
+
+        audioSource.Play();
+
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration) {
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        audioSource.volume = targetVolume;
+    }
+
+
+    public static IEnumerator fadeOutAudio(float fadeDuration, AudioSource audioSource) {
+        float startVolume = audioSource.volume;
+        float targetVolume = 0f;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration) {
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        audioSource.volume = targetVolume;
+        audioSource.Stop();
+        audioSource.volume = startVolume;
+    }
 }

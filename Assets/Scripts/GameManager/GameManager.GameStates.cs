@@ -35,9 +35,10 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void playerBeatSong() {
+        AudioManager.Instance.playMenuMusic(true);
         showFireworks();
         StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 1.0f, 1.0f));
-        StartCoroutine(fadeOutAudio(1.0f));
+        StartCoroutine(SharedResources.fadeOutAudio(1.0f, audioSource));
         songCompleteDisplay.text = "Song Complete!";
         songCompleteDisplay.color = new Color32(0, 236, 117, 255);
         songCompleteDisplay.enabled = true;
@@ -59,7 +60,7 @@ public partial class GameManager: MonoBehaviour {
         setupFireworksFinale();
         showFireworks();
         StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 1.0f, 1.0f));
-        StartCoroutine(fadeOutAudio(1.0f));
+        StartCoroutine(SharedResources.fadeOutAudio(1.0f, audioSource));
         songCompleteDisplay.text = "YOU WON!";
         songCompleteDisplay.color = new Color32(0, 236, 117, 255);
         songCompleteDisplay.enabled = true;
