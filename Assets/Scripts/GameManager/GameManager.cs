@@ -74,8 +74,6 @@ public partial class GameManager: MonoBehaviour {
 
         pressSpaceButton.SetActive(true);
 
-        setupFireworksFinale();
-
         setupSong();
     }
 

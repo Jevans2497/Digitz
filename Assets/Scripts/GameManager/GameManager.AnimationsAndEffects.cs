@@ -111,7 +111,7 @@ public partial class GameManager {
             Color brightFunColor = Color.HSVToRGB(randomHue, 1.0f, 1.0f, true);
             ParticleSystem.MainModule main = firework.main;
             main.startColor = brightFunColor;
-            randomHue += 0.21f;
+            randomHue = Mathf.Repeat(randomHue + 0.21f, 1.0f);
 
             firework.Play();
         }
