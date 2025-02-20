@@ -13,6 +13,7 @@ public class MenuCanvasManager: MonoBehaviour {
     [SerializeField] JSONLoader jsonLoader;
     [SerializeField] GameObject menuObjectPrefab;
     [SerializeField] TextMeshProUGUI menuOptionExplanationText;
+    [SerializeField] GameObject concealedChallengeExplanation;
 
     [SerializeField] GameObject levelBonusGameObject;
     private bool isLevelBonusOptionAvailable;
@@ -97,6 +98,7 @@ public class MenuCanvasManager: MonoBehaviour {
     }
 
     private void activateChallengeMenuItem(Challenge challenge) {
+        concealedChallengeExplanation.SetActive(false);
         if (challenge.isConcealed) {
             menuGameObjects.ForEach(menuGameObjects => {
                 if (menuGameObjects.menuItem is Challenge challenge) {
@@ -145,7 +147,7 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void presentUpgradeOptions() {
         destroyPreexistingMenuObjects();
-        menuOptionExplanationText.text = "Select Upgrade";        
+        menuOptionExplanationText.text = "Upgrade";        
         menuGameObjects = upgradeManager.createUpgradeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
             setupMenuOptions();
@@ -155,7 +157,8 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void presentChallengeOptions() {
         destroyPreexistingMenuObjects();
-        menuOptionExplanationText.text = "Select Challenge";
+        menuOptionExplanationText.text = "Challenge";
+        concealedChallengeExplanation.SetActive(true);
         setupLevelBonusOption();
         menuGameObjects = challengeManager.createChallengeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
@@ -176,7 +179,7 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void presentSongOptions() {
         destroyPreexistingMenuObjects();
-        menuOptionExplanationText.text = "Select Song";
+        menuOptionExplanationText.text = "Song";
         menuGameObjects = songManager.createSongOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
             setupMenuOptions();
