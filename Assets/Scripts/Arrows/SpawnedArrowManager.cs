@@ -87,7 +87,7 @@ public class SpawnedArrowManager: MonoBehaviour {
                 arrowSpeed -= 0.7f;
             }
 
-            if (ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.Supersonic) {
+            if (ChallengeTracker.getChallenge() != null && ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.Supersonic) {
                 arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.25f;
             }
 

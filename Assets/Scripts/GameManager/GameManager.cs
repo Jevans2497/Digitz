@@ -59,7 +59,7 @@ public partial class GameManager: MonoBehaviour {
         } else {
             songs = jsonLoader.loadSongs();
             levels = jsonLoader.loadLevels();
-            currentSong = "FreakingOutTheNeighborhood";
+            currentSong = "MammaMia";
         }
 
         if (levels.Count > 0) {
@@ -74,6 +74,10 @@ public partial class GameManager: MonoBehaviour {
 
         pressSpaceButton.SetActive(true);
 
+        if (isInGenerateSongJSONMode || isInTestSongMode) {
+            setupForDevMode();
+        }
+
         setupSong();
     }
 
@@ -85,7 +89,7 @@ public partial class GameManager: MonoBehaviour {
                 if (isGameComplete) {
                     SceneManager.LoadScene("Main Menu");
                 } else {
-                    if (!isTutorial && isInitialGameStart) {
+                    if (!isTutorial && isInitialGameStart && !isInGenerateSongJSONMode && !isInTestSongMode) {
                         startMenuLoop();
                         isInitialGameStart = false;
                     }
@@ -112,6 +116,12 @@ public partial class GameManager: MonoBehaviour {
         }
     }
 
+    private void setupForDevMode() {
+        progressBar.gameObject.SetActive(false);
+        scoreDisplay.gameObject.SetActive(false);
+        displayTimer.gameObject.SetActive(true);
+    }
+
     private void startMenuLoop() {
         songCompleteDisplay.enabled = false;
         pressSpaceButton.SetActive(false);
@@ -120,7 +130,9 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void startSongLoop() {
-        AudioManager.Instance.stopMenuMusic();
+        if (AudioManager.Instance != null) {
+            AudioManager.Instance.stopMenuMusic();
+        }
         pressSpaceButton.SetActive(false);
         setupSpawnedArrowManager();
         inSongLoop = true;
