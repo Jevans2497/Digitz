@@ -5689,6 +5689,46 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1324b3a1332734714ab689372249b5dd, type: 3}
+--- !u!21 &352959294
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI/RoundedCorners/RoundedCorners
+  m_Shader: {fileID: 4800000, guid: 0bd2ec5d73751e34a814274a454bec41, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
+    - _WidthHeightRadius: {r: 460, g: 90, b: 90, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1 &363619984 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1456191994608075424, guid: 708fdec0b501a4aa6be12425311422bb, type: 3}
@@ -10921,46 +10961,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &508416752
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: UI/RoundedCorners/RoundedCorners
-  m_Shader: {fileID: 4800000, guid: 0bd2ec5d73751e34a814274a454bec41, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _ColorMask: 15
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UseUIAlphaClip: 0
-    m_Colors:
-    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
-    - _WidthHeightRadius: {r: 460, g: 90, b: 90, a: 0}
-  m_BuildTextureStacks: []
 --- !u!1 &585900344
 GameObject:
   m_ObjectHideFlags: 0
@@ -31603,7 +31603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 508416752}
+  m_Material: {fileID: 352959294}
   m_Color: {r: 0.6123621, g: 0.6498058, b: 0.9339623, a: 0.12156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -36957,6 +36957,14 @@ MonoBehaviour:
   finaleFirework2: {fileID: 909671447}
   finaleFirework3: {fileID: 1024694167}
   finaleFirework4: {fileID: 205254856}
+  fireworkClip1: {fileID: 8300000, guid: 3247dc94b466e4bd18cc25ebdfdd446d, type: 3}
+  fireworkClip2: {fileID: 8300000, guid: 82d3c7389388b4ae7bc41b58c9d90569, type: 3}
+  fireworkClip3: {fileID: 8300000, guid: 1265b3f87a1904ea3972c989eb869412, type: 3}
+  fireworkClip4: {fileID: 8300000, guid: fa193afb9898a4708b65ef389d750204, type: 3}
+  fireworkClip5: {fileID: 8300000, guid: 6765613528ed14234afcd81a6f0c0b91, type: 3}
+  fireworkClip6: {fileID: 8300000, guid: 13e8d51997f0343a195d08bcf5e96945, type: 3}
+  fireworkClip7: {fileID: 8300000, guid: 7c89a092694a04eb0983ea60ce374774, type: 3}
+  fireworksShowBackgroundClip: {fileID: 8300000, guid: 22defbeb0fd4c4206a876510f9ad9eff, type: 3}
   isInGenerateSongJSONMode: 0
   isInTestSongMode: 0
   skipToTime: 0
@@ -42715,7 +42723,7 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
     inside: 1
     outside: 0

@@ -34,6 +34,15 @@ public class AudioManager : MonoBehaviour {
         isMenuMusicPlaying = false;
     }
 
+    public void stopAudioClip(AudioClip audioClip) {
+        foreach (var source in audioSources) {
+            if (source.clip == audioClip) {
+                source.Stop();
+                return;
+            }
+        }
+    }
+
     public void playSound(AudioClip clip, bool withFadeIn = false, float volume = 1f) {
         AudioSource source = getAvailableAudioSource();
         source.clip = clip;
