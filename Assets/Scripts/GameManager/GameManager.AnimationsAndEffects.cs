@@ -14,7 +14,17 @@ public partial class GameManager {
     [SerializeField] ParticleSystem finaleFirework2;
     [SerializeField] ParticleSystem finaleFirework3;
     [SerializeField] ParticleSystem finaleFirework4;
+
+    public AudioClip fireworkClip1;
+    public AudioClip fireworkClip2;
+    public AudioClip fireworkClip3;
+    public AudioClip fireworkClip4;
+    public AudioClip fireworkClip5;
+    public AudioClip fireworkClip6;
+    public AudioClip fireworkClip7;
+
     List<ParticleSystem> fireworks = new List<ParticleSystem>();
+    List<AudioClip> fireworksAudioClips = new List<AudioClip>();
 
     private IEnumerator showAndFadeLevelName(TextMeshProUGUI textMeshObject, float duration) {
         Color white = Color.white;
@@ -87,6 +97,7 @@ public partial class GameManager {
 
     private void setupFireworks() {
         fireworks.AddRange(new ParticleSystem[] { firework1, firework2, firework3, firework4 });
+        fireworksAudioClips.AddRange(new AudioClip[] { fireworkClip1, fireworkClip2, fireworkClip3, fireworkClip4, fireworkClip5, fireworkClip6, fireworkClip7 });
     }
 
     private void showFireworks() {
