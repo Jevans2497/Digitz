@@ -15,17 +15,7 @@ public partial class GameManager {
     [SerializeField] ParticleSystem finaleFirework3;
     [SerializeField] ParticleSystem finaleFirework4;
 
-    public AudioClip fireworkClip1;
-    public AudioClip fireworkClip2;
-    public AudioClip fireworkClip3;
-    public AudioClip fireworkClip4;
-    public AudioClip fireworkClip5;
-    public AudioClip fireworkClip6;
-    public AudioClip fireworkClip7;
-    public AudioClip fireworksShowBackgroundClip;
-
     List<ParticleSystem> fireworks = new List<ParticleSystem>();
-    List<AudioClip> fireworksAudioClips = new List<AudioClip>();
 
     private IEnumerator showAndFadeLevelName(TextMeshProUGUI textMeshObject, float duration) {
         Color white = Color.white;
@@ -98,7 +88,6 @@ public partial class GameManager {
 
     private void setupFireworks() {
         fireworks.AddRange(new ParticleSystem[] { firework1, firework2, firework3, firework4 });
-        fireworksAudioClips.AddRange(new AudioClip[] { fireworkClip1, fireworkClip2, fireworkClip3, fireworkClip4, fireworkClip5, fireworkClip6, fireworkClip7 });
     }
 
     private void showFireworks() {
@@ -110,30 +99,8 @@ public partial class GameManager {
             randomHue = Mathf.Repeat(randomHue + 0.21f, 1.0f);
 
             firework.Play();
-            AudioManager.Instance.playSound(fireworksShowBackgroundClip);
-            StartCoroutine(playFireworkAudioClip(firework));
         }
     }
-
-    private IEnumerator playFireworkAudioClip(ParticleSystem firework) {
-        AudioManager.Instance.stopMenuMusic();
-        ParticleSystem.MainModule main = firework.main;
-        float duration = main.duration / main.simulationSpeed;
-        float initialDelay = main.startDelay.constant / main.simulationSpeed;
-
-        yield return new WaitForSeconds(initialDelay);
-
-        while (firework.isPlaying) {
-            playRandomFireworkSound();
-            yield return new WaitForSeconds(duration);
-        }
-    }
-
-    private void playRandomFireworkSound() {        
-        AudioClip randomFireworkClip = fireworksAudioClips[Random.Range(0, fireworksAudioClips.Count)];
-        AudioManager.Instance.playSound(randomFireworkClip);
-    }
-
 
     private void setupFireworksFinale() {
         fireworks.ForEach(firework => {
@@ -147,6 +114,5 @@ public partial class GameManager {
         foreach (var firework in fireworks) {
             firework.Stop();
         }
-        AudioManager.Instance.stopAudioClip(fireworksShowBackgroundClip);
     }
 }

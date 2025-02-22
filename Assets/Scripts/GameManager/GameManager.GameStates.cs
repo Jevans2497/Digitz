@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public partial class GameManager: MonoBehaviour {
+
+    [SerializeField] AudioClip songCompleteClip;
+    [SerializeField] AudioClip gameOverClip;
+
     private bool isSongComplete() {
         if (isInGenerateSongJSONMode) { return false; }
         bool didPlayerBeatSong = score >= scoreNeededToClearLevel && !isTutorial && !isInTestSongMode;
@@ -35,6 +39,7 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void playerBeatSong() {
+        AudioManager.Instance.playSound(songCompleteClip);
         AudioManager.Instance.playMenuMusic(true);
         showFireworks();
         StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 1.0f, 1.0f));
@@ -46,6 +51,7 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private IEnumerator gameOver() {
+        AudioManager.Instance.playSound(gameOverClip);
         StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 0, 0.5f, 1.0f));
         yield return new WaitForSeconds(1.0f);
         songCompleteDisplay.text = "Game Over";
@@ -56,6 +62,8 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void gameWon() {
+        AudioManager.Instance.playSound(songCompleteClip);
+        AudioManager.Instance.playMenuMusic(true);
         isGameComplete = true;
         setupFireworksFinale();
         showFireworks();
