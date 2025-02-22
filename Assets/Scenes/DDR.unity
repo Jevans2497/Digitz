@@ -10921,6 +10921,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &508416752
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI/RoundedCorners/RoundedCorners
+  m_Shader: {fileID: 4800000, guid: 0bd2ec5d73751e34a814274a454bec41, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
+    - _WidthHeightRadius: {r: 460, g: 90, b: 90, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1 &585900344
 GameObject:
   m_ObjectHideFlags: 0
@@ -31563,7 +31603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 1065572904}
+  m_Material: {fileID: 508416752}
   m_Color: {r: 0.6123621, g: 0.6498058, b: 0.9339623, a: 0.12156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -36564,46 +36604,6 @@ Transform:
   - {fileID: 585900345}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1065572904
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: UI/RoundedCorners/RoundedCorners
-  m_Shader: {fileID: 4800000, guid: 0bd2ec5d73751e34a814274a454bec41, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _ColorMask: 15
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UseUIAlphaClip: 0
-    m_Colors:
-    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
-    - _WidthHeightRadius: {r: 460, g: 90, b: 90, a: 0}
-  m_BuildTextureStacks: []
 --- !u!1 &1098106950
 GameObject:
   m_ObjectHideFlags: 0
@@ -36958,7 +36958,7 @@ MonoBehaviour:
   finaleFirework3: {fileID: 1024694167}
   finaleFirework4: {fileID: 205254856}
   isInGenerateSongJSONMode: 0
-  isInTestSongMode: 1
+  isInTestSongMode: 0
   skipToTime: 0
   displayTimer: {fileID: 2056429447}
   levelNameDisplay: {fileID: 639769987}
@@ -37133,9 +37133,10 @@ MonoBehaviour:
   menuOptionExplanationText: {fileID: 1396913074}
   concealedChallengeExplanation: {fileID: 373418461}
   upgradeSelectedClip: {fileID: 8300000, guid: e8c16202b4f6743d2b1505f7fb314291, type: 3}
-  challengeSelectedClip: {fileID: 8300000, guid: 1c2155fe16da24c22a8dac41863e9665, type: 3}
-  songSelectedClip: {fileID: 8300000, guid: bb24daead0466495ea50099780391dc1, type: 3}
+  challengeSelectedClip: {fileID: 8300000, guid: ca1ffa0c07e284205856e43825a7bc1b, type: 3}
+  songSelectedClip: {fileID: 8300000, guid: 32b9e3a6414af4ade841d940be9c63c4, type: 3}
   levelBonusSelectedClip: {fileID: 8300000, guid: 051ab9248cee24418935aeee80b90a26, type: 3}
+  concealedChallengeRevealedClip: {fileID: 8300000, guid: 1c2155fe16da24c22a8dac41863e9665, type: 3}
   levelBonusGameObject: {fileID: 1713576907}
   isMenuLoopFinished: 1
 --- !u!1 &1217143849

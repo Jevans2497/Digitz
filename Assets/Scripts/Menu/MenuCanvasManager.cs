@@ -19,6 +19,7 @@ public class MenuCanvasManager: MonoBehaviour {
     public AudioClip challengeSelectedClip;
     public AudioClip songSelectedClip;
     public AudioClip levelBonusSelectedClip;
+    public AudioClip concealedChallengeRevealedClip;
 
     [SerializeField] GameObject levelBonusGameObject;
     private bool isLevelBonusOptionAvailable;
@@ -105,7 +106,7 @@ public class MenuCanvasManager: MonoBehaviour {
     private void activateChallengeMenuItem(Challenge challenge) {
         concealedChallengeExplanation.SetActive(false);
         if (challenge.isConcealed) {
-            AudioManager.Instance.playSound(challengeSelectedClip);
+            AudioManager.Instance.playSound(concealedChallengeRevealedClip);
             menuGameObjects.ForEach(menuGameObjects => {
                 if (menuGameObjects.menuItem is Challenge challenge) {
                     challenge.isConcealed = false;
