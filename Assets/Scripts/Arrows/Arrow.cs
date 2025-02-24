@@ -9,6 +9,8 @@ public class Arrow: MonoBehaviour {
     [SerializeField] ArrowFeedback arrowFeedbackPrefab;
     [SerializeField] SpawnedArrowManager spawnedArrowManager;
 
+    [SerializeField] ParticleSystem freezeEffectParticleSystem;
+
     private float scaleFactor = 1.2f;
     private float animationDuration = 0.1f;
 
@@ -19,7 +21,7 @@ public class Arrow: MonoBehaviour {
     private bool isSecurityCameraUpgradeArrow;
 
     private int frozenArrowDethawCounter = 0;
-    private int tapsNeededToDethaw = 30;
+    private int tapsNeededToDethaw = 20;
 
     private void Update() {
         CheckForInput();
@@ -111,18 +113,22 @@ public class Arrow: MonoBehaviour {
         spriteRenderer.color = fullFreezeColor;
         defaultColor = fullFreezeColor;
         frozenArrowDethawCounter = tapsNeededToDethaw;
+
+        freezeEffectParticleSystem.transform.position = this.transform.position;
+        freezeEffectParticleSystem.Play();
     }
 
     private void dethawFrozenArrow() {
         frozenArrowDethawCounter -= 1;
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         Color fullFreezeColor = new Color(0f, 0.87f, 1f);
-        Color readyToDethawColor = new Color(0.53f, 0.92f, 0.98f);
+        Color readyToDethawColor = new Color(0.686f, 0.941f, 0.980f);
         float lerpFactor = Mathf.Clamp01((tapsNeededToDethaw - frozenArrowDethawCounter) * 0.1f);
         spriteRenderer.color = Color.Lerp(fullFreezeColor, readyToDethawColor, lerpFactor);
 
         if (frozenArrowDethawCounter <= 0) {
-            defaultColor = Color.white;  
+            defaultColor = Color.white;
+            spriteRenderer.color = Color.white;
         }
     }
 
