@@ -116,6 +116,78 @@
             "rarity_string": "common",
             "hasSeverity": false,
             "description": "No Perfects, no Misses"
+        },        
+        {
+            "name": "The Great Below",
+            "sprite_name": "TheGreatBelow",
+            "challenge_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "hasSeverity": true,
+            "description": "Start the next song with negative points"
+        },
+        {
+            "name": "Death Beam",
+            "sprite_name": "DeathBeam",
+            "challenge_type_string": "arrowSpeed",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "hasSeverity": true,
+            "description": "One random direction has increased arrow speed"
+        },
+        {
+            "name": "Subterfuge",
+            "sprite_name": "Subterfuge",
+            "challenge_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "hasSeverity": false,
+            "description": "Random directions for each spawned arrow, 20% of song per severity level"
+        },
+        {
+            "name": "Frosty",
+            "sprite_name": "Frosty",
+            "challenge_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "hasSeverity": true,
+            "description": "Some spawned arrows are now non-scoring freeze effect arrows"
+        },
+        {
+            "name": "Short Circuit",
+            "sprite_name": "ShortCircuit",
+            "challenge_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "hasSeverity": true,
+            "description": "Some spawned arrows are now non-scoring lightning effect arrows"
+        },
+        {
+            "name": "Blaze",
+            "sprite_name": "Blaze",
+            "challenge_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "hasSeverity": true,
+            "description": "Some spawned arrows are now non-scoring fire effect arrows"
+        },
+        {
+            "name": "Pandora's Box",
+            "sprite_name": "PandorasBox",
+            "challenge_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "hasSeverity": true,
+            "description": "Severity effects are more intense for the rest of the game"
+        },
+        {
+            "name": "Detour",
+            "sprite_name": "Detour",
+            "challenge_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "hasSeverity": false,
+            "description": "One random direction is closed, arrows redirected to random other direction"
         }
     ]
 }

@@ -29,6 +29,8 @@ public class SpawnedArrowManager: MonoBehaviour {
 
     private List<GameObject> currentlyExistingArrows = new List<GameObject>();
 
+    private Direction deathBeamRandomDirection;
+
     private void Update() {
         if (shouldSpawnArrows) {
             float songTime = gameManager.getSongTime();
@@ -51,6 +53,8 @@ public class SpawnedArrowManager: MonoBehaviour {
         preproccessArrowTimestampForArrivalTime();
         preprocessArrowsForArrowEffects();
         maximumBasePointsForSong = arrowSpawnDataList.Count * 100.0f;
+
+        deathBeamRandomDirection = (Direction)Random.Range(0, 4);
     }
 
     public void setShouldSpawnArrows(bool value) {
@@ -89,6 +93,13 @@ public class SpawnedArrowManager: MonoBehaviour {
 
             if (ChallengeTracker.getChallenge() != null && ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.Supersonic) {
                 arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.25f;
+            }
+
+            if (ChallengeTracker.getChallenge() != null && ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.DeathBeam) {
+                if (deathBeamRandomDirection == SharedResources.convertStringToDirection(spawnData.arrowData.arrow_direction)) {
+                    arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.6f;
+                }
+                    
             }
 
             spawnData.arrowData.arrow_speed = arrowSpeed;

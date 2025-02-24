@@ -95,15 +95,13 @@ public class Arrow: MonoBehaviour {
             ArrowFeedback arrowFeedbackInstance = Instantiate(arrowFeedbackPrefab, canvas.transform);
 
             if (isSecurityCameraUpgradeArrow) {
-                threshold = Mathf.Min(threshold, 0.29f);
+                threshold = Mathf.Min(threshold, FeedbackData.greatThreshold - 0.01f);
             }
 
             FeedbackData feedbackData = new(threshold, gameManager, isGoldenArrow);
             gameManager.addToScore(feedbackData.score);
             arrowFeedbackInstance.displayFeedback(feedbackData);
             StartCoroutine(changeColorOfArrow(feedbackData));
-        } else {
-            Debug.LogError("Canvas not found in the scene!");
         }
     }
 

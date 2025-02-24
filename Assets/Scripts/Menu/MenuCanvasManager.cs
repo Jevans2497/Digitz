@@ -145,6 +145,7 @@ public class MenuCanvasManager: MonoBehaviour {
         AudioManager.Instance.playSound(challengeSelectedClip);
         ChallengeTracker.addChallenge(challenge);
         levelBonusGameObject.SetActive(false);
+        challengeManager.removeChallengeFromPool(challenge);
         presentSongOptions();
     }
 
@@ -154,6 +155,7 @@ public class MenuCanvasManager: MonoBehaviour {
         menuCanvas.enabled = false;
         isMenuLoopFinished = true;
         gameManager.setPressSpaceButtonActive(true);
+        songManager.removeSongFromPool(song);
     }
 
     private void presentUpgradeOptions() {

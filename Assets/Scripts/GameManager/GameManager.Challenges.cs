@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public partial class GameManager : MonoBehaviour {
+
+    private void handleChallenges() {
+        handleSecurityCameraUpgrade();
+        handleOverclockChallenge();
+        handleTheGreatBelowChallenge();
+    }
+
     private void handleOverclockChallenge() {
         if (ChallengeTracker.hasChallenge(Challenge.ChallengeEffect.Overclock)) {
             Challenge overclock = ChallengeTracker.getChallenge();
@@ -22,6 +29,13 @@ public partial class GameManager : MonoBehaviour {
                     UpgradeTracker.disableUpgrade(upgrade);
                 }
             }
+        }
+    }
+
+    private void handleTheGreatBelowChallenge() {
+        if (ChallengeTracker.hasChallenge(Challenge.ChallengeEffect.TheGreatBelow)) {
+            Challenge theGreatBelow = ChallengeTracker.getChallenge();
+            score -= theGreatBelow.getSeverityMultiplier() * (scoreNeededToClearLevel * 0.1f);
         }
     }
 }

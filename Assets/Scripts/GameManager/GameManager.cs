@@ -270,7 +270,6 @@ public partial class GameManager: MonoBehaviour {
     private void handleUpgradesAndChallenges() {
         UpgradeTracker.enableAllUpgrades();
         handleOutageChallenge();
-        handleSecurityCameraUpgrade();
-        handleOverclockChallenge();
+        handleChallenges();
     }
 }

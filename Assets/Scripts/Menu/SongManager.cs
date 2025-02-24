@@ -18,4 +18,8 @@ public class SongManager: MenuItemManager {
     public List<MenuGameObjects> createSongOptions(Transform menuCanvasTransform, GameObject menuObjectPrefab) {
         return createMenuOptions<Song>(menuCanvasTransform, menuObjectPrefab, songs);
     }
+
+    public void removeSongFromPool(Song songToRemove) {
+        songs.RemoveAll(song => song.Name == songToRemove.Name);
+    }
 }

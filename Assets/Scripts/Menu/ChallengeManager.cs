@@ -31,6 +31,9 @@ public class ChallengeManager: MenuItemManager {
         return challengeMenuOptions;
     }
 
+    public void removeChallengeFromPool(Challenge challengeToRemove) {
+        challenges.RemoveAll(challenge => challenge.effect == challengeToRemove.effect);        
+    }
 
     public Challenge.ChallengeSeverity getSeverityForChallenge(int currentLevel, bool hasSeverity) {
         if (!hasSeverity) {

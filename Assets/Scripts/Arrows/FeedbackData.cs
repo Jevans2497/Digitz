@@ -16,10 +16,10 @@ public class FeedbackData {
     public bool isGradient = false;
     public VertexGradient gradient;
 
-    private float perfectThreshold = 0.1f;
-    private float greatThreshold = 0.3f;
-    private float goodThreshold = 0.5f;
-    private float stinkyThreshold = 0.85f;
+    public static float perfectThreshold = 0.1f;
+    public static float greatThreshold = 0.4f;
+    public static float goodThreshold = 0.7f;
+    public static float stinkyThreshold = 1.0f;
 
     private float defaultPerfectScore = 100.0f;
     private float defaultGreatScore = 75.0f;

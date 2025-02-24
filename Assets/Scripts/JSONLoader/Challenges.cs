@@ -37,10 +37,17 @@ public class Challenge: MenuItem {
         Outage,
         Overclock,
         ShatteredSword,
-        StartWithNegative,
         Supersonic,
         TheCurse,
         TheMiddlePath,
+        TheGreatBelow,
+        DeathBeam,
+        Subterfuge,
+        Frosty,
+        ShortCircuit,
+        Blaze,
+        PandorasBox,
+        Detour,
         None
     }
 
@@ -79,7 +86,7 @@ public class Challenge: MenuItem {
             rarity = ChallengeRarity.common;
         }
 
-        if (!Enum.TryParse(name.Replace(" ", ""), true, out effect)) {
+        if (!Enum.TryParse(name.Replace(" ", "").Replace("\'", ""), true, out effect)) {
             Debug.LogWarning($"Invalid effect: {name} for Challenge {name}. Defaulting to 'none'.");
             effect = ChallengeEffect.None;
         }
