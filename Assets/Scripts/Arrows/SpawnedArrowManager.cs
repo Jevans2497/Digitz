@@ -66,14 +66,17 @@ public class SpawnedArrowManager: MonoBehaviour {
     }
 
     private void createArrowSpawnDataList(SongPreset song) {
+        int index = 0;
         foreach (ArrowData arrowData in song.arrows) {
-            Direction spawnDirection = convertStringToDirection(arrowData.arrow_direction);
+            Direction spawnDirection = getPotentiallyModifiedArrowDirection(arrowData.arrow_direction, index, song.arrows.Count);            
             ArrowSpawnData spawnData = GetSpawnData(spawnDirection, arrowData);
             if (spawnData != null) {
                 arrowSpawnDataList.Add(spawnData);
             }
+            index += 1;
         }
     }
+
     /**
      * We don't care when arrows leave, we care when they arrive. 
      * This function calculates when the arrow would need to leave it's spawn point in order to arrive at it's destination at the expected timestamp
@@ -97,7 +100,7 @@ public class SpawnedArrowManager: MonoBehaviour {
 
             if (ChallengeTracker.getChallenge() != null && ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.DeathBeam) {
                 if (deathBeamRandomDirection == SharedResources.convertStringToDirection(spawnData.arrowData.arrow_direction)) {
-                    arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.6f;
+                    arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.75f;
                 }
                     
             }
@@ -185,9 +188,9 @@ public class SpawnedArrowManager: MonoBehaviour {
         foreach (ArrowSpawnData spawnData in arrowSpawnDataList) {
             int randomInt = UnityEngine.Random.Range(0, 4);
             if (randomInt == 0) {
-                spawnData.arrowData.timestamp += (challengeSeverityMultiplier * -.05f);
+                spawnData.arrowData.timestamp += (challengeSeverityMultiplier * -.025f);
             } else if (randomInt == 1) {
-                spawnData.arrowData.timestamp += (challengeSeverityMultiplier * .05f);
+                spawnData.arrowData.timestamp += (challengeSeverityMultiplier * .025f);
             }
             //Else, leave the timestamp as is
         }
@@ -225,6 +228,18 @@ public class SpawnedArrowManager: MonoBehaviour {
             alphaAdjustedColor.a = alpha;
             spawnedArrow.GetComponent<SpriteRenderer>().color = alphaAdjustedColor;
         }
+    }
+
+    private Direction getPotentiallyModifiedArrowDirection(string originalDirection, int spawnedArrowIndex, int songArrowsCount) {
+        Challenge challenge = ChallengeTracker.getChallenge();
+        if (challenge != null && challenge.effect == Challenge.ChallengeEffect.Subterfuge) {
+            float numberOfArrowsToAlter = songArrowsCount * (0.15f * challenge.getSeverityMultiplier()); // 15% per severity level
+            if (spawnedArrowIndex < numberOfArrowsToAlter) {                
+                string randomDirection = getRandomDirectionAsString();
+                return convertStringToDirection(randomDirection);
+            }
+        }
+        return convertStringToDirection(originalDirection);
     }
 
     private IEnumerator destroySpawnedArrowAfterDelay(GameObject targetArrow, Transform arrowTransform) {

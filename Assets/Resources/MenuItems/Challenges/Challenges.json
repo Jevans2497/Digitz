@@ -140,9 +140,9 @@
             "sprite_name": "Subterfuge",
             "challenge_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "common",
-            "hasSeverity": false,
-            "description": "Random directions for each spawned arrow, 20% of song per severity level"
+            "rarity_string": "always",
+            "hasSeverity": true,
+            "description": "Random directions for each spawned arrow, 15% of song per severity level"
         },
         {
             "name": "Frosty",
