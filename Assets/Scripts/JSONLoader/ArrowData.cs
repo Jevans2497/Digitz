@@ -5,7 +5,7 @@ using UnityEngine;
 public class ArrowData {
 
     public enum ArrowEffect {
-        regular, simultaneous, golden, rainbow
+        regular, simultaneous, golden, rainbow, freeze, lightning, fire
     }
 
     public float timestamp;
@@ -39,7 +39,7 @@ public class ArrowData {
                 break;
             case ArrowEffect.simultaneous:
                 color = Color.magenta;
-            ; layer = 6;
+                layer = 6;
                 break;
             case ArrowEffect.golden:
                 color = Color.yellow;
@@ -48,6 +48,18 @@ public class ArrowData {
             case ArrowEffect.rainbow:
                 color = Color.red;
                 layer = 8;
+                break;
+            case ArrowEffect.freeze:
+                color = new Color(0.49f, 0.93f, 1f);
+                layer = 9;
+                break;
+            case ArrowEffect.lightning:
+                color = Color.cyan;
+                layer = 10;
+                break;
+            case ArrowEffect.fire:
+                color = Color.red;
+                layer = 11;
                 break;
         }
     }

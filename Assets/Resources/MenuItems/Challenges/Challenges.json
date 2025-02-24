@@ -149,7 +149,7 @@
             "sprite_name": "Frosty",
             "challenge_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "common",
+            "rarity_string": "always",
             "hasSeverity": true,
             "description": "Some spawned arrows are now non-scoring freeze effect arrows"
         },

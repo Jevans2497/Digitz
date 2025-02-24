@@ -123,7 +123,33 @@ public class SpawnedArrowManager: MonoBehaviour {
             lastArrowData.arrowEffect = ArrowData.ArrowEffect.golden;
         }
 
+        Challenge challenge = ChallengeTracker.getChallenge();
+        if (challenge != null && challenge.effect == Challenge.ChallengeEffect.Frosty || challenge.effect == Challenge.ChallengeEffect.ShortCircuit || challenge.effect == Challenge.ChallengeEffect.Blaze) {
+            addChallengeEffectToArrows(challenge);
+        }
+
         arrowSpawnDataList.ForEach(spawnData => spawnData.arrowData.applyEffectToArrow());
+    }
+
+    private void addChallengeEffectToArrows(Challenge challenge) {
+        ArrowData.ArrowEffect challengeEffect = ArrowData.ArrowEffect.regular;
+        switch (challenge.effect) {
+            case Challenge.ChallengeEffect.Frosty:
+            challengeEffect = ArrowData.ArrowEffect.freeze;
+            break;
+            case Challenge.ChallengeEffect.ShortCircuit:
+            challengeEffect = ArrowData.ArrowEffect.lightning;
+            break;
+            case Challenge.ChallengeEffect.Blaze:
+            challengeEffect = ArrowData.ArrowEffect.fire;
+            break;
+        }
+
+        int numberOfEffectArrows = (int)challenge.getSeverityMultiplier() * 20;
+        for (int i = 0; i < numberOfEffectArrows; i++) {
+            int randomIndex = Random.Range(0, arrowSpawnDataList.Count);
+            arrowSpawnDataList[randomIndex].arrowData.arrowEffect = challengeEffect;
+        }
     }
 
     private void spawnArrow(ArrowSpawnData arrowSpawnData) {
@@ -159,7 +185,7 @@ public class SpawnedArrowManager: MonoBehaviour {
         }
 
         if (arrowTransform != null) {
-            StartCoroutine(destroySpawnedArrowAfterDelay(arrowSpawnData.targetArrow, arrowTransform));
+            StartCoroutine(destroySpawnedArrowAfterDelay(arrowSpawnData.targetArrow, arrowTransform, spawnedArrow.layer));
         }
     }
 
@@ -242,7 +268,7 @@ public class SpawnedArrowManager: MonoBehaviour {
         return convertStringToDirection(originalDirection);
     }
 
-    private IEnumerator destroySpawnedArrowAfterDelay(GameObject targetArrow, Transform arrowTransform) {
+    private IEnumerator destroySpawnedArrowAfterDelay(GameObject targetArrow, Transform arrowTransform, int arrowLayer) {
         //Delay so the user has time to hit arrow before it counts as a miss.
         float destructionDelay = 0.1f;
 
@@ -254,9 +280,10 @@ public class SpawnedArrowManager: MonoBehaviour {
 
         if (arrowTransform != null) {
             Arrow targetArrowComponent = targetArrow.GetComponent<Arrow>();
-            if (targetArrowComponent != null) {
+            int frozenArrowLayer = 9;
+            if (targetArrowComponent != null && arrowLayer != frozenArrowLayer) {
                 // Report a miss
-                targetArrowComponent.handleScoring(1.0f, false);
+                targetArrowComponent.handleScoring(10.0f, false);
             }
             Destroy(arrowTransform.gameObject);
         }

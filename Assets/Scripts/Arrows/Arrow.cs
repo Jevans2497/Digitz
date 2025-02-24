@@ -18,6 +18,9 @@ public class Arrow: MonoBehaviour {
 
     private bool isSecurityCameraUpgradeArrow;
 
+    private int frozenArrowDethawCounter = 0;
+    private int tapsNeededToDethaw = 30;
+
     private void Update() {
         CheckForInput();
     }
@@ -45,7 +48,11 @@ public class Arrow: MonoBehaviour {
     private IEnumerator arrowButtonPressed(GameObject arrow) {
         isInputEnabled = false;
 
-        checkContact(arrow);
+        if (frozenArrowDethawCounter > 0) {
+            dethawFrozenArrow();
+        } else {
+            checkContact(arrow);
+        }
 
         Vector3 originalScale = arrow.transform.localScale;
         Vector3 targetScale = originalScale * scaleFactor;
@@ -60,6 +67,11 @@ public class Arrow: MonoBehaviour {
     }
 
     private void checkContact(GameObject arrow) {
+        if (frozenArrowDethawCounter > 0) {
+            dethawFrozenArrow();
+            return;
+        } 
+
         Collider2D[] colliders = Physics2D.OverlapBoxAll(arrow.transform.position, new Vector2(1.0f, 1.0f), 0.0f);
         GameObject closestArrow = null;
         float minDistance = float.MaxValue;
@@ -85,8 +97,33 @@ public class Arrow: MonoBehaviour {
     private void detectedContactWithArrow(float minDistance, GameObject closestArrow) {
         float clampedDistance = Mathf.Clamp01(minDistance);
         bool isGoldenArrow = closestArrow.layer == 7;
+        if (closestArrow.layer == 9) {
+            detectedContactWithFrozenArrow();
+        }
+
         Destroy(closestArrow);
         handleScoring(clampedDistance, isGoldenArrow);
+    }
+
+    private void detectedContactWithFrozenArrow() {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        Color fullFreezeColor = new Color(0f, 0.87f, 1f);
+        spriteRenderer.color = fullFreezeColor;
+        defaultColor = fullFreezeColor;
+        frozenArrowDethawCounter = tapsNeededToDethaw;
+    }
+
+    private void dethawFrozenArrow() {
+        frozenArrowDethawCounter -= 1;
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        Color fullFreezeColor = new Color(0f, 0.87f, 1f);
+        Color readyToDethawColor = new Color(0.53f, 0.92f, 0.98f);
+        float lerpFactor = Mathf.Clamp01((tapsNeededToDethaw - frozenArrowDethawCounter) * 0.1f);
+        spriteRenderer.color = Color.Lerp(fullFreezeColor, readyToDethawColor, lerpFactor);
+
+        if (frozenArrowDethawCounter <= 0) {
+            defaultColor = Color.white;  
+        }
     }
 
     public void handleScoring(float threshold, bool isGoldenArrow) {
@@ -101,7 +138,9 @@ public class Arrow: MonoBehaviour {
             FeedbackData feedbackData = new(threshold, gameManager, isGoldenArrow);
             gameManager.addToScore(feedbackData.score);
             arrowFeedbackInstance.displayFeedback(feedbackData);
-            StartCoroutine(changeColorOfArrow(feedbackData));
+            if (frozenArrowDethawCounter <= 0) {
+                StartCoroutine(changeColorOfArrow(feedbackData));
+            }
         }
     }
 
