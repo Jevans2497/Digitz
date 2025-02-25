@@ -50,11 +50,11 @@ public class ArrowData {
                 layer = 8;
                 break;
             case ArrowEffect.freeze:
-                color = new Color(0.49f, 0.93f, 1f);
-                layer = 9;
+            color = SharedResources.hexToColor("#7DEDFF");
+            layer = 9;
                 break;
             case ArrowEffect.lightning:
-                color = Color.cyan;
+                color = SharedResources.hexToColor("#fcdda7");
                 layer = 10;
                 break;
             case ArrowEffect.fire:

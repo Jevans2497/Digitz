@@ -140,7 +140,7 @@
             "sprite_name": "Subterfuge",
             "challenge_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "always",
+            "rarity_string": "common",
             "hasSeverity": true,
             "description": "Random directions for each spawned arrow, 15% of song per severity level"
         },
@@ -149,7 +149,7 @@
             "sprite_name": "Frosty",
             "challenge_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "always",
+            "rarity_string": "common",
             "hasSeverity": true,
             "description": "Some spawned arrows are now non-scoring freeze effect arrows"
         },
@@ -158,7 +158,7 @@
             "sprite_name": "ShortCircuit",
             "challenge_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "common",
+            "rarity_string": "always",
             "hasSeverity": true,
             "description": "Some spawned arrows are now non-scoring lightning effect arrows"
         },

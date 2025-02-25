@@ -13,6 +13,9 @@ public class Arrow: MonoBehaviour {
     [SerializeField] TextMeshProUGUI challengeHelperText;
     [SerializeField] ParticleSystem effectCompleteParticleSystem;
     [SerializeField] ParticleSystem freezeEffectParticleSystem;
+    [SerializeField] ParticleSystem lightningEffectParticleSystem;
+
+    [SerializeField] AudioClip electricalInterferenceClip;
 
     private float scaleFactor = 1.2f;
     private float animationDuration = 0.1f;
@@ -25,6 +28,7 @@ public class Arrow: MonoBehaviour {
 
     private int frozenArrowDethawCounter = 0;
     private int tapsNeededToDethaw = 20;
+    private static bool isElectricalInterferenceActive;
 
     private void Update() {
         CheckForInput();
@@ -41,6 +45,16 @@ public class Arrow: MonoBehaviour {
         { KeyCode.RightArrow, "RightArrow" },
         { KeyCode.DownArrow, "DownArrow" }
     };
+
+        // If electrical interference, mirror inputs
+        if (isElectricalInterferenceActive) {
+            keyToArrowMap = new Dictionary<KeyCode, string> {
+        { KeyCode.LeftArrow, "RightArrow" },
+        { KeyCode.UpArrow, "DownArrow" },
+        { KeyCode.RightArrow, "LeftArrow" },
+        { KeyCode.DownArrow, "UpArrow" }
+    };
+        }
 
         foreach (var entry in keyToArrowMap) {
             if (Input.GetKeyDown(entry.Key) && this.CompareTag(entry.Value)) {
@@ -102,8 +116,13 @@ public class Arrow: MonoBehaviour {
     private void detectedContactWithArrow(float minDistance, GameObject closestArrow) {
         float clampedDistance = Mathf.Clamp01(minDistance);
         bool isGoldenArrow = closestArrow.layer == 7;
-        if (closestArrow.layer == 9) {
+        switch (closestArrow.layer) {
+            case 9:
             detectedContactWithFrozenArrow();
+            break;
+            case 10:
+            detectedContactWithLightningArrow();
+            break;
         }
 
         Destroy(closestArrow);
@@ -120,7 +139,8 @@ public class Arrow: MonoBehaviour {
         freezeEffectParticleSystem.transform.position = this.transform.position;
         freezeEffectParticleSystem.Play();
 
-        StartCoroutine(showChallengeEffectHelper("Tap to dethaw!"));
+        TMP_FontAsset freezeFont = Resources.Load<TMP_FontAsset>("Fonts/FreezeFont");        
+        StartCoroutine(showChallengeEffectHelper("Tap to dethaw!", freezeFont, SharedResources.hexToColor("#7DEDFF")));
     }
 
     private void dethawFrozenArrow() {
@@ -139,8 +159,27 @@ public class Arrow: MonoBehaviour {
         }
     }
 
-    private IEnumerator showChallengeEffectHelper(string text) {
-        challengeHelperText.text = text;        
+    private void detectedContactWithLightningArrow() {
+        if (!lightningEffectParticleSystem.isPlaying) {
+            StartCoroutine(activateElectricalInterference());
+            TMP_FontAsset lightningFont = Resources.Load<TMP_FontAsset>("Fonts/LightningFont");            
+            StartCoroutine(showChallengeEffectHelper("Arrow inputs mirrored!", lightningFont, SharedResources.hexToColor("#ffa100")));
+        }
+    }
+
+    private IEnumerator activateElectricalInterference() {
+        AudioManager.Instance.playSound(electricalInterferenceClip);
+        lightningEffectParticleSystem.Play();
+        isElectricalInterferenceActive = true;
+        yield return new WaitForSeconds(10.0f);
+        lightningEffectParticleSystem.Stop();
+        isElectricalInterferenceActive = false;
+    }
+
+    private IEnumerator showChallengeEffectHelper(string text, TMP_FontAsset font, Color color) {
+        challengeHelperText.text = text;
+        challengeHelperText.font = font;
+        challengeHelperText.color = color;
         challengeHelperText.gameObject.SetActive(true);
         yield return new WaitForSeconds(5.0f);
         challengeHelperText.gameObject.SetActive(false);

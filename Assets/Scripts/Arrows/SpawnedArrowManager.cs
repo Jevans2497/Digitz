@@ -281,7 +281,9 @@ public class SpawnedArrowManager: MonoBehaviour {
         if (arrowTransform != null) {
             Arrow targetArrowComponent = targetArrow.GetComponent<Arrow>();
             int frozenArrowLayer = 9;
-            if (targetArrowComponent != null && arrowLayer != frozenArrowLayer) {
+            int lightningArrowLayer = 10;
+            int fireArrowLayer = 11;
+            if (targetArrowComponent != null && arrowLayer != frozenArrowLayer && arrowLayer != lightningArrowLayer && arrowLayer != fireArrowLayer) {
                 // Report a miss
                 targetArrowComponent.handleScoring(10.0f, false);
             }
