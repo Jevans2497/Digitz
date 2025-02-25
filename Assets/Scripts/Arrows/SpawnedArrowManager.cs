@@ -280,10 +280,7 @@ public class SpawnedArrowManager: MonoBehaviour {
 
         if (arrowTransform != null) {
             Arrow targetArrowComponent = targetArrow.GetComponent<Arrow>();
-            int frozenArrowLayer = 9;
-            int lightningArrowLayer = 10;
-            int fireArrowLayer = 11;
-            if (targetArrowComponent != null && arrowLayer != frozenArrowLayer && arrowLayer != lightningArrowLayer && arrowLayer != fireArrowLayer) {
+            if (targetArrowComponent != null && !isArrowNonScoring(arrowLayer)) { 
                 // Report a miss
                 targetArrowComponent.handleScoring(10.0f, false);
             }
@@ -291,11 +288,27 @@ public class SpawnedArrowManager: MonoBehaviour {
         }
     }
 
+    private bool isArrowNonScoring(int arrowLayer) {
+        int frozenArrowLayer = 9;
+        int lightningArrowLayer = 10;
+        int fireArrowLayer = 11;
+
+        return arrowLayer == frozenArrowLayer || arrowLayer == lightningArrowLayer || arrowLayer == fireArrowLayer;
+    }
+
     public void destroyCurrentExistingArrows() {
         foreach (GameObject arrow in currentlyExistingArrows.Where(arrow => arrow != null).ToList()) {
             Destroy(arrow);
         }
+        currentlyExistingArrows = new List<GameObject>();
+    }
 
+    public IEnumerator destroyCurrentExistingArrowsWithFireEffect() {
+
+        yield return new WaitForSeconds(0.3f);
+        foreach (GameObject arrow in currentlyExistingArrows.Where(arrow => arrow != null).ToList()) {
+            Destroy(arrow);
+        }
         currentlyExistingArrows = new List<GameObject>();
     }
 
