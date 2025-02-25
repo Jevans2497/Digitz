@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 public class Arrow: MonoBehaviour {
 
@@ -9,6 +10,8 @@ public class Arrow: MonoBehaviour {
     [SerializeField] ArrowFeedback arrowFeedbackPrefab;
     [SerializeField] SpawnedArrowManager spawnedArrowManager;
 
+    [SerializeField] TextMeshProUGUI challengeHelperText;
+    [SerializeField] ParticleSystem effectCompleteParticleSystem;
     [SerializeField] ParticleSystem freezeEffectParticleSystem;
 
     private float scaleFactor = 1.2f;
@@ -116,6 +119,8 @@ public class Arrow: MonoBehaviour {
 
         freezeEffectParticleSystem.transform.position = this.transform.position;
         freezeEffectParticleSystem.Play();
+
+        StartCoroutine(showChallengeEffectHelper("Tap to dethaw!"));
     }
 
     private void dethawFrozenArrow() {
@@ -129,7 +134,16 @@ public class Arrow: MonoBehaviour {
         if (frozenArrowDethawCounter <= 0) {
             defaultColor = Color.white;
             spriteRenderer.color = Color.white;
+            effectCompleteParticleSystem.transform.position = this.transform.position;
+            effectCompleteParticleSystem.Play();
         }
+    }
+
+    private IEnumerator showChallengeEffectHelper(string text) {
+        challengeHelperText.text = text;        
+        challengeHelperText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(5.0f);
+        challengeHelperText.gameObject.SetActive(false);
     }
 
     public void handleScoring(float threshold, bool isGoldenArrow) {
