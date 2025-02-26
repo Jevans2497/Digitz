@@ -104,14 +104,19 @@ public class Challenge: MenuItem {
     }
 
     public float getSeverityMultiplier() {
+        float challengeDifficultyModifier = 0.0f;
+        if (ChallengeTracker.getPandorasBoxIfActive() != null) {
+            challengeDifficultyModifier = 0.3f * ChallengeTracker.getPandorasBoxIfActive().getSeverityMultiplier();
+        }
+
         switch (severity) {
-            case ChallengeSeverity.none: return 0;
-            case ChallengeSeverity.veryLow: return 1;
-            case ChallengeSeverity.low: return 2;
-            case ChallengeSeverity.medium: return 3;
-            case ChallengeSeverity.high: return 4;
-            case ChallengeSeverity.veryHigh: return 5;
-            default: return 1;
+            case ChallengeSeverity.none: return 0 + challengeDifficultyModifier;
+            case ChallengeSeverity.veryLow: return 1 + challengeDifficultyModifier;
+            case ChallengeSeverity.low: return 2 + challengeDifficultyModifier;
+            case ChallengeSeverity.medium: return 3 + challengeDifficultyModifier;
+            case ChallengeSeverity.high: return 4 + challengeDifficultyModifier;
+            case ChallengeSeverity.veryHigh: return 5 + challengeDifficultyModifier;
+            default: return 1 + challengeDifficultyModifier;
         }
     }
 

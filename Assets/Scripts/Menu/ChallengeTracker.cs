@@ -6,8 +6,11 @@ public static class ChallengeTracker {
     private static Challenge currentActiveChallenge;
     private static ChallengeDisplayManager challengeDisplayManager;
 
-    //A special challenge that increases the severity of all future challenges, store it if the player has taken the curse. 
+    //A special challenge that increases the likelihood for challenges to be more severe, store it if the player has taken the curse. 
     private static Challenge theCurse;
+
+    //A special challenge that increases the severity of all future challenges, store it if the player has taken Pandora's Box.
+    private static Challenge pandorasBox;
 
     public static void setChallengeDisplayManager(ChallengeDisplayManager cdm) {
         challengeDisplayManager = cdm;
@@ -16,6 +19,10 @@ public static class ChallengeTracker {
     public static void addChallenge(Challenge challenge) {
         if (challenge.effect == Challenge.ChallengeEffect.TheCurse) {
             theCurse = challenge;
+        }
+
+        if (challenge.effect == Challenge.ChallengeEffect.PandorasBox) {
+            pandorasBox = challenge;
         }
 
         if (challenge.effect == Challenge.ChallengeEffect.ShatteredSword) {
@@ -54,5 +61,9 @@ public static class ChallengeTracker {
 
     public static Challenge getTheCurseIfActive() {
         return theCurse;
+    }
+
+    public static Challenge getPandorasBoxIfActive() {
+        return pandorasBox;
     }
 }

@@ -167,7 +167,7 @@
             "sprite_name": "Blaze",
             "challenge_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "always",
+            "rarity_string": "common",
             "hasSeverity": true,
             "description": "Some spawned arrows are now non-scoring fire effect arrows"
         },

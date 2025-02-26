@@ -148,7 +148,7 @@ public class SpawnedArrowManager: MonoBehaviour {
             break;
         }
 
-        int numberOfEffectArrows = (int)challenge.getSeverityMultiplier() * 20;
+        int numberOfEffectArrows = (int)challenge.getSeverityMultiplier() * 6;
         for (int i = 0; i < numberOfEffectArrows; i++) {
             int randomIndex = Random.Range(0, arrowSpawnDataList.Count);
             arrowSpawnDataList[randomIndex].arrowData.arrowEffect = challengeEffect;
