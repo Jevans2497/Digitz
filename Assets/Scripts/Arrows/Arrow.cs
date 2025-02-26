@@ -14,6 +14,7 @@ public class Arrow: MonoBehaviour {
     [SerializeField] ParticleSystem effectCompleteParticleSystem;
     [SerializeField] ParticleSystem freezeEffectParticleSystem;
     [SerializeField] ParticleSystem lightningEffectParticleSystem;
+    [SerializeField] ParticleSystem fireEffectCentralizedParticleSystem;
 
     [SerializeField] AudioClip electricalInterferenceClip;
 
@@ -123,6 +124,9 @@ public class Arrow: MonoBehaviour {
             case 10:
             detectedContactWithLightningArrow();
             break;
+            case 11:
+            detectedContactWithFireArrow();
+            break;
         }
 
         Destroy(closestArrow);
@@ -174,6 +178,11 @@ public class Arrow: MonoBehaviour {
         yield return new WaitForSeconds(10.0f);
         lightningEffectParticleSystem.Stop();
         isElectricalInterferenceActive = false;
+    }
+
+    private void detectedContactWithFireArrow() {
+        fireEffectCentralizedParticleSystem.Play();
+        StartCoroutine(spawnedArrowManager.destroyCurrentExistingArrowsWithFireEffect());
     }
 
     private IEnumerator showChallengeEffectHelper(string text, TMP_FontAsset font, Color color) {

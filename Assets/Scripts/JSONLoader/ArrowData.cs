@@ -58,8 +58,8 @@ public class ArrowData {
                 layer = 10;
                 break;
             case ArrowEffect.fire:
-                color = Color.red;
-                layer = 11;
+            color = SharedResources.hexToColor("#ffb0b0");
+            layer = 11;
                 break;
         }
     }

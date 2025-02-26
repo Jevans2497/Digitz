@@ -19,6 +19,9 @@ public class SpawnedArrowManager: MonoBehaviour {
 
     [SerializeField] GameManager gameManager;
 
+    [SerializeField] ParticleSystem fireEffectArrowParticleSystem;
+    [SerializeField] AudioClip fireEffectClip;
+
     public Transform leftSpawn, upSpawn, rightSpawn, downSpawn;
 
     float defaultSpeed = 1f;
@@ -27,7 +30,7 @@ public class SpawnedArrowManager: MonoBehaviour {
     private bool shouldSpawnArrows;
     private float maximumBasePointsForSong; // The score for the song assuming no upgrades and every feedback is perfect.
 
-    private List<GameObject> currentlyExistingArrows = new List<GameObject>();
+    private List<GameObject> currentlyExistingArrows = new List<GameObject>();    
 
     private Direction deathBeamRandomDirection;
 
@@ -304,9 +307,11 @@ public class SpawnedArrowManager: MonoBehaviour {
     }
 
     public IEnumerator destroyCurrentExistingArrowsWithFireEffect() {
-
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         foreach (GameObject arrow in currentlyExistingArrows.Where(arrow => arrow != null).ToList()) {
+            ParticleSystem fireEffect = Instantiate(fireEffectArrowParticleSystem, arrow.transform.position, Quaternion.identity);
+            fireEffect.Play();
+            AudioManager.Instance.playSound(fireEffectClip);
             Destroy(arrow);
         }
         currentlyExistingArrows = new List<GameObject>();
