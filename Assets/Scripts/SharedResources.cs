@@ -23,6 +23,12 @@ public class SharedResources: MonoBehaviour {
         }
     }
 
+    public static Direction getRandomDirection(Direction excludeDirection = Direction.None) {
+        List<Direction> directions = new List<Direction> { Direction.Left, Direction.Up, Direction.Right, Direction.Down };
+        directions.Remove(excludeDirection);
+        return directions[UnityEngine.Random.Range(0, directions.Count)];
+    }
+
     public static string getRandomDirectionAsString() {
         int randomInt = UnityEngine.Random.Range(0, 4);
         switch (randomInt) {

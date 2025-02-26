@@ -46,6 +46,7 @@ public class Challenge: MenuItem {
         Frosty,
         ShortCircuit,
         Blaze,
+        ElementalChaos,
         PandorasBox,
         Detour,
         None
@@ -133,7 +134,7 @@ public class Challenge: MenuItem {
             case Challenge.ChallengeSeverity.veryHigh:
             return "#E74C3C"; // Strong Red  
             default:
-            return "#964B00"; // White for fallback
+            return "#964B00"; // Brown for fallback
         }
     }
 

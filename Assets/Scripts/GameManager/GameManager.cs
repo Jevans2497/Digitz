@@ -244,6 +244,7 @@ public partial class GameManager: MonoBehaviour {
         delayStartSeconds = 3.0f;
         songTime = 0.0f;
         resetArrows();
+        detourGameObject.SetActive(false);
     }
 
     private void setupLevel() {

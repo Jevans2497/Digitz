@@ -33,6 +33,7 @@ public class SpawnedArrowManager: MonoBehaviour {
     private List<GameObject> currentlyExistingArrows = new List<GameObject>();    
 
     private Direction deathBeamRandomDirection;
+    public Direction detourRandomDirection;
 
     private void Update() {
         if (shouldSpawnArrows) {
@@ -51,13 +52,14 @@ public class SpawnedArrowManager: MonoBehaviour {
     }
 
     public void setup(SongPreset song) {
+        deathBeamRandomDirection = (Direction)Random.Range(0, 4);
+        detourRandomDirection = (Direction)Random.Range(0, 4);
+
         defaultSpeed = song.default_speed;
         createArrowSpawnDataList(song);
         preproccessArrowTimestampForArrivalTime();
         preprocessArrowsForArrowEffects();
         maximumBasePointsForSong = arrowSpawnDataList.Count * 100.0f;
-
-        deathBeamRandomDirection = (Direction)Random.Range(0, 4);
     }
 
     public void setShouldSpawnArrows(bool value) {
@@ -127,11 +129,15 @@ public class SpawnedArrowManager: MonoBehaviour {
         }
 
         Challenge challenge = ChallengeTracker.getChallenge();
-        if (challenge != null && challenge.effect == Challenge.ChallengeEffect.Frosty || challenge.effect == Challenge.ChallengeEffect.ShortCircuit || challenge.effect == Challenge.ChallengeEffect.Blaze) {
+        if (challenge != null && isChallengeElemental(challenge)) {
             addChallengeEffectToArrows(challenge);
         }
 
         arrowSpawnDataList.ForEach(spawnData => spawnData.arrowData.applyEffectToArrow());
+    }
+
+    private bool isChallengeElemental(Challenge challenge) {
+        return challenge.effect == Challenge.ChallengeEffect.Frosty || challenge.effect == Challenge.ChallengeEffect.ShortCircuit || challenge.effect == Challenge.ChallengeEffect.Blaze || challenge.effect == Challenge.ChallengeEffect.ElementalChaos;
     }
 
     private void addChallengeEffectToArrows(Challenge challenge) {
@@ -145,14 +151,26 @@ public class SpawnedArrowManager: MonoBehaviour {
             break;
             case Challenge.ChallengeEffect.Blaze:
             challengeEffect = ArrowData.ArrowEffect.fire;
-            break;
-        }
+            break;            
+        }        
 
-        int numberOfEffectArrows = (int)challenge.getSeverityMultiplier() * 6;
+        int numberOfEffectArrows = (int)challenge.getSeverityMultiplier() * 30;
         for (int i = 0; i < numberOfEffectArrows; i++) {
             int randomIndex = Random.Range(0, arrowSpawnDataList.Count);
+            if (challenge.effect == Challenge.ChallengeEffect.ElementalChaos) {
+                challengeEffect = getRandomElementalEffect();
+            }
             arrowSpawnDataList[randomIndex].arrowData.arrowEffect = challengeEffect;
         }
+    }
+
+    private ArrowData.ArrowEffect getRandomElementalEffect() {
+        ArrowData.ArrowEffect[] effects = {
+        ArrowData.ArrowEffect.fire,
+        ArrowData.ArrowEffect.freeze,
+        ArrowData.ArrowEffect.lightning
+    };
+        return effects[Random.Range(0, effects.Length)];
     }
 
     private void spawnArrow(ArrowSpawnData arrowSpawnData) {
@@ -199,9 +217,9 @@ public class SpawnedArrowManager: MonoBehaviour {
         }
 
         if (challenge.effect == Challenge.ChallengeEffect.EarlyBird) {
-            modifyTimeStampsBy(challenge.getSeverityMultiplier() * -0.05f);
+            modifyTimeStampsBy(challenge.getSeverityMultiplier() * -0.025f);
         } else if (challenge.effect == Challenge.ChallengeEffect.LaterGator) {
-            modifyTimeStampsBy(challenge.getSeverityMultiplier() * 0.05f);
+            modifyTimeStampsBy(challenge.getSeverityMultiplier() * 0.025f);
         } else if (challenge.effect == Challenge.ChallengeEffect.BrokenTape) {
             modifyTimeStampsForBrokenTapeChallenge(challenge.getSeverityMultiplier());
         } else if (challenge.effect == Challenge.ChallengeEffect.Bombardment) {
@@ -233,9 +251,8 @@ public class SpawnedArrowManager: MonoBehaviour {
             //Get random timestamp to spawn arrow at
             float randomFloat = UnityEngine.Random.Range(0, lastArrowTimestamp - 2);
 
-            //Get random direction
-            string randomDirection = getRandomDirectionAsString();
-            Direction spawnDirection = convertStringToDirection(randomDirection);
+            //Get random direction            
+            Direction spawnDirection = getRandomDirection();            
 
             //Create spawn data
             ArrowData speedyArrowData = new(randomFloat, getRandomDirectionAsString(), ArrowData.ArrowEffect.regular);
@@ -261,13 +278,20 @@ public class SpawnedArrowManager: MonoBehaviour {
 
     private Direction getPotentiallyModifiedArrowDirection(string originalDirection, int spawnedArrowIndex, int songArrowsCount) {
         Challenge challenge = ChallengeTracker.getChallenge();
+
         if (challenge != null && challenge.effect == Challenge.ChallengeEffect.Subterfuge) {
             float numberOfArrowsToAlter = songArrowsCount * (0.15f * challenge.getSeverityMultiplier()); // 15% per severity level
-            if (spawnedArrowIndex < numberOfArrowsToAlter) {                
-                string randomDirection = getRandomDirectionAsString();
-                return convertStringToDirection(randomDirection);
+            if (spawnedArrowIndex < numberOfArrowsToAlter) {
+                return getRandomDirection();
             }
         }
+
+        if (challenge != null && challenge.effect == Challenge.ChallengeEffect.Detour) {
+            if (detourRandomDirection == SharedResources.convertStringToDirection(originalDirection)) {                
+                return getRandomDirection(excludeDirection: detourRandomDirection);
+            }
+        }
+
         return convertStringToDirection(originalDirection);
     }
 

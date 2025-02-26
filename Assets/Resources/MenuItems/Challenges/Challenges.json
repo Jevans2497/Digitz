@@ -23,7 +23,7 @@
             "sprite_name": "BrokenTape",
             "challenge_type_string": "arrowSpeed",
             "color": "#007FFF",
-            "rarity_string": "common",
+            "rarity_string": "rare",
             "hasSeverity": true,
             "description": "Half of arrows are shifted either late or early."
         },
@@ -41,7 +41,7 @@
             "sprite_name": "Overclock",
             "challenge_type_string": "arrowSpeed",
             "color": "#007FFF",
-            "rarity_string": "common",
+            "rarity_string": "uncommon",
             "hasSeverity": true,
             "description": "Everything is sped up"
         },
@@ -77,7 +77,7 @@
             "sprite_name": "Outage",
             "challenge_type_string": "other",
             "color": "#00D903",
-            "rarity_string": "uncommon",
+            "rarity_string": "rare",
             "hasSeverity": true,
             "description": "Chance for each upgrade to be disabled for the round"
         },
@@ -86,7 +86,7 @@
             "sprite_name": "Graveyard",
             "challenge_type_string": "other",
             "color": "#00D903",
-            "rarity_string": "common",
+            "rarity_string": "uncommon",
             "hasSeverity": true,
             "description": "Spawned arrows start invisible and increase in visibility as they approach"
         },
@@ -104,7 +104,7 @@
             "sprite_name": "TheCurse",
             "challenge_type_string": "other",
             "color": "#00D903",
-            "rarity_string": "uncommon",
+            "rarity_string": "rare",
             "hasSeverity": true,
             "description": "Higher chance of future challenges having increased severity"
         },
@@ -113,10 +113,10 @@
             "sprite_name": "TheMiddlePath",
             "challenge_type_string": "feedback",
             "color": "#007FFF",
-            "rarity_string": "common",
+            "rarity_string": "rare",
             "hasSeverity": false,
             "description": "No Perfects, no Misses"
-        },        
+        },
         {
             "name": "The Great Below",
             "sprite_name": "TheGreatBelow",
@@ -140,7 +140,7 @@
             "sprite_name": "Subterfuge",
             "challenge_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "common",
+            "rarity_string": "uncommon",
             "hasSeverity": true,
             "description": "Random directions for each spawned arrow, 15% of song per severity level"
         },
@@ -172,11 +172,20 @@
             "description": "Some spawned arrows are now non-scoring fire effect arrows"
         },
         {
+            "name": "Elemental Chaos",
+            "sprite_name": "ElementalChaos",
+            "challenge_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "uncommon",
+            "hasSeverity": true,
+            "description": "Some spawned arrows are now non-scoring elemental effect arrows"
+        },
+        {
             "name": "Pandora's Box",
             "sprite_name": "PandorasBox",
             "challenge_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "common",
+            "rarity_string": "rare",
             "hasSeverity": true,
             "description": "Severity effects are more intense for the rest of the game"
         },
@@ -185,7 +194,7 @@
             "sprite_name": "Detour",
             "challenge_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "common",
+            "rarity_string": "uncommon",
             "hasSeverity": false,
             "description": "One random direction is closed, arrows redirected to random other direction"
         }
