@@ -17,7 +17,7 @@ public partial class GameManager : MonoBehaviour {
     private void handleOverclockChallenge() {
         if (ChallengeTracker.hasChallenge(Challenge.ChallengeEffect.Overclock)) {
             Challenge overclock = ChallengeTracker.getChallenge();
-            float overclockSpeed = 0.02f * overclock.getSeverityMultiplier();
+            float overclockSpeed = 0.015f * overclock.getSeverityMultiplier();
             audioSource.pitch = 1 + overclockSpeed;
         } else {
             audioSource.pitch = 1;

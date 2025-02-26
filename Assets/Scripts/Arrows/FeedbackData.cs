@@ -25,7 +25,7 @@ public class FeedbackData {
     private float defaultGreatScore = 75.0f;
     private float defaultGoodScore = 50.0f;
     private float defaultStinkyScore = 25.0f;
-    private float defaultMissScore = -25.0f;
+    private float defaultMissScore = -50.0f;
 
     private float banditThreshold = -1f;
     private float banditDefaultScore = 5.0f;
@@ -210,7 +210,7 @@ public class FeedbackData {
         if(challenge != null && challenge.effect == Challenge.ChallengeEffect.HighPressure) {
             float multiplier = challenge.getSeverityMultiplier();
             defaultStinkyScore = -25 * multiplier;
-            defaultMissScore = -125 * multiplier;
+            defaultMissScore = -100 * multiplier;
         }
     }
 

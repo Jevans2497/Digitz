@@ -14,6 +14,7 @@ public class MenuCanvasManager: MonoBehaviour {
     [SerializeField] GameObject menuObjectPrefab;
     [SerializeField] TextMeshProUGUI menuOptionExplanationText;
     [SerializeField] GameObject concealedChallengeExplanation;
+    [SerializeField] GameObject theCurseExplanation;
 
     public AudioClip upgradeSelectedClip;
     public AudioClip challengeSelectedClip;
@@ -145,6 +146,7 @@ public class MenuCanvasManager: MonoBehaviour {
         AudioManager.Instance.playSound(challengeSelectedClip);
         ChallengeTracker.addChallenge(challenge);
         levelBonusGameObject.SetActive(false);
+        theCurseExplanation.SetActive(false);
         challengeManager.removeChallengeFromPool(challenge);
         presentSongOptions();
     }
@@ -178,6 +180,17 @@ public class MenuCanvasManager: MonoBehaviour {
             setupMenuOptions();
         }
         menuGameObjects.ForEach(menuGameObject => StartCoroutine(animateMenuOptionGrowing(menuGameObject.background)));
+        showTheCurseExplanationIfTheCurseActive();
+    }
+
+    private void showTheCurseExplanationIfTheCurseActive() {
+        Challenge theCurse = ChallengeTracker.getTheCurseIfActive();
+        if (theCurse != null) {
+            theCurseExplanation.GetComponent<Image>().color = SharedResources.hexToColor(theCurse.color);
+            Tooltip tooltip = theCurseExplanation.GetComponent<Tooltip>();
+            tooltip.message = "The Curse\n" + getSeverityString(theCurse, false);            
+            theCurseExplanation.SetActive(true);
+        }
     }
 
     private void setupLevelBonusOption() {
@@ -254,9 +267,10 @@ public class MenuCanvasManager: MonoBehaviour {
         }
     }
 
-    private string getSeverityString(Challenge challenge) {
+    private string getSeverityString(Challenge challenge, bool withNewLines = true) {
         string severityColor = challenge.hexForSeverity(challenge.severity);
-        return $"\n\nSeverity: <b><size=120%><color={severityColor}>{challenge.severityAsString(challenge.severity)}</color></size></b>";
+        string newLines = withNewLines ? "\n\n" : "";
+        return $"{newLines}Severity: <b><size=120%><color={severityColor}>{challenge.severityAsString(challenge.severity)}</color></size></b>";
     }
 
     private float animationSpeed = 5f; // Speed of the up and down motion

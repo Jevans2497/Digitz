@@ -100,12 +100,12 @@ public class SpawnedArrowManager: MonoBehaviour {
             }
 
             if (ChallengeTracker.getChallenge() != null && ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.Supersonic) {
-                arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.25f;
+                arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.2f;
             }
 
             if (ChallengeTracker.getChallenge() != null && ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.DeathBeam) {
                 if (deathBeamRandomDirection == SharedResources.convertStringToDirection(spawnData.arrowData.arrow_direction)) {
-                    arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.75f;
+                    arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.5f;
                 }
                     
             }
@@ -256,7 +256,7 @@ public class SpawnedArrowManager: MonoBehaviour {
 
             //Create spawn data
             ArrowData speedyArrowData = new(randomFloat, getRandomDirectionAsString(), ArrowData.ArrowEffect.regular);
-            speedyArrowData.arrow_speed = defaultSpeed * 1.75f;
+            speedyArrowData.arrow_speed = defaultSpeed * 1.5f;
             ArrowSpawnData spawnData = GetSpawnData(spawnDirection, speedyArrowData);
 
             //Add to list
@@ -267,7 +267,7 @@ public class SpawnedArrowManager: MonoBehaviour {
     private void handleGraveyardChallenge(float fractionOfJourney, GameObject spawnedArrow) {
         Challenge challenge = ChallengeTracker.getChallenge();
         if (challenge != null && challenge.effect == Challenge.ChallengeEffect.Graveyard) {
-            float startingAlpha = -.25f - (.125f * challenge.getSeverityMultiplier());
+            float startingAlpha = -.1f - (.135f * challenge.getSeverityMultiplier());            
             float alpha = Mathf.Lerp(startingAlpha, 0.85f, fractionOfJourney);
 
             Color alphaAdjustedColor = spawnedArrow.GetComponent<SpriteRenderer>().color;
