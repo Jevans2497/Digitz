@@ -38,9 +38,20 @@ public class ChallengeDisplayManager: MonoBehaviour {
 
     private void setupPandorasBoxDisplay(Challenge challenge, GameObject challengeDisplayObject) {
         Challenge pandorasBox = ChallengeTracker.getPandorasBoxIfActive();
+        GameObject pandorasBoxObject = challengeDisplayObject.transform.Find("PandorasBoxDisplay").gameObject;
+
         if (pandorasBox != null && challenge.effect != Challenge.ChallengeEffect.PandorasBox) {
-            GameObject pandorasBoxObject = challengeDisplayObject.transform.Find("PandorasBoxDisplay").gameObject;
+            //Set color
+            Image pandorasBoxBackground = pandorasBoxObject.transform.Find("PandorasBoxDisplayForeground").gameObject.GetComponent<Image>();
+            pandorasBoxBackground.color = SharedResources.hexToColor(pandorasBox.hexForSeverity(pandorasBox.severity));
+
+            //tooltip
+            Tooltip tooltip = pandorasBoxObject.GetComponent<Tooltip>();
+            tooltip.message = pandorasBox.name + ":\n\n" + pandorasBox.description;
+
             pandorasBoxObject.SetActive(true);
+        } else {
+            pandorasBoxObject.SetActive(false);
         }
     }
 
