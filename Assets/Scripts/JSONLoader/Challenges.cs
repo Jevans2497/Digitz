@@ -104,10 +104,10 @@ public class Challenge: MenuItem {
         }
     }
 
-    public float getSeverityMultiplier() {
+    public float getSeverityMultiplier(bool isPandorasBoxCheck = false) {
         float challengeDifficultyModifier = 0.0f;
-        if (ChallengeTracker.getPandorasBoxIfActive() != null) {
-            challengeDifficultyModifier = 0.3f * ChallengeTracker.getPandorasBoxIfActive().getSeverityMultiplier();
+        if (ChallengeTracker.getPandorasBoxIfActive() != null && !isPandorasBoxCheck) {
+            challengeDifficultyModifier = 0.3f * ChallengeTracker.getPandorasBoxIfActive().getSeverityMultiplier(true);
         }
 
         switch (severity) {

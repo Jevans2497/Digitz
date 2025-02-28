@@ -148,7 +148,7 @@ public class MenuCanvasManager: MonoBehaviour {
             challenge.color = challenge.hexForSeverity(challenge.severity);
         }
         AudioManager.Instance.playSound(challengeSelectedClip);
-        //ChallengeTracker.addChallenge(challenge);
+        ChallengeTracker.addChallenge(challenge);
         levelBonusGameObject.SetActive(false);
         theCurseExplanation.SetActive(false);
         challengeManager.removeChallengeFromPool(challenge);
