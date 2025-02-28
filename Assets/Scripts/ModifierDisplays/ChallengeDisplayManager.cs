@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ChallengeDisplayManager: MonoBehaviour {
 
     [SerializeField] GameObject challengeDisplayPrefab;
-    [SerializeField] Transform challengeDisplayTransform;
+    [SerializeField] Transform challengeDisplayTransform;    
 
     private KeyValuePair<Challenge, GameObject> challengeDisplayObject = new();
 
@@ -32,6 +32,16 @@ public class ChallengeDisplayManager: MonoBehaviour {
         // Set Tooltip
         Tooltip tooltip = challengeDisplayObject.GetComponent<Tooltip>();
         tooltip.message = challenge.name + ":\n\n" + challenge.description;
+
+        setupPandorasBoxDisplay(challengeDisplayObject);
+    }
+
+    private void setupPandorasBoxDisplay(GameObject challengeDisplayObject) {
+        Challenge pandorasBox = ChallengeTracker.getPandorasBoxIfActive();
+        if (pandorasBox != null) {
+            GameObject pandorasBoxObject = challengeDisplayObject.transform.Find("PandorasBoxDisplay").gameObject;
+            pandorasBoxObject.SetActive(true);
+        }
     }
 
     public void challengeRemoved(Challenge challenge) {

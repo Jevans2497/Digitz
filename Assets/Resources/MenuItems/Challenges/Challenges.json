@@ -104,7 +104,7 @@
             "sprite_name": "TheCurse",
             "challenge_type_string": "other",
             "color": "#00D903",
-            "rarity_string": "always",
+            "rarity_string": "uncommon",
             "hasSeverity": true,
             "description": "Higher chance of future challenges having increased severity"
         },
@@ -185,7 +185,7 @@
             "sprite_name": "PandorasBox",
             "challenge_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "rare",
+            "rarity_string": "always",
             "hasSeverity": true,
             "description": "Severity effects are more intense for the rest of the game"
         },
