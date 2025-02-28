@@ -33,12 +33,12 @@ public class ChallengeDisplayManager: MonoBehaviour {
         Tooltip tooltip = challengeDisplayObject.GetComponent<Tooltip>();
         tooltip.message = challenge.name + ":\n\n" + challenge.description;
 
-        setupPandorasBoxDisplay(challengeDisplayObject);
+        setupPandorasBoxDisplay(challenge, challengeDisplayObject);
     }
 
-    private void setupPandorasBoxDisplay(GameObject challengeDisplayObject) {
+    private void setupPandorasBoxDisplay(Challenge challenge, GameObject challengeDisplayObject) {
         Challenge pandorasBox = ChallengeTracker.getPandorasBoxIfActive();
-        if (pandorasBox != null) {
+        if (pandorasBox != null && challenge.effect != Challenge.ChallengeEffect.PandorasBox) {
             GameObject pandorasBoxObject = challengeDisplayObject.transform.Find("PandorasBoxDisplay").gameObject;
             pandorasBoxObject.SetActive(true);
         }
