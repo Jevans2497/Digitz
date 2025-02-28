@@ -29,9 +29,12 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void stopMenuMusic() {
-        AudioSource menuMusicAudioSource = audioSources.Find(audioSource => audioSource.clip == menuMusic);
-        StartCoroutine(SharedResources.fadeOutAudio(1.5f, menuMusicAudioSource));
-        isMenuMusicPlaying = false;
+        if (isMenuMusicPlaying) {
+            AudioSource menuMusicAudioSource = audioSources.Find(audioSource => audioSource.clip == menuMusic);
+            if (menuMusicAudioSource == null) return;
+            StartCoroutine(SharedResources.fadeOutAudio(1.5f, menuMusicAudioSource));
+            isMenuMusicPlaying = false;
+        }
     }
 
     public void stopAudioClip(AudioClip audioClip) {

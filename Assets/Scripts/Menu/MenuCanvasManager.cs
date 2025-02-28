@@ -154,10 +154,10 @@ public class MenuCanvasManager: MonoBehaviour {
     private void addSong(Song song) {
         AudioManager.Instance.playSound(songSelectedClip);
         menuCanvas.enabled = false;
-        gameManager.setPressSpaceButtonActive(true);
         songManager.removeSongFromPool(song);        
         gameManager.setSong(song.song_file_name);
         isMenuLoopFinished = true;
+        gameManager.setPressSpaceButtonActive(true);
     }
 
     private void presentUpgradeOptions() {

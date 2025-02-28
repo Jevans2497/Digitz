@@ -72,18 +72,31 @@ public class SharedResources: MonoBehaviour {
 
 
     public static IEnumerator fadeOutAudio(float fadeDuration, AudioSource audioSource) {
+        if (audioSource == null || audioSource.gameObject == null) {
+            Debug.LogWarning("fadeOutAudio called with a null or destroyed AudioSource.");
+            yield break;
+        }
+
         float startVolume = audioSource.volume;
         float targetVolume = 0f;
-
         float elapsedTime = 0f;
+
         while (elapsedTime < fadeDuration) {
+            if (audioSource == null || audioSource.gameObject == null) {
+                Debug.LogWarning("AudioSource was destroyed during fadeOutAudio.");
+                yield break;
+            }
+
             audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        audioSource.volume = targetVolume;
-        audioSource.Stop();
-        audioSource.volume = startVolume;
+        if (audioSource != null && audioSource.gameObject != null) {
+            audioSource.volume = targetVolume;
+            audioSource.Stop();
+            audioSource.volume = startVolume;
+        }
     }
+
 }

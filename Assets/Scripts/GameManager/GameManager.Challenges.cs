@@ -8,7 +8,7 @@ public partial class GameManager : MonoBehaviour {
     [SerializeField] GameObject detourGameObject;
 
     private void handleChallenges() {
-        handleSecurityCameraUpgrade();
+        handleOutageChallenge();
         handleOverclockChallenge();
         handleTheGreatBelowChallenge();
         handleDetourChallenge();
@@ -70,6 +70,4 @@ public partial class GameManager : MonoBehaviour {
             detourGameObject.SetActive(false);
         }
     }
-
-
 }

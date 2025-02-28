@@ -134,13 +134,13 @@ public partial class GameManager: MonoBehaviour {
             AudioManager.Instance.stopMenuMusic();
         }
         pressSpaceButton.SetActive(false);
-        setupSpawnedArrowManager();
-        inSongLoop = true;
+        setupSpawnedArrowManager();        
         setupLevel();
         levelNameDisplay.enabled = true;
         handleUpgradesAndChallenges();
         StartCoroutine(showAndFadeLevelName(levelNameDisplay, delayStartSeconds));
         StartCoroutine(changeSpriteAlpha(blackBackgroundOverlay, 1.0f, 1.5f, 0.9f));
+        inSongLoop = true;
     }
 
     private void manageSongLoop() {
@@ -253,7 +253,6 @@ public partial class GameManager: MonoBehaviour {
         spriteRenderer.sprite = background;
         levelNameDisplay.text = currentLevel.name;
         setupLevelProgress(currentLevel);
-
     }
 
     private void setupLevelProgress(Level currentLevel) {
@@ -270,7 +269,7 @@ public partial class GameManager: MonoBehaviour {
 
     private void handleUpgradesAndChallenges() {
         UpgradeTracker.enableAllUpgrades();
-        handleOutageChallenge();
+        handleSecurityCameraUpgrade();
         handleChallenges();
     }
 }
