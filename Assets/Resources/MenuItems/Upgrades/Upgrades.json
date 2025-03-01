@@ -6,7 +6,7 @@
             "upgrade_type_string": "feedback",
             "color": "#007FFF",
             "rarity_string": "common",
-            "description": "Perfects are worth 2x points"
+            "description": "Perfect! worth 2x points"
         },
         {
             "name": "Repeat Offender",
@@ -22,7 +22,7 @@
             "upgrade_type_string": "feedback",
             "color": "#007FFF",
             "rarity_string": "uncommon",
-            "description": "Each time you score all 5 feedback types, multiply total score by 1.25x"
+            "description": "Each time you score all 5 Feedback types, multiply total score by 1.25x"
         },
         {
             "name": "Goalie",
@@ -70,7 +70,7 @@
             "upgrade_type_string": "feedback",
             "color": "#007FFF",
             "rarity_string": "uncommon",
-            "description": "All positive feedback scores worth 1.25x more"
+            "description": "All positive Feedback scores worth 1.25x more"
         },
         {
             "name": "Houston",
@@ -78,7 +78,95 @@
             "upgrade_type_string": "feedback",
             "color": "#007FFF",
             "rarity_string": "uncommon",
-            "description": "Last arrow of song multiplies total score greatly based on feedback"
+            "description": "Last arrow of song multiplies total score greatly based on Feedback"
+        },
+        {
+            "name": "Sloth",
+            "sprite_name": "Sloth",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "description": "Spawned arrows slightly slowed"
+        },
+        {
+            "name": "Marshmallow",
+            "sprite_name": "Marshmallow",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "rare",
+            "description": "Skip upgrade this round and get all 3 next round"
+        },
+        {
+            "name": "Pressure Cooker",
+            "sprite_name": "PressureCooker",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "rare",
+            "description": "Feedback worth more based on song difficulty"
+        },
+        {
+            "name": "Abacus",
+            "sprite_name": "Abacus",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "uncommon",
+            "description": "Each Feedback type worth +1 each time it's received, resets each song"
+        },
+        {
+            "name": "The G-Train",
+            "sprite_name": "TheGTrain",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "rare",
+            "description": "Good and great worth 5x. Perfect worth 0"
+        },
+        {
+            "name": "Gold Mine",
+            "sprite_name": "GoldMine",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "uncommon",
+            "description": "Golden arrows more likely to spawn (Golden arrows multiply score based on Feedback)"
+        },
+        {
+            "name": "After the Rain",
+            "sprite_name": "AfterTheRain",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "uncommon",
+            "description": "Rainbow arrows more likely to spawn (Rainbow arrows give random upgrade based on Feedback)"
+        },
+        {
+            "name": "Most Wanted",
+            "sprite_name": "MostWanted",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "godly",
+            "description": "Duplicate all upgrades. All Challenge severity's are now Very Hard"
+        },
+        {
+            "name": "Great Day",
+            "sprite_name": "GreatDay",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "description": "Great! worth 3x points"
+        },
+        {
+            "name": "Good Graces",
+            "sprite_name": "GoodGraces",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "common",
+            "description": "Good worth 7x points"
+        },
+        {
+            "name": "Great Responsibility",
+            "sprite_name": "GreatResponsibility",
+            "upgrade_type_string": "other",
+            "color": "#007FFF",
+            "rarity_string": "rare",
+            "description": "Stinky ): and Good now scored as Great!"
         }
     ]
 }

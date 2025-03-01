@@ -27,16 +27,27 @@ public class Upgrade: MenuItem {
     }
 
     public enum UpgradeEffect {
+        Abacus,
+        AfterTheRain,
         Anarchy,
         Bandit,
         ControlTower,
         Fertilizer,
         Goalie,
+        GoldMine,
+        GoodGraces,
+        GreatDay,
+        GreatResponsibility,
         Houston,
         LoadedDice,
+        Marshmallow,
+        MostWanted,
+        PressureCooker,
         RepeatOffender,
         SecurityCamera,
         Sharpshooter,
+        Sloth,
+        TheGTrain,
         TwoPerfect,
         None
     }
@@ -72,7 +83,7 @@ public class Upgrade: MenuItem {
             rarity = UpgradeRarity.common;
         }
 
-        if (!Enum.TryParse(name.Replace(" ", ""), true, out effect)) {
+        if (!Enum.TryParse(name.Replace(" ", "").Replace("-", ""), true, out effect)) {
             Debug.LogWarning($"Invalid effect: {name} for Upgrade {name}. Defaulting to 'none'.");
             effect = UpgradeEffect.None;
         }
