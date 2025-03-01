@@ -95,20 +95,8 @@ public class SpawnedArrowManager: MonoBehaviour {
             float arrowSpeed = spawnData.arrowData.arrow_speed != 0 ? spawnData.arrowData.arrow_speed : defaultSpeed;
 
             //We have to check for arrowSpeed modifiers here before the timestamps are processed.
-            if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.slowArrows) {
-                arrowSpeed -= 0.7f;
-            }
-
-            if (ChallengeTracker.getChallenge() != null && ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.Supersonic) {
-                arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.2f;
-            }
-
-            if (ChallengeTracker.getChallenge() != null && ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.DeathBeam) {
-                if (deathBeamRandomDirection == SharedResources.convertStringToDirection(spawnData.arrowData.arrow_direction)) {
-                    arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.5f;
-                }
-                    
-            }
+            Direction arrowDirection = SharedResources.convertStringToDirection(spawnData.arrowData.arrow_direction);
+            arrowSpeed = modifyArrowSpeedIfNeeded(arrowSpeed, arrowDirection);
 
             spawnData.arrowData.arrow_speed = arrowSpeed;
 
@@ -116,10 +104,32 @@ public class SpawnedArrowManager: MonoBehaviour {
             spawnData.arrowData.timestamp -= travelTime;
         }
 
-
         alterSpawnedArrowsForChallengeIfNeeded();
 
         arrowSpawnDataList.Sort((a, b) => a.arrowData.timestamp.CompareTo(b.arrowData.timestamp));
+    }
+
+    private float modifyArrowSpeedIfNeeded(float originalSpeed, Direction arrowDirection) {
+        float arrowSpeed = originalSpeed;
+        if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.slowArrows) {
+            arrowSpeed -= 0.7f;
+        }
+
+        if (ChallengeTracker.getChallenge() != null && ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.Supersonic) {
+            arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.2f;
+        }
+
+        if (ChallengeTracker.getChallenge() != null && ChallengeTracker.getChallenge().effect == Challenge.ChallengeEffect.DeathBeam) {
+            if (deathBeamRandomDirection == arrowDirection) {
+                arrowSpeed += ChallengeTracker.getChallenge().getSeverityMultiplier() * 0.5f;
+            }
+        }
+
+        if (UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.Sloth)) {
+            arrowSpeed -= 0.5f;
+        }
+
+        return arrowSpeed;
     }
 
     private void preprocessArrowsForArrowEffects() {

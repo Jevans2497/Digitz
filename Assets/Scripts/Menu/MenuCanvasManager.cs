@@ -136,6 +136,10 @@ public class MenuCanvasManager: MonoBehaviour {
         }
     }
 
+    private void activateUpgradeMenuOption() {
+        GameObject menuGameObject = menuGameObjects[0].background;
+    }
+
     private void addUpgrade(Upgrade upgrade) {
         AudioManager.Instance.playSound(upgradeSelectedClip);
         UpgradeTracker.addUpgrade(upgrade);
