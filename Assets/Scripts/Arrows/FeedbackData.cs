@@ -236,6 +236,14 @@ public class FeedbackData {
                 defaultGreatScore *= 3f;
                 defaultGoodScore *= 3f;
             }
+
+            if (upgrade.effect == UpgradeEffect.GreatDay) {
+                defaultGreatScore *= 3f;
+            }
+
+            if (upgrade.effect == UpgradeEffect.GoodGraces) {
+                defaultGoodScore *= 7f;
+            }
         }
     }
 
