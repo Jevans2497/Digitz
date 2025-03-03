@@ -146,7 +146,6 @@ public class FeedbackData {
                     modifiedThreshold = stinkyThreshold;
                     mostRecentFeedback = FeedbackType.miss;
                 }
-                UpgradeTracker.upgradeTriggered(UpgradeEffect.Goalie);
             }
 
             //LoadedDice
@@ -155,14 +154,16 @@ public class FeedbackData {
                     modifiedThreshold = perfectThreshold;
                     mostRecentFeedback = FeedbackType.perfect;
                     loadedDiceCounter -= 1;
-                    UpgradeTracker.upgradeTriggered(upgrade);
                 }
             }
 
             //Sharpshooter
             if (upgrade.effect == UpgradeEffect.Sharpshooter) {
                 perfectThreshold = 0.125f;
-                UpgradeTracker.upgradeTriggered(upgrade);
+            }
+
+            if (upgrade.effect == UpgradeEffect.GreatResponsibility) {
+                greatThreshold = stinkyThreshold;
             }
         }
 
