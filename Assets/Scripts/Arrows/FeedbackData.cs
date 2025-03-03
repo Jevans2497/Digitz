@@ -42,7 +42,8 @@ public class FeedbackData {
 
     private static HashSet<FeedbackType> anarchyUpgradeFeedbackTracker = new HashSet<FeedbackType>();
 
-    public static Dictionary<FeedbackType, int> feedbackCounter = new Dictionary<FeedbackType, int>();
+    public static Dictionary<FeedbackType, int> fullGameFeedbackCounter = new Dictionary<FeedbackType, int>();
+    public static Dictionary<FeedbackType, int> currentSongFeedbackCounter = new Dictionary<FeedbackType, int>();
 
     public FeedbackData(float baseThreshold, GameManager gameManager, bool isGoldenArrow) {
         this.gameManager = gameManager;
@@ -114,18 +115,22 @@ public class FeedbackData {
         feedbackStreak = mostRecentFeedback == feedbackForScore ? feedbackStreak + 1 : 0;
         mostRecentFeedback = feedbackForScore;
 
-        incrementFeedbackCounter(feedbackForScore);
+        incrementFeedbackCounters(feedbackForScore);
 
         float modifiedScore = modifyScoreForUpgrades(calculatedScore, feedbackForScore);
 
         return modifiedScore;
     }
 
-    private void incrementFeedbackCounter(FeedbackType feedbackForScore) {
-        if (!feedbackCounter.Keys.Contains(feedbackForScore)) {
-            feedbackCounter[feedbackForScore] = 0;
+    private void incrementFeedbackCounters(FeedbackType feedbackForScore) {
+        if (!fullGameFeedbackCounter.Keys.Contains(feedbackForScore)) {
+            fullGameFeedbackCounter[feedbackForScore] = 0;
         }
-        feedbackCounter[feedbackForScore] += 1;
+        if (!currentSongFeedbackCounter.Keys.Contains(feedbackForScore)) {
+            currentSongFeedbackCounter[feedbackForScore] = 0;
+        }
+        fullGameFeedbackCounter[feedbackForScore] += 1;
+        currentSongFeedbackCounter[feedbackForScore] += 1;
 
     }
 
@@ -209,6 +214,11 @@ public class FeedbackData {
                 float multiplier = 1f + (0.1f * difficultyLevel);
                 modifiedScore *= multiplier;
             }
+
+            //Abacus
+            if (upgrade.effect == UpgradeEffect.Abacus) {
+                modifiedScore += currentSongFeedbackCounter[feedbackForScore];
+            }
         }
 
         return modifiedScore;
@@ -224,7 +234,7 @@ public class FeedbackData {
 
     private void modifyDefaultScoresForLevelBonus() {
         if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.aintBroke) {
-            FeedbackType mostReceivedFeedback = FeedbackData.feedbackCounter.OrderByDescending(kvp => kvp.Value).First().Key;
+            FeedbackType mostReceivedFeedback = FeedbackData.fullGameFeedbackCounter.OrderByDescending(kvp => kvp.Value).First().Key;
             switch (mostReceivedFeedback) {
                 case FeedbackType.bandit:
                 banditDefaultScore *= 1.25f;

@@ -101,7 +101,7 @@
             "sprite_name": "PressureCooker",
             "upgrade_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "always",
+            "rarity_string": "uncommon",
             "description": "Feedback worth more based on song difficulty"
         },
         {
