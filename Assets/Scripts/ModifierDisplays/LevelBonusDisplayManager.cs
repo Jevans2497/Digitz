@@ -20,7 +20,7 @@ public class LevelBonusDisplayManager: MonoBehaviour {
         setLevelBonusDisplay(levelBonus, levelBonusDisplayObject);
         this.levelBonusDisplayObject = new KeyValuePair<LevelBonus, GameObject>(levelBonus, levelBonusDisplayObject);
 
-        upgradeDisplayManager.shiftToAccomodateLevelBonus();
+        upgradeDisplayManager.layoutUpgradeDisplayObjects();
     }
 
     private void setLevelBonusDisplay(LevelBonus levelBonus, GameObject levelBonusDisplayObject) {
@@ -39,6 +39,6 @@ public class LevelBonusDisplayManager: MonoBehaviour {
 
     public void levelBonusRemoved() {
         Destroy(levelBonusDisplayObject.Value);
-        upgradeDisplayManager.shiftToAccomodateLevelBonus();
+        upgradeDisplayManager.layoutUpgradeDisplayObjects();
     }
 }

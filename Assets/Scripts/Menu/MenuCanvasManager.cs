@@ -35,8 +35,8 @@ public class MenuCanvasManager: MonoBehaviour {
     public bool isMenuLoopFinished = true;
 
     private bool isInitialMenuLoop = true;
-
     private bool isUserInteractionEnabled = true;
+    private bool isSelectingUpgrade;
 
     public void startMenuLoop() {
         LevelBonusTracker.reset();
@@ -87,16 +87,14 @@ public class MenuCanvasManager: MonoBehaviour {
             if (menuGameObjects[2] != null) {
                 activateMenuItem(menuGameObjects[2].menuItem);
             }
-        }
-        //For debugging
-        if (Input.GetKeyDown(KeyCode.U)) {
-            presentSongOptions();
-        }
+        } else if (Input.GetKeyDown(KeyCode.DownArrow) && isSelectingUpgrade) {
+            passOnUpgrades();
+        }        
     }
 
     private void activateMenuItem(MenuItem menuItem) {
         if (menuItem is Upgrade upgrade) {
-            addUpgrade(upgrade);
+            activateUpgradeMenuOption(menuItem);
         } else if (menuItem is Challenge challenge) {
             activateChallengeMenuItem(challenge);
         } else if (menuItem is Song song) {
@@ -136,14 +134,35 @@ public class MenuCanvasManager: MonoBehaviour {
         }
     }
 
-    private void activateUpgradeMenuOption() {
-        GameObject menuGameObject = menuGameObjects[0].background;
+    private void activateUpgradeMenuOption(MenuItem menuItem) {
+        int activeMenuObjects = menuGameObjects.Count(mgo => mgo.background.activeSelf);
+        if (UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.Marshmallow) && activeMenuObjects > 1) {
+            addUpgrade((Upgrade)menuItem, false);
+            var menuGameObject = menuGameObjects.Find(mgo => mgo.menuItem == menuItem);
+            if (menuGameObject != null) {
+                menuGameObject.background.SetActive(false);
+            }
+        } else if (UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.Marshmallow) && activeMenuObjects == 1) {
+            UpgradeTracker.removeMarshmallowUpgrade();
+            addUpgrade((Upgrade)menuItem);
+        } else { 
+            addUpgrade((Upgrade)menuItem);
+        }
     }
 
-    private void addUpgrade(Upgrade upgrade) {
+    private void passOnUpgrades() {
+        //Remove marshmallow upgrade if it exists
+        UpgradeTracker.removeMarshmallowUpgrade();
+        presentChallengeOptions();
+    }
+
+    private void addUpgrade(Upgrade upgrade, bool isCompleteAfterUpgradeAdded = true) {
         AudioManager.Instance.playSound(upgradeSelectedClip);
         UpgradeTracker.addUpgrade(upgrade);
-        presentChallengeOptions();
+        if (isCompleteAfterUpgradeAdded) {
+            isSelectingUpgrade = false;
+            presentChallengeOptions();
+        }
     }
 
     private void addChallenge(Challenge challenge) {
@@ -170,6 +189,7 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void presentUpgradeOptions() {
         destroyPreexistingMenuObjects();
+        isSelectingUpgrade = true;
         menuOptionExplanationText.text = "Upgrade";        
         menuGameObjects = upgradeManager.createUpgradeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {

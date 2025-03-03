@@ -93,7 +93,7 @@
             "sprite_name": "Marshmallow",
             "upgrade_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "rare",
+            "rarity_string": "always",
             "description": "Skip upgrade this round and get all 3 next round"
         },
         {

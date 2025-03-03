@@ -49,6 +49,14 @@ public static class UpgradeTracker {
         }
     }
 
+    public static void removeMarshmallowUpgrade() {
+        var marshmallowUpgrade = currentActiveUpgrades.FirstOrDefault(upgrade => upgrade.effect == Upgrade.UpgradeEffect.Marshmallow);
+        if (marshmallowUpgrade != null) {
+            currentActiveUpgrades.Remove(marshmallowUpgrade);
+            upgradeDisplayManager.upgradeRemoved(marshmallowUpgrade);
+        }
+    }
+
     public static void removeLastAcquiredUpgrade() {
         if (currentActiveUpgrades.Count > 0) {
             Upgrade upgradeToRemove = currentActiveUpgrades[^1];

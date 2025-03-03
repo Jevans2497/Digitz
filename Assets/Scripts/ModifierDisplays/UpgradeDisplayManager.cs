@@ -21,6 +21,7 @@ public class UpgradeDisplayManager: MonoBehaviour {
         GameObject upgradeDisplayObject = Instantiate(upgradeDisplayPrefab, upgradeDisplayTransform);
         setUpgradeDisplay(upgrade, upgradeDisplayObject);
         upgradeDisplayObjects.Add(new(upgrade, upgradeDisplayObject));
+        layoutUpgradeDisplayObjects();        
     }
 
     private void setUpgradeDisplay(Upgrade upgrade, GameObject upgradeDisplayObject) {
@@ -41,11 +42,11 @@ public class UpgradeDisplayManager: MonoBehaviour {
         tooltip.message = upgrade.name + ":\n\n" + upgrade.description;
     }
 
-    public void shiftToAccomodateLevelBonus() {
+    public void layoutUpgradeDisplayObjects() {
         float levelBonusSpacer = LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.none ? 0.0f : 105.0f;
         for (int i = 0; i < upgradeDisplayObjects.Count; i++) {
             var upgradeDisplayObject = upgradeDisplayObjects[i];
-            float newXPosition =  (i * spacing) + levelBonusSpacer;
+            float newXPosition = (i * spacing) + levelBonusSpacer;
             upgradeDisplayObject.Value.GetComponent<RectTransform>().anchoredPosition = new Vector2(newXPosition, 0);
         }
     }
@@ -61,6 +62,7 @@ public class UpgradeDisplayManager: MonoBehaviour {
 
         upgradeDisplayObjects.Remove(upgradeToRemove);
         Destroy(upgradeToRemove.Value);
+        layoutUpgradeDisplayObjects();
     }
 
     public void upgradeDisabled(Upgrade upgrade) {
