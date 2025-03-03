@@ -104,19 +104,18 @@ public class SharedResources: MonoBehaviour {
         float rainbowSpeed = 3.5f;
 
         while (elapsedTime < duration) {
-            if (spriteRenderer != null) {
-                // Generate a color using HSV (Hue, Saturation, Value)
-                float hue = Mathf.Repeat(elapsedTime * rainbowSpeed, 1f); // Cycles hue from 0 to 1
-                Color rainbowColor = Color.HSVToRGB(hue, 1f, 1f); // Saturation and Value are maxed
-                spriteRenderer.color = rainbowColor;
-
-                elapsedTime += Time.deltaTime;
-                yield return null;
+            if (spriteRenderer == null) {
+                yield break;
             }
+            // Generate a color using HSV (Hue, Saturation, Value)
+            float hue = Mathf.Repeat(elapsedTime * rainbowSpeed, 1f); // Cycles hue from 0 to 1
+            Color rainbowColor = Color.HSVToRGB(hue, 1f, 1f); // Saturation and Value are maxed
+            spriteRenderer.color = rainbowColor;
 
-            if (spriteRenderer != null) {
-                spriteRenderer.color = defaultColor;
-            }
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+
+        spriteRenderer.color = defaultColor;
     }
 }

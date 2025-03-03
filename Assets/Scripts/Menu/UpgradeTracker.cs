@@ -27,8 +27,11 @@ public static class UpgradeTracker {
         }
     }
 
-    public static void addRandomUpgrade() {
+    public static void addRandomUpgrade(Upgrade.UpgradeEffect excludedUpgradeEffect) {                
         Upgrade randomUpgrade = allUpgrades[Random.Range(0, allUpgrades.Count)];
+        while (randomUpgrade.effect != excludedUpgradeEffect) {
+            randomUpgrade = allUpgrades[Random.Range(0, allUpgrades.Count)];
+        }
         addUpgrade(randomUpgrade);
     }
 

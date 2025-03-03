@@ -137,7 +137,7 @@ public class Arrow: MonoBehaviour {
     }
 
     private void detectedContactWithRainbowArrow() {
-        UpgradeTracker.addRandomUpgrade();
+        UpgradeTracker.addRandomUpgrade(Upgrade.UpgradeEffect.AfterTheRain);
     }
 
     private void detectedContactWithFrozenArrow() {
