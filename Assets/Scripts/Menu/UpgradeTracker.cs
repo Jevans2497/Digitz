@@ -19,7 +19,7 @@ public static class UpgradeTracker {
     public static void addUpgrade(Upgrade upgrade) {
         if (upgrade.effect == Upgrade.UpgradeEffect.MostWanted) {
             duplicateAllUpgrades();
-        }
+        }        
 
         // We want to clone upgrade so it uses a unique guid in case of duplicates. Otherwise, duplicate upgrades will reference same object
         Upgrade clonedUniqueUpgrade = upgrade.Clone();

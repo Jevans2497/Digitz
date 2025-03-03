@@ -144,7 +144,7 @@ public class FeedbackData {
             if (upgrade.effect == UpgradeEffect.Goalie && !UpgradeTracker.hasUpgrade(UpgradeEffect.LoadedDice)) {
                 if (modifiedThreshold > stinkyThreshold && modifiedThreshold != banditThreshold) {
                     modifiedThreshold = stinkyThreshold;
-                    mostRecentFeedback = FeedbackType.miss;
+                    mostRecentFeedback = FeedbackType.miss;                    
                 }
             }
 
@@ -174,44 +174,20 @@ public class FeedbackData {
         float modifiedScore = baseScore;
 
         foreach (var upgrade in upgrades) {
-
-            //TwoPerfect
-            if (upgrade.effect == UpgradeEffect.TwoPerfect) {
-                if (feedbackForScore == FeedbackType.perfect) {
-                    UpgradeTracker.upgradeTriggered(upgrade);
-                    modifiedScore *= 2;
-                }
-            }
-
+         
             //RepeatOffender
             if (upgrade.effect == UpgradeEffect.RepeatOffender) {
                 UpgradeTracker.upgradeTriggered(upgrade);
-                modifiedScore += 25.0f * feedbackStreak;
+                modifiedScore += 10.0f * feedbackStreak;
             }
 
             //Anarchy
             if (upgrade.effect == UpgradeEffect.Anarchy) {
-                UpgradeTracker.upgradeTriggered(upgrade);
-                if (feedbackForScore != FeedbackType.bandit) {
-                    anarchyUpgradeFeedbackTracker.Add(feedbackForScore);
-                }
-                int numberOfFeedbackTypesDiscluded = 0;
-                if (UpgradeTracker.hasUpgrade(UpgradeEffect.LoadedDice) || UpgradeTracker.hasUpgrade(UpgradeEffect.Goalie)) {
-                    numberOfFeedbackTypesDiscluded += 1;
-                }
-                if (anarchyUpgradeFeedbackTracker.Count - numberOfFeedbackTypesDiscluded == System.Enum.GetValues(typeof(FeedbackType)).Length - 1) {
-                    gameManager.multiplyScore(1.25f);
+                if (anarchyUpgradeFeedbackTracker.Count == getCurrentPotentialFeedbackTypes().Count) {
+                    gameManager.multiplyScore(1.05f);
                     anarchyUpgradeFeedbackTracker.Clear();
                 }
-            }
-
-            //Fertilizer
-            if (upgrade.effect == UpgradeEffect.Fertilizer) {
-                if (feedbackForScore != FeedbackType.miss) {
-                    modifiedScore *= 1.25f;
-                }
-                UpgradeTracker.upgradeTriggered(upgrade);
-            }
+            }                       
 
             //Pressure Cooker
             if (upgrade.effect == UpgradeEffect.PressureCooker) {
@@ -230,20 +206,57 @@ public class FeedbackData {
         return modifiedScore;
     }
 
+    private List<FeedbackType> getCurrentPotentialFeedbackTypes() {
+        List<FeedbackType> feedbackTypes = System.Enum.GetValues(typeof(FeedbackType))
+            .Cast<FeedbackType>()
+            .ToList();
+
+        if (!UpgradeTracker.hasUpgrade(UpgradeEffect.Bandit)) {
+            feedbackTypes.Remove(FeedbackType.bandit);
+        }
+
+        if (UpgradeTracker.hasUpgrade(UpgradeEffect.Goalie) || UpgradeTracker.hasUpgrade(UpgradeEffect.Goalie)) {
+            feedbackTypes.Remove(FeedbackType.miss);
+        }
+
+        if (UpgradeTracker.hasUpgrade(UpgradeEffect.GreatResponsibility)) {
+            feedbackTypes.Remove(FeedbackType.good);
+            feedbackTypes.Remove(FeedbackType.stinky);
+        }
+
+        if (ChallengeTracker.hasChallenge(Challenge.ChallengeEffect.TheMiddlePath)) {
+            feedbackTypes.Remove(FeedbackType.perfect);
+            feedbackTypes.Remove(FeedbackType.miss);
+        }
+
+        return feedbackTypes;
+    }
+
     private void modifyDefaultScoresForUpgrade() {
         foreach (var upgrade in upgrades) {
+            if (upgrade.effect == UpgradeEffect.TwoPerfect) {
+                defaultPerfectScore += 100;
+            }
+
             if (upgrade.effect == UpgradeEffect.TheGTrain) {
                 defaultPerfectScore = 0.0f;
-                defaultGreatScore *= 3f;
-                defaultGoodScore *= 3f;
+                defaultGreatScore += 225.0f;
+                defaultGoodScore += 150.0f;
             }
 
             if (upgrade.effect == UpgradeEffect.GreatDay) {
-                defaultGreatScore *= 3f;
+                defaultGreatScore += 225.0f;
             }
 
             if (upgrade.effect == UpgradeEffect.GoodGraces) {
-                defaultGoodScore *= 7f;
+                defaultGoodScore += 350.0f;
+            }
+
+            if (upgrade.effect == UpgradeEffect.Fertilizer) {                
+                defaultStinkyScore += 25 * 1.25f;
+                defaultGoodScore += 50 * 1.25f;
+                defaultGreatScore += 75 * 1.25f;
+                defaultPerfectScore += 100 * 1.25f;
             }
         }
     }

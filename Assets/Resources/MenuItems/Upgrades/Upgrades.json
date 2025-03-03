@@ -6,7 +6,7 @@
             "upgrade_type_string": "feedback",
             "color": "#007FFF",
             "rarity_string": "common",
-            "description": "Perfect! worth 2x points"
+            "description": "Base Perfect! worth 2x points"
         },
         {
             "name": "Repeat Offender",
@@ -22,7 +22,7 @@
             "upgrade_type_string": "feedback",
             "color": "#007FFF",
             "rarity_string": "uncommon",
-            "description": "Each time you score all 5 Feedback types, multiply total score by 1.25x"
+            "description": "Each time you score all possible Feedback types, multiply total score by 1.05x"
         },
         {
             "name": "Goalie",
@@ -37,7 +37,7 @@
             "sprite_name": "Bandit",
             "upgrade_type_string": "other",
             "color": "#00D903",
-            "rarity_string": "common",
+            "rarity_string": "uncommon",
             "description": "Hitting an arrow button at any time scores a small amount of points, increases each level"
         },
         {
@@ -46,7 +46,7 @@
             "upgrade_type_string": "avoidErrors",
             "color": "#FF0011",
             "rarity_string": "uncommon",
-            "description": "One random direction each round is always \"Great!\""
+            "description": "One random direction each round is always Great!"
         },
         {
             "name": "Loaded Dice",
@@ -70,15 +70,15 @@
             "upgrade_type_string": "feedback",
             "color": "#007FFF",
             "rarity_string": "uncommon",
-            "description": "All positive Feedback scores worth 1.25x more"
+            "description": "All positive Feedback base scores worth 1.25x more"
         },
         {
             "name": "Houston",
             "sprite_name": "Houston",
             "upgrade_type_string": "feedback",
             "color": "#007FFF",
-            "rarity_string": "uncommon",
-            "description": "Last arrow of song multiplies total score greatly based on Feedback"
+            "rarity_string": "rare",
+            "description": "Last arrow of song is a golden arrow (Golden arrows multiply score based on Feedback)"
         },
         {
             "name": "Sloth",
@@ -150,7 +150,7 @@
             "upgrade_type_string": "other",
             "color": "#007FFF",
             "rarity_string": "common",
-            "description": "Great! worth 3x points"
+            "description": "Base Great! worth 3x points"
         },
         {
             "name": "Good Graces",
@@ -158,14 +158,14 @@
             "upgrade_type_string": "other",
             "color": "#007FFF",
             "rarity_string": "common",
-            "description": "Good worth 7x points"
+            "description": "Base Good score worth 7x points"
         },
         {
             "name": "Great Responsibility",
             "sprite_name": "GreatResponsibility",
             "upgrade_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "always",
+            "rarity_string": "rare",
             "description": "Stinky ): and Good now scored as Great!"
         }
     ]
