@@ -231,6 +231,14 @@ public partial class GameManager: MonoBehaviour {
         setupSong();
     }
 
+    public Song getCurrentSong() {
+        return songs.Find(song => normalizeSongString(song.name) == normalizeSongString(currentSong));
+    }
+
+    private string normalizeSongString(string songString) {
+        return songString.Replace(" ", "").ToLower();
+    }
+
     public void setPressSpaceButtonActive(bool isActive) {
         pressSpaceButton.SetActive(isActive);
     }

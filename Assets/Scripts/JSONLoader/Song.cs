@@ -11,8 +11,7 @@ public class SongList {
 [System.Serializable]
 public class Song : MenuItem {
 
-    public enum SongDifficulty
-    {
+    public enum SongDifficulty {
         veryEasy,
         easy,
         medium,

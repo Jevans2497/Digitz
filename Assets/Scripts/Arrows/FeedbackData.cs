@@ -201,6 +201,14 @@ public class FeedbackData {
                 }
                 UpgradeTracker.upgradeTriggered(upgrade);
             }
+
+            //Pressure Cooker
+            if (upgrade.effect == UpgradeEffect.PressureCooker) {
+                Song currentSong = gameManager.getCurrentSong();
+                int difficultyLevel = (int)currentSong.difficulty + 1;
+                float multiplier = 1f + (0.1f * difficultyLevel);
+                modifiedScore *= multiplier;
+            }
         }
 
         return modifiedScore;
