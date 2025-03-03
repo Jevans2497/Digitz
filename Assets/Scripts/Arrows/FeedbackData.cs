@@ -51,6 +51,7 @@ public class FeedbackData {
         float modifiedThreshold = modifyThresholdForUpgrades(baseThreshold);
         modifiedThreshold = modifyThresholdForChallenge(modifiedThreshold);
 
+        modifyDefaultScoresForUpgrade();
         modifyDefaultScoresForChallenge();
         modifyDefaultScoresForLevelBonus();
         score = calculateScore(modifiedThreshold);
@@ -193,7 +194,11 @@ public class FeedbackData {
                 if (feedbackForScore != FeedbackType.bandit) {
                     anarchyUpgradeFeedbackTracker.Add(feedbackForScore);
                 }
-                if (anarchyUpgradeFeedbackTracker.Count == System.Enum.GetValues(typeof(FeedbackType)).Length - 1) {
+                int numberOfFeedbackTypesDiscluded = 0;
+                if (UpgradeTracker.hasUpgrade(UpgradeEffect.LoadedDice) || UpgradeTracker.hasUpgrade(UpgradeEffect.Goalie)) {
+                    numberOfFeedbackTypesDiscluded += 1;
+                }
+                if (anarchyUpgradeFeedbackTracker.Count - numberOfFeedbackTypesDiscluded == System.Enum.GetValues(typeof(FeedbackType)).Length - 1) {
                     gameManager.multiplyScore(1.25f);
                     anarchyUpgradeFeedbackTracker.Clear();
                 }
@@ -223,6 +228,17 @@ public class FeedbackData {
 
         return modifiedScore;
     }
+
+    private void modifyDefaultScoresForUpgrade() {
+        foreach (var upgrade in upgrades) {
+            if (upgrade.effect == UpgradeEffect.TheGTrain) {
+                defaultPerfectScore = 0.0f;
+                defaultGreatScore *= 3f;
+                defaultGoodScore *= 3f;
+            }
+        }
+    }
+
 
     private void modifyDefaultScoresForChallenge() {
         if(challenge != null && challenge.effect == Challenge.ChallengeEffect.HighPressure) {
@@ -292,19 +308,19 @@ public class FeedbackData {
     private void handleGoldenArrow() {
         switch (mostRecentFeedback) {
             case FeedbackType.perfect:
-            gameManager.multiplyScore(5.0f);
+            gameManager.multiplyScore(1.15f);
             break;
 
             case FeedbackType.great:
-            gameManager.multiplyScore(3.0f);
+            gameManager.multiplyScore(1.1f);
             break;
 
             case FeedbackType.good:
-            gameManager.multiplyScore(2.0f);
+            gameManager.multiplyScore(1.05f);
             break;
 
             case FeedbackType.stinky:
-            gameManager.multiplyScore(1.5f);
+            gameManager.multiplyScore(1.025f);
             break;
         }
     }

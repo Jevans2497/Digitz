@@ -34,33 +34,33 @@ public class ArrowData {
 
         switch (arrowEffect) {
             case ArrowEffect.regular:
-                color = Color.white;
-                layer = 0;
-                break;
+            color = Color.white;
+            layer = 0;
+            break;
             case ArrowEffect.simultaneous:
-                color = Color.magenta;
-                layer = 6;
-                break;
-            case ArrowEffect.golden:
-                color = Color.yellow;
-                layer = 7;
-                break;
+            color = SharedResources.hexToColor("#FFD700");
+            layer = 6;
+            break;
+            case ArrowEffect.golden:            
+        color = Color.yellow;
+            layer = 7;
+            break;
             case ArrowEffect.rainbow:
-                color = Color.red;
-                layer = 8;
-                break;
+            color = Color.red;
+            layer = 8;
+            break;
             case ArrowEffect.freeze:
             color = SharedResources.hexToColor("#7DEDFF");
             layer = 9;
-                break;
+            break;
             case ArrowEffect.lightning:
-                color = SharedResources.hexToColor("#fcdda7");
-                layer = 10;
-                break;
+            color = SharedResources.hexToColor("#fcdda7");
+            layer = 10;
+            break;
             case ArrowEffect.fire:
             color = SharedResources.hexToColor("#ffb0b0");
             layer = 11;
-                break;
+            break;
         }
     }
 
@@ -76,6 +76,15 @@ public class ArrowData {
         if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.yellowBrick) {
             goldenArrowSpawnRate /= 2;
         }
+
+        UpgradeTracker.GetUpgrades().ForEach(upgrade => {
+            if (upgrade.effect == Upgrade.UpgradeEffect.GoldMine) {
+                goldenArrowSpawnRate /= 2;
+            }
+            if (upgrade.effect == Upgrade.UpgradeEffect.AfterTheRain) {
+                rainbowArrowSpawnRate /= 2;
+            }
+        });
 
         int randomRainbowArrowRoll = UnityEngine.Random.Range(0, rainbowArrowSpawnRate);
         int randomGoldenArrowRoll = UnityEngine.Random.Range(0, goldenArrowSpawnRate);

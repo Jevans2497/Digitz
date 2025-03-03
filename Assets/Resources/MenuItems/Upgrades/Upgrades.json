@@ -118,7 +118,7 @@
             "upgrade_type_string": "other",
             "color": "#007FFF",
             "rarity_string": "rare",
-            "description": "Good and great worth 5x. Perfect worth 0"
+            "description": "Good and great worth 3x. Perfect worth 0"
         },
         {
             "name": "Gold Mine",
@@ -126,7 +126,7 @@
             "upgrade_type_string": "other",
             "color": "#007FFF",
             "rarity_string": "uncommon",
-            "description": "Golden arrows more likely to spawn (Golden arrows multiply score based on Feedback)"
+            "description": "Golden arrows 2x more likely to spawn (Golden arrows multiply score based on Feedback)"
         },
         {
             "name": "After the Rain",
