@@ -190,7 +190,8 @@ public class MenuCanvasManager: MonoBehaviour {
     private void presentUpgradeOptions() {
         destroyPreexistingMenuObjects();
         isSelectingUpgrade = true;
-        menuOptionExplanationText.text = "Upgrade";        
+        string menuExplanation = UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.Marshmallow) ? "Upgrade - Marshmallow Upgrade Active! Select upgrade(s) or press the down arrow at any time to continue." : "Upgrade";
+        menuOptionExplanationText.text = menuExplanation;        
         menuGameObjects = upgradeManager.createUpgradeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
             setupMenuOptions();
