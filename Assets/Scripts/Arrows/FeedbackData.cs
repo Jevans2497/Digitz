@@ -38,7 +38,7 @@ public class FeedbackData {
     private static FeedbackType mostRecentFeedback;
     private static int feedbackStreak = 0;
 
-    public static int loadedDiceCounter = 25;
+    public static int loadedDiceCounter = 0;
 
     private static HashSet<FeedbackType> anarchyUpgradeFeedbackTracker = new HashSet<FeedbackType>();
 

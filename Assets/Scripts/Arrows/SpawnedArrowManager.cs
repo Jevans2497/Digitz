@@ -164,7 +164,7 @@ public class SpawnedArrowManager: MonoBehaviour {
             break;            
         }        
 
-        int numberOfEffectArrows = (int)challenge.getSeverityMultiplier() * 30;
+        int numberOfEffectArrows = (int)challenge.getSeverityMultiplier() * 5;
         for (int i = 0; i < numberOfEffectArrows; i++) {
             int randomIndex = Random.Range(0, arrowSpawnDataList.Count);
             if (challenge.effect == Challenge.ChallengeEffect.ElementalChaos) {

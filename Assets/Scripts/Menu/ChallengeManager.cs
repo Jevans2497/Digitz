@@ -40,6 +40,10 @@ public class ChallengeManager: MenuItemManager {
             return Challenge.ChallengeSeverity.none;
         }
 
+        if (UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.MostWanted)) {
+            return Challenge.ChallengeSeverity.veryHigh;
+        }
+
         float difficultyFactor = (currentLevel - 1) / 6f; // Scale level 1-7 to 0-1
 
         float randomValue = UnityEngine.Random.value; // Get random float between 0 and 1

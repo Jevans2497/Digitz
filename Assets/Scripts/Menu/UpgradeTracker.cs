@@ -17,19 +17,35 @@ public static class UpgradeTracker {
     }
 
     public static void addUpgrade(Upgrade upgrade) {
+        if (upgrade.effect == Upgrade.UpgradeEffect.MostWanted) {
+            duplicateAllUpgrades();
+        }
+
         // We want to clone upgrade so it uses a unique guid in case of duplicates. Otherwise, duplicate upgrades will reference same object
         Upgrade clonedUniqueUpgrade = upgrade.Clone();
         currentActiveUpgrades.Add(clonedUniqueUpgrade);
         upgradeDisplayManager.upgradeAdded(clonedUniqueUpgrade);
 
         if (upgrade.effect == Upgrade.UpgradeEffect.LoadedDice) {
-            FeedbackData.loadedDiceCounter = 25;
+            FeedbackData.loadedDiceCounter += 25;
+        }
+    }
+
+    private static void duplicateAllUpgrades() {
+        List<Upgrade> duplicates = currentActiveUpgrades
+            .Select(existingUpgrade => existingUpgrade.Clone())
+            .ToList();
+
+        currentActiveUpgrades.AddRange(duplicates);
+
+        foreach (var duplicatedUpgrade in duplicates) {
+            upgradeDisplayManager.upgradeAdded(duplicatedUpgrade);
         }
     }
 
     public static void addRandomUpgrade(Upgrade.UpgradeEffect excludedUpgradeEffect) {                
         Upgrade randomUpgrade = allUpgrades[Random.Range(0, allUpgrades.Count)];
-        while (randomUpgrade.effect != excludedUpgradeEffect) {
+        while (randomUpgrade.effect == excludedUpgradeEffect) {
             randomUpgrade = allUpgrades[Random.Range(0, allUpgrades.Count)];
         }
         addUpgrade(randomUpgrade);

@@ -25,7 +25,7 @@ public class ArrowData {
     }
 
     public void applyEffectToArrow() {
-        //If the arrow is default, check if it's a special effect. 
+        //If the arrow is default, check if the JSON has already given it a special effect. 
         if (arrowEffect == ArrowEffect.regular) {
             arrowEffect = convertEffectStringToEffect();
         }
@@ -66,7 +66,7 @@ public class ArrowData {
 
     private ArrowEffect rollForSpecialArrowEffect(ArrowEffect originalEffect) {
         //Any arrow in the game has a small chance to be golden or rainbow
-        int rainbowArrowSpawnRate = 20;
+        int rainbowArrowSpawnRate = 10000;
         int goldenArrowSpawnRate = 5000;
 
         if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.rainbowRoad) {

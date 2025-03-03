@@ -10,7 +10,7 @@ public class Arrow: MonoBehaviour {
     [SerializeField] ArrowFeedback arrowFeedbackPrefab;
     [SerializeField] SpawnedArrowManager spawnedArrowManager;
 
-    [SerializeField] TextMeshProUGUI challengeHelperText;
+    [SerializeField] TextMeshProUGUI multiUseHelperText;
     [SerializeField] ParticleSystem effectCompleteParticleSystem;
     [SerializeField] ParticleSystem freezeEffectParticleSystem;
     [SerializeField] ParticleSystem lightningEffectParticleSystem;
@@ -137,7 +137,9 @@ public class Arrow: MonoBehaviour {
     }
 
     private void detectedContactWithRainbowArrow() {
-        UpgradeTracker.addRandomUpgrade(Upgrade.UpgradeEffect.AfterTheRain);
+        UpgradeTracker.addRandomUpgrade(excludedUpgradeEffect: Upgrade.UpgradeEffect.AfterTheRain);
+        TMP_FontAsset defaultFont = Resources.Load<TMP_FontAsset>("Fonts/DefaultFont");
+        StartCoroutine(showMultiUseHelper("<b>Random upgrade added!</b>", defaultFont, Color.white, true));
     }
 
     private void detectedContactWithFrozenArrow() {
@@ -151,7 +153,7 @@ public class Arrow: MonoBehaviour {
         freezeEffectParticleSystem.Play();
 
         TMP_FontAsset freezeFont = Resources.Load<TMP_FontAsset>("Fonts/FreezeFont");        
-        StartCoroutine(showChallengeEffectHelper("Tap to dethaw!", freezeFont, SharedResources.hexToColor("#7DEDFF")));
+        StartCoroutine(showMultiUseHelper("Tap to dethaw!", freezeFont, SharedResources.hexToColor("#7DEDFF")));
     }
 
     private void dethawFrozenArrow() {
@@ -174,7 +176,7 @@ public class Arrow: MonoBehaviour {
         if (!lightningEffectParticleSystem.isPlaying) {
             StartCoroutine(activateElectricalInterference());
             TMP_FontAsset lightningFont = Resources.Load<TMP_FontAsset>("Fonts/LightningFont");            
-            StartCoroutine(showChallengeEffectHelper("Arrow inputs mirrored!", lightningFont, SharedResources.hexToColor("#ffa100")));
+            StartCoroutine(showMultiUseHelper("Arrow inputs mirrored!", lightningFont, SharedResources.hexToColor("#ffa100")));
         }
     }
 
@@ -192,13 +194,14 @@ public class Arrow: MonoBehaviour {
         StartCoroutine(spawnedArrowManager.destroyCurrentExistingArrowsWithFireEffect());
     }
 
-    private IEnumerator showChallengeEffectHelper(string text, TMP_FontAsset font, Color color) {
-        challengeHelperText.text = text;
-        challengeHelperText.font = font;
-        challengeHelperText.color = color;
-        challengeHelperText.gameObject.SetActive(true);
+    private IEnumerator showMultiUseHelper(string text, TMP_FontAsset font, Color color, bool isGradient = false) {
+        multiUseHelperText.text = text;
+        multiUseHelperText.font = font;
+        multiUseHelperText.color = color;
+        multiUseHelperText.enableVertexGradient = isGradient;
+        multiUseHelperText.gameObject.SetActive(true);
         yield return new WaitForSeconds(5.0f);
-        challengeHelperText.gameObject.SetActive(false);
+        multiUseHelperText.gameObject.SetActive(false);
     }
 
     public void handleScoring(float threshold, bool isGoldenArrow) {

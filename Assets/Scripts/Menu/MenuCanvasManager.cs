@@ -289,6 +289,12 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void setupMenuItemForChallenge(MenuItem menuItem) {
         Challenge challenge = (Challenge)menuItem;
+        if (UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.MostWanted)) {
+            challenge.severity = Challenge.ChallengeSeverity.veryHigh;
+            challenge.color = challenge.hexForSeverity(challenge.severity);
+        }
+
+        //We need hasSeverityBeenSet so that the challenge doesn't change when concealed challenges are revealed.
         if (!challenge.hasSeverityBeenSet) {
             challenge.severity = challengeManager.getSeverityForChallenge(gameManager.getLevelNumber(), challenge.hasSeverity);
             challenge.color = challenge.hexForSeverity(challenge.severity);
