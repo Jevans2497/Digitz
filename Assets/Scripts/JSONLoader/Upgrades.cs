@@ -87,6 +87,8 @@ public class Upgrade: MenuItem {
             Debug.LogWarning($"Invalid effect: {name} for Upgrade {name}. Defaulting to 'none'.");
             effect = UpgradeEffect.None;
         }
+
+        color = getColorForRarity();
     }
 
     public Upgrade Clone() {
@@ -116,6 +118,21 @@ public class Upgrade: MenuItem {
             case UpgradeRarity.uncommon: return 5;
             case UpgradeRarity.common: return 10;
             default: return 1;
+        }
+    }
+
+    public String getColorForRarity() {
+        switch (rarity) {
+            case UpgradeRarity.godly:
+            return "rainbow"; 
+            case UpgradeRarity.rare:
+            return "#FF00FE";
+            case UpgradeRarity.uncommon:
+            return "#44BAAD";
+            case UpgradeRarity.common:
+            return "#007FFF";
+            default:
+            return "#DEDEDE";
         }
     }
 }

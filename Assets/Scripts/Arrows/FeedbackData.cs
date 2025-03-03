@@ -113,8 +113,10 @@ public class FeedbackData {
             calculatedScore = defaultMissScore;
         }
 
-        feedbackStreak = mostRecentFeedback == feedbackForScore ? feedbackStreak + 1 : 0;
-        mostRecentFeedback = feedbackForScore;
+        if (feedbackForScore != FeedbackType.bandit) {
+            feedbackStreak = mostRecentFeedback == feedbackForScore ? feedbackStreak + 1 : 0;
+            mostRecentFeedback = feedbackForScore;
+        }
 
         incrementFeedbackCounters(feedbackForScore);
 
@@ -177,7 +179,6 @@ public class FeedbackData {
          
             //RepeatOffender
             if (upgrade.effect == UpgradeEffect.RepeatOffender) {
-                UpgradeTracker.upgradeTriggered(upgrade);
                 modifiedScore += 10.0f * feedbackStreak;
             }
 
