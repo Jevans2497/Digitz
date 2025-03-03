@@ -13,6 +13,7 @@ public class UpgradeManager : MenuItemManager {
         this.jsonLoader = jsonLoader;
         this.menuObjectPrefab = menuObjectPrefab;
         this.upgrades = jsonLoader.loadUpgrades(isTutorial);
+        UpgradeTracker.setAllUpgrades(upgrades);
     }
 
     public List<MenuGameObjects> createUpgradeOptions(Transform menuCanvasTransform, GameObject menuObjectPrefab) {

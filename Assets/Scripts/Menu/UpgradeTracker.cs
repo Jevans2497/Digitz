@@ -4,8 +4,13 @@ using System.Linq;
 using UnityEngine;
 
 public static class UpgradeTracker {
+    private static List<Upgrade> allUpgrades = new List<Upgrade>();
     private static List<Upgrade> currentActiveUpgrades = new List<Upgrade>();
     private static UpgradeDisplayManager upgradeDisplayManager;
+
+    public static void setAllUpgrades(List<Upgrade> upgrades) {
+        allUpgrades = upgrades;
+    }
 
     public static void setUpgradeDisplayManager(UpgradeDisplayManager udm) {
         upgradeDisplayManager = udm;
@@ -20,6 +25,11 @@ public static class UpgradeTracker {
         if (upgrade.effect == Upgrade.UpgradeEffect.LoadedDice) {
             FeedbackData.loadedDiceCounter = 25;
         }
+    }
+
+    public static void addRandomUpgrade() {
+        Upgrade randomUpgrade = allUpgrades[Random.Range(0, allUpgrades.Count)];
+        addUpgrade(randomUpgrade);
     }
 
     public static void duplicateRandomUpgrade() {

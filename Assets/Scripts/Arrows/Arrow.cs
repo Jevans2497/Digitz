@@ -118,6 +118,9 @@ public class Arrow: MonoBehaviour {
         float clampedDistance = Mathf.Clamp01(minDistance);
         bool isGoldenArrow = closestArrow.layer == 7;
         switch (closestArrow.layer) {
+            case 8:
+            detectedContactWithRainbowArrow();
+            break;
             case 9:
             detectedContactWithFrozenArrow();
             break;
@@ -131,6 +134,10 @@ public class Arrow: MonoBehaviour {
 
         Destroy(closestArrow);
         handleScoring(clampedDistance, isGoldenArrow);
+    }
+
+    private void detectedContactWithRainbowArrow() {
+        UpgradeTracker.addRandomUpgrade();
     }
 
     private void detectedContactWithFrozenArrow() {
@@ -230,31 +237,13 @@ public class Arrow: MonoBehaviour {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null) {
             if (feedbackData.isGradient) {
-                StartCoroutine(applyRainbowEffect(spriteRenderer, 0.5f));
+                StartCoroutine(SharedResources.applyRainbowEffect(spriteRenderer, 0.5f, defaultColor));
                 yield return null;
             } else {
                 spriteRenderer.color = feedbackData.color;
                 yield return new WaitForSeconds(0.35f);
                 spriteRenderer.color = defaultColor;
             }
-
         }
-    }
-
-    public IEnumerator applyRainbowEffect(SpriteRenderer spriteRenderer, float duration) {
-        float elapsedTime = 0f;
-        float rainbowSpeed = 3.5f;
-
-        while (elapsedTime < duration) {
-            // Generate a color using HSV (Hue, Saturation, Value)
-            float hue = Mathf.Repeat(elapsedTime * rainbowSpeed, 1f); // Cycles hue from 0 to 1
-            Color rainbowColor = Color.HSVToRGB(hue, 1f, 1f); // Saturation and Value are maxed
-            spriteRenderer.color = rainbowColor;
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        spriteRenderer.color = defaultColor;
     }
 }

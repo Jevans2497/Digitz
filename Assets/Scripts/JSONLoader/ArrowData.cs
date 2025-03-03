@@ -66,7 +66,7 @@ public class ArrowData {
 
     private ArrowEffect rollForSpecialArrowEffect(ArrowEffect originalEffect) {
         //Any arrow in the game has a small chance to be golden or rainbow
-        int rainbowArrowSpawnRate = 10000;
+        int rainbowArrowSpawnRate = 20;
         int goldenArrowSpawnRate = 5000;
 
         if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.rainbowRoad) {

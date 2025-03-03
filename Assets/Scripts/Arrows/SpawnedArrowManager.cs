@@ -187,10 +187,18 @@ public class SpawnedArrowManager: MonoBehaviour {
         if (arrowSpawnData.spawnPoint != null && arrowSpawnData.arrowPrefab != null) {
             GameObject spawnedArrow = Instantiate(arrowSpawnData.arrowPrefab, arrowSpawnData.spawnPoint.position, Quaternion.identity);
             currentlyExistingArrows.Add(spawnedArrow);
-            SpriteRenderer spriteRenderer = spawnedArrow.GetComponent<SpriteRenderer>();
-            spriteRenderer.color = arrowSpawnData.arrowData.color;
+            setSpawnedArrowColor(spawnedArrow, arrowSpawnData);
             spawnedArrow.layer = arrowSpawnData.arrowData.layer;
             StartCoroutine(moveSpawnedArrowToTargetArrow(arrowSpawnData, spawnedArrow));
+        }
+    }
+
+    private void setSpawnedArrowColor(GameObject spawnedArrow, ArrowSpawnData arrowSpawnData) {
+        SpriteRenderer spriteRenderer = spawnedArrow.GetComponent<SpriteRenderer>();
+        if (arrowSpawnData.arrowData.arrowEffect == ArrowData.ArrowEffect.rainbow) {
+            StartCoroutine(SharedResources.applyRainbowEffect(spriteRenderer, 50.0f, Color.white));
+        } else {
+            spriteRenderer.color = arrowSpawnData.arrowData.color;
         }
     }
 
