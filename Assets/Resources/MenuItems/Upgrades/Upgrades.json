@@ -53,7 +53,7 @@
             "sprite_name": "LoadedDice",
             "upgrade_type_string": "avoidErrors",
             "color": "#FF0011",
-            "rarity_string": "always",
+            "rarity_string": "common",
             "description": "The next 25 misses are scored as perfects"
         },
         {
