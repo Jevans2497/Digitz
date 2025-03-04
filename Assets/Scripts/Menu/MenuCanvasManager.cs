@@ -267,6 +267,9 @@ public class MenuCanvasManager: MonoBehaviour {
         //Text and color
         gameObjects.text.GetComponent<TextMeshProUGUI>().text = text;
         gameObjects.background.GetComponent<Image>().color = SharedResources.hexToColor(color);
+        if (color == "rainbow") {
+            StartCoroutine(SharedResources.applyRainbowEffectToImage(gameObjects.background.GetComponent<Image>(), 30.0f, Color.white));
+        }
 
         //Sprite
         Sprite sprite = Resources.Load<Sprite>(spritePath);

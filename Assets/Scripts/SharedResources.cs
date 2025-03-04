@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using UnityEngine.UI;
 
 public class SharedResources: MonoBehaviour {
 
@@ -117,5 +118,25 @@ public class SharedResources: MonoBehaviour {
         }
 
         spriteRenderer.color = defaultColor;
+    }
+
+    public static IEnumerator applyRainbowEffectToImage(Image image, float duration, Color defaultColor) {
+        float elapsedTime = 0f;
+        float rainbowSpeed = 3.5f;
+
+        while (elapsedTime < duration) {
+            if (image == null) {
+                yield break;
+            }
+            // Generate a color using HSV (Hue, Saturation, Value)
+            float hue = Mathf.Repeat(elapsedTime * rainbowSpeed, 1f); // Cycles hue from 0 to 1
+            Color rainbowColor = Color.HSVToRGB(hue, 1f, 1f); // Saturation and Value are maxed
+            image.color = rainbowColor;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        image.color = defaultColor;
     }
 }
