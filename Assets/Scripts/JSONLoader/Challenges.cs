@@ -66,7 +66,6 @@ public class Challenge: MenuItem {
     public ChallengeEffect effect;
     public bool hasSeverity;
     public ChallengeSeverity severity;
-    public bool hasSeverityBeenSet;
     public string description;
     public bool isConcealed;
 

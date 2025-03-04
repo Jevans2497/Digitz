@@ -254,8 +254,8 @@ public class MenuCanvasManager: MonoBehaviour {
                 string hiddenItemSpritePath = "MenuItems/Challenges/ChallengeIcons/QuestionMark";
                 customizeMenuOption(gameObjects, "???", "#DEDEDE", hiddenItemSpritePath, "");
             } else {
-                if (menuItem is Challenge) {
-                    setupMenuItemForChallenge(menuItem);
+                if (menuItem is Challenge) {                    
+                    setupMenuItemForChallenge(gameObjects);
                 }
                 customizeMenuOption(gameObjects, menuItem.Name, menuItem.Color, gameObjects.path, menuItem.Description);
             }
@@ -287,19 +287,13 @@ public class MenuCanvasManager: MonoBehaviour {
 
     }
 
-    private void setupMenuItemForChallenge(MenuItem menuItem) {
-        Challenge challenge = (Challenge)menuItem;
-        if (UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.MostWanted)) {
-            challenge.severity = Challenge.ChallengeSeverity.veryHigh;
-            challenge.color = challenge.hexForSeverity(challenge.severity);
-        }
-
-        //We need hasSeverityBeenSet so that the challenge doesn't change when concealed challenges are revealed.
-        if (!challenge.hasSeverityBeenSet) {
+    private void setupMenuItemForChallenge(MenuGameObjects challengeGameObjects) {
+        Challenge challenge = (Challenge)challengeGameObjects.menuItem;
+        if (!challengeGameObjects.hasChallengeBeenViewed) {
             challenge.severity = challengeManager.getSeverityForChallenge(gameManager.getLevelNumber(), challenge.hasSeverity);
             challenge.color = challenge.hexForSeverity(challenge.severity);
-            challenge.hasSeverityBeenSet = true;
         }
+        challengeGameObjects.hasChallengeBeenViewed = true;
     }
 
     private string getSeverityString(Challenge challenge, bool withNewLines = true) {

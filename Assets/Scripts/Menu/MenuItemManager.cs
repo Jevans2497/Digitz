@@ -64,6 +64,7 @@ public class MenuGameObjects {
     public GameObject background;
     public GameObject image;
     public GameObject text;
+    public bool hasChallengeBeenViewed = false;
 
     public MenuGameObjects(MenuItem menuItem, GameObject background, GameObject image, GameObject text) {
         this.menuItem = menuItem;
