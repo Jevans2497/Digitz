@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class UpgradeDisplayManager: MonoBehaviour {
 
     [SerializeField] GameObject upgradeDisplayPrefab;
     [SerializeField] Transform upgradeDisplayTransform;
+    [SerializeField] ParticleSystem destroyLoadedDiceParticleSystem;
+    [SerializeField] ParticleSystem destroyUpgradeParticleSystem;
 
     private List<KeyValuePair<Upgrade, GameObject>> upgradeDisplayObjects = new();
     private float spacing = 85;
@@ -53,12 +56,37 @@ public class UpgradeDisplayManager: MonoBehaviour {
 
     public void upgradeRemoved(Upgrade upgrade) {
         KeyValuePair<Upgrade, GameObject> upgradeToRemove = upgradeDisplayObjects
-            .Find(pair => pair.Key == upgrade);
-
+            .FirstOrDefault(pair => pair.Key == upgrade);
+        
         if (upgradeToRemove.Equals(default(KeyValuePair<Upgrade.UpgradeEffect, GameObject>))) {
             Debug.LogWarning("Upgrade not found!");
             return;
         }
+
+        ParticleSystem particleSystem = upgradeToRemove.Key.effect == Upgrade.UpgradeEffect.LoadedDice ? destroyLoadedDiceParticleSystem : destroyUpgradeParticleSystem;
+        StartCoroutine(removeUpgradeWithEffect(upgradeToRemove, particleSystem));
+    }
+
+    private IEnumerator removeUpgradeWithEffect(KeyValuePair<Upgrade, GameObject> upgradeToRemove, ParticleSystem particleSystem) {
+        RectTransform upgradeRectTransform = upgradeToRemove.Value.GetComponent<RectTransform>();
+
+        // Convert UI position to world space
+        Vector3 screenPosition = RectTransformUtility.WorldToScreenPoint(null, upgradeRectTransform.position);
+
+        // Convert screen position to world position in the world canvas
+        Vector3 worldPosition;
+        bool success = RectTransformUtility.ScreenPointToWorldPointInRectangle(
+            upgradeDisplayTransform as RectTransform, screenPosition, Camera.main, out worldPosition);
+
+        if (success) {
+            particleSystem.transform.position = worldPosition;
+        } else {
+            Debug.LogWarning("Failed to convert UI position to world position.");
+        }
+
+        particleSystem.Play();
+
+        yield return new WaitForSeconds(0.1f);
 
         upgradeDisplayObjects.Remove(upgradeToRemove);
         Destroy(upgradeToRemove.Value);

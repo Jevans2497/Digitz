@@ -143,7 +143,7 @@ public class MenuCanvasManager: MonoBehaviour {
                 menuGameObject.background.SetActive(false);
             }
         } else if (UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.Marshmallow) && activeMenuObjects == 1) {
-            UpgradeTracker.removeMarshmallowUpgrade();
+            UpgradeTracker.removeFirstUpgradeWithEffect(Upgrade.UpgradeEffect.Marshmallow);
             addUpgrade((Upgrade)menuItem);
         } else { 
             addUpgrade((Upgrade)menuItem);
@@ -152,7 +152,7 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void passOnUpgrades() {
         //Remove marshmallow upgrade if it exists
-        UpgradeTracker.removeMarshmallowUpgrade();
+        UpgradeTracker.removeFirstUpgradeWithEffect(Upgrade.UpgradeEffect.Marshmallow);
         presentChallengeOptions();
     }
 

@@ -25,10 +25,6 @@ public static class UpgradeTracker {
         Upgrade clonedUniqueUpgrade = upgrade.Clone();
         currentActiveUpgrades.Add(clonedUniqueUpgrade);
         upgradeDisplayManager.upgradeAdded(clonedUniqueUpgrade);
-
-        if (upgrade.effect == Upgrade.UpgradeEffect.LoadedDice) {
-            FeedbackData.loadedDiceCounter += 25;
-        }
     }
 
     private static void duplicateAllUpgrades() {
@@ -78,11 +74,11 @@ public static class UpgradeTracker {
         }
     }
 
-    public static void removeMarshmallowUpgrade() {
-        var marshmallowUpgrade = currentActiveUpgrades.FirstOrDefault(upgrade => upgrade.effect == Upgrade.UpgradeEffect.Marshmallow);
-        if (marshmallowUpgrade != null) {
-            currentActiveUpgrades.Remove(marshmallowUpgrade);
-            upgradeDisplayManager.upgradeRemoved(marshmallowUpgrade);
+    public static void removeFirstUpgradeWithEffect(Upgrade.UpgradeEffect effect) {
+        var upgradeToRemove = currentActiveUpgrades.FirstOrDefault(upgrade => upgrade.effect == effect);
+        if (upgradeToRemove != null) {
+            currentActiveUpgrades.Remove(upgradeToRemove);
+            upgradeDisplayManager.upgradeRemoved(upgradeToRemove);
         }
     }
 
@@ -96,18 +92,5 @@ public static class UpgradeTracker {
 
     public static void reset() {
         currentActiveUpgrades = new List<Upgrade>();
-    }
-
-    public static void upgradeTriggered(Upgrade upgrade) {
-        if (currentActiveUpgrades.Contains(upgrade)) {
-            upgrade.numOfTimesTriggered += 1;
-        }
-    }
-
-    public static void upgradeTriggered(Upgrade.UpgradeEffect effect) {
-        Upgrade upgrade = currentActiveUpgrades.FirstOrDefault(upgrade => upgrade.effect == effect);
-        if (upgrade != null) {
-            upgrade.numOfTimesTriggered += 1;
-        }
     }
 }

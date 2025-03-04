@@ -38,8 +38,6 @@ public class FeedbackData {
     private static FeedbackType mostRecentFeedback;
     private static int feedbackStreak = 0;
 
-    public static int loadedDiceCounter = 0;
-
     private static HashSet<FeedbackType> anarchyUpgradeFeedbackTracker = new HashSet<FeedbackType>();
 
     public static Dictionary<FeedbackType, int> fullGameFeedbackCounter = new Dictionary<FeedbackType, int>();
@@ -150,15 +148,6 @@ public class FeedbackData {
                 }
             }
 
-            //LoadedDice
-            if (upgrade.effect == UpgradeEffect.LoadedDice) {
-                if (modifiedThreshold > stinkyThreshold && loadedDiceCounter > 0) {
-                    modifiedThreshold = perfectThreshold;
-                    mostRecentFeedback = FeedbackType.perfect;
-                    loadedDiceCounter -= 1;
-                }
-            }
-
             //Sharpshooter
             if (upgrade.effect == UpgradeEffect.Sharpshooter) {
                 perfectThreshold = 0.125f;
@@ -166,6 +155,20 @@ public class FeedbackData {
 
             if (upgrade.effect == UpgradeEffect.GreatResponsibility) {
                 greatThreshold = stinkyThreshold;
+            }
+        }
+
+        //LoadedDice
+        Upgrade firstLoadedDice = UpgradeTracker.GetUpgrades().FirstOrDefault(upgrade => upgrade.effect == UpgradeEffect.LoadedDice);
+        if (firstLoadedDice != null) {            
+            if (modifiedThreshold > stinkyThreshold) {
+                modifiedThreshold = perfectThreshold;
+                mostRecentFeedback = FeedbackType.perfect;
+                firstLoadedDice.loadedDiceCounter -= 1;
+
+                if (firstLoadedDice.loadedDiceCounter <= 0) {
+                    UpgradeTracker.removeFirstUpgradeWithEffect(UpgradeEffect.LoadedDice);
+                }
             }
         }
 

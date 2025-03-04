@@ -61,8 +61,8 @@ public class Upgrade: MenuItem {
     public UpgradeRarity rarity;
     public UpgradeEffect effect;
     public string description;
-    public int numOfTimesTriggered;
     public bool isEnabled = true;
+    public int loadedDiceCounter = 25;
     public Guid guid;
 
     public string Name => name;
@@ -103,7 +103,6 @@ public class Upgrade: MenuItem {
             rarity = this.rarity,
             effect = this.effect,
             description = this.description,
-            numOfTimesTriggered = this.numOfTimesTriggered,
             isEnabled = this.isEnabled,
             guid = Guid.NewGuid() // Assign a new GUID for the copy
         };
