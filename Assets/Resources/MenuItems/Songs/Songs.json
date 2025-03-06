@@ -79,6 +79,26 @@
             "description": "",
             "artist": "Electric Guest",
             "difficulty_string": "hard"
+        },
+        {
+            "name": "Honestly",
+            "song_file_name": "Honestly",
+            "sprite_name": "Honestly",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "Hippo Campus",
+            "difficulty_string": "medium"
+        },
+        {
+            "name": "Speed Racer",
+            "song_file_name": "SpeedRacer",
+            "sprite_name": "SpeedRacer",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "",
+            "artist": "Hippo Campus",
+            "difficulty_string": "medium"
         }
     ]
 }
