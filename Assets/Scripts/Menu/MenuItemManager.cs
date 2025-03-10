@@ -6,9 +6,17 @@ using System;
 
 public class MenuItemManager {
 
-    public List<MenuGameObjects> createMenuOptions<T>(Transform menuCanvasTransform, GameObject menuObjectPrefab, List<T> items) where T : MenuItem {
+    public List<MenuGameObjects> createMenuOptions<T>(Transform menuCanvasTransform, GameObject menuObjectPrefab, List<T> items, int currentLevel = -1) where T : MenuItem {
         List<MenuGameObjects> menuGameObjects = new List<MenuGameObjects>();
-        List<T> menuOptions = getThreeRandomRarityFactoredMenuOptions(items);
+        List<T> menuOptions;
+
+        if (typeof(T) == typeof(Song)) {
+            List<Song> songItems = items.Cast<Song>().ToList();
+            List<Song> songOptions = getThreeDifficultyFactoredSongOptions(songItems, currentLevel);
+            menuOptions = songOptions.Cast<T>().ToList();
+        } else {
+            menuOptions = getThreeRandomRarityFactoredMenuOptions(items);
+        }
 
         if (menuOptions.Count >= 3) {
             menuGameObjects.Add(createMenuOption(menuObjectPrefab, menuOptions[0], menuCanvasTransform, -420.0f, 20.0f));
@@ -55,6 +63,10 @@ public class MenuItemManager {
         }
 
         return uniqueItems.ToList();
+    }
+
+    public List<Song> getThreeDifficultyFactoredSongOptions(List<Song> items, int currentLevel) {
+        return new List<Song>();
     }
 }
 

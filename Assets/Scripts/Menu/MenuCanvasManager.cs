@@ -234,7 +234,7 @@ public class MenuCanvasManager: MonoBehaviour {
     private void presentSongOptions() {
         destroyPreexistingMenuObjects();
         menuOptionExplanationText.text = "Song";
-        menuGameObjects = songManager.createSongOptions(menuCanvas.transform, menuObjectPrefab);
+        menuGameObjects = songManager.createSongOptions(menuCanvas.transform, menuObjectPrefab, gameManager.getLevelNumber());
         if (menuGameObjects.Count >= 3) {
             setupMenuOptions();
         }

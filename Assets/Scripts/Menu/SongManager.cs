@@ -7,7 +7,7 @@ public class SongManager: MenuItemManager {
 
     List<Song> songs;
     private JSONLoader jsonLoader;
-    private GameObject menuObjectPrefab;
+    private GameObject menuObjectPrefab;    
 
     public SongManager(JSONLoader jsonLoader, GameObject menuObjectPrefab, bool isTutorial = false) {
         this.jsonLoader = jsonLoader;
