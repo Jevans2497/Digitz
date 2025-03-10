@@ -6,7 +6,7 @@
             "sprite_name": "Yesterday",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "",
+            "description": "Yesterday\nBy - The Beatles\nDifficulty: <color=#1D7A1D>Very Easy</color>",
             "artist": "The Beatles",
             "difficulty_string": "veryEasy"
         },
@@ -16,7 +16,7 @@
             "sprite_name": "AfterTheEarthquake",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "",
+            "description": "After the Earthquake\nBy - Alvvays\nDifficulty: <color=#E67E22>Hard</color>",
             "artist": "Alvvays",
             "difficulty_string": "hard"
         },
@@ -26,7 +26,7 @@
             "sprite_name": "DANCE",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "",
+            "description": "D.A.N.C.E\nBy - Justice\nDifficulty: <color=#E67E22>Hard</color>",
             "artist": "Justice",
             "difficulty_string": "hard"
         },
@@ -36,7 +36,7 @@
             "sprite_name": "FreakingOutTheNeighborhood",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "",
+            "description": "Freaking Out the Neighborhood\nBy - Mac Demarco\nDifficulty: <color=#3498DB>Medium</color>",
             "artist": "Mac Demarco",
             "difficulty_string": "medium"
         },
@@ -46,7 +46,7 @@
             "sprite_name": "IfYouWantTheTruth",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "",
+            "description": "If You Want the Truth\nBy - Preacher and Daisy\nDifficulty: <color=#3498DB>Medium</color>",
             "artist": "Preacher and Daisy",
             "difficulty_string": "medium"
         },
@@ -56,7 +56,7 @@
             "sprite_name": "LittleSecrets",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "",
+            "description": "Little Secrets\nBy - Passion Pit\nDifficulty: <color=#E67E22>Hard</color>",
             "artist": "Passion Pit",
             "difficulty_string": "hard"
         },
@@ -66,7 +66,7 @@
             "sprite_name": "MammaMia",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "",
+            "description": "Mamma Mia\nBy - Abba\nDifficulty: <color=#E74C3C>Very Hard</color>",
             "artist": "Abba",
             "difficulty_string": "veryHard"
         },
@@ -76,7 +76,7 @@
             "sprite_name": "Waves",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "",
+            "description": "Waves\nBy - Electric Guest\nDifficulty: <color=#E67E22>Hard</color>",
             "artist": "Electric Guest",
             "difficulty_string": "hard"
         },
@@ -86,7 +86,7 @@
             "sprite_name": "Honestly",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "",
+            "description": "Honestly\nBy - Hippo Campus\nDifficulty: <color=#3498DB>Medium</color>",
             "artist": "Hippo Campus",
             "difficulty_string": "medium"
         },
@@ -96,8 +96,8 @@
             "sprite_name": "SpeedRacer",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "",
-            "artist": "Hippo Campus",
+            "description": "Speed Racer\nBy - Her's\nDifficulty: <color=#3498DB>Medium</color>",
+            "artist": "Her's",
             "difficulty_string": "medium"
         }
     ]

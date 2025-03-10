@@ -40,12 +40,29 @@ public class Song : MenuItem {
         return 1;
     }
 
-    public void InitializeFromJSON()
-    {
-        if (!Enum.TryParse(difficulty_string, true, out difficulty))
-        {
+    public void InitializeFromJSON() {
+        if (!Enum.TryParse(difficulty_string, true, out difficulty)) {
             Debug.LogWarning($"Invalid song_difficulty: {difficulty_string} for Song {name}. Defaulting to 'medium'.");
             difficulty = SongDifficulty.medium;
+        }
+
+        color = hexForDifficulty();
+    }
+
+    public string hexForDifficulty() {
+        switch (difficulty) {
+            case SongDifficulty.veryEasy:
+            return "#1D7A1D"; // Bright Green  
+            case SongDifficulty.easy:
+            return "#B78F00"; // Strong Yellow  
+            case SongDifficulty.medium:
+            return "#3498DB"; // Vibrant Blue  
+            case SongDifficulty.hard:
+            return "#E67E22"; // Deep Orange  
+            case SongDifficulty.veryHard:
+            return "#E74C3C"; // Strong Red  
+            default:
+            return "#964B00"; // Brown for fallback
         }
     }
 }
