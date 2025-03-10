@@ -11,26 +11,6 @@
             "difficulty_string": "veryEasy"
         },
         {
-            "name": "After the Earthquake",
-            "song_file_name": "AfterTheEarthquake",
-            "sprite_name": "AfterTheEarthquake",
-            "color": "#007FFF",
-            "rarity_string": "",
-            "description": "After the Earthquake\nBy - Alvvays\nDifficulty: <color=#E67E22>Hard</color>",
-            "artist": "Alvvays",
-            "difficulty_string": "hard"
-        },
-        {
-            "name": "D.A.N.C.E",
-            "song_file_name": "DANCE",
-            "sprite_name": "DANCE",
-            "color": "#007FFF",
-            "rarity_string": "",
-            "description": "D.A.N.C.E\nBy - Justice\nDifficulty: <color=#E67E22>Hard</color>",
-            "artist": "Justice",
-            "difficulty_string": "hard"
-        },
-        {
             "name": "Freaking Out the Neighborhood",
             "song_file_name": "FreakingOutTheNeighborhood",
             "sprite_name": "FreakingOutTheNeighborhood",
@@ -99,6 +79,16 @@
             "description": "Speed Racer\nBy - Her's\nDifficulty: <color=#3498DB>Medium</color>",
             "artist": "Her's",
             "difficulty_string": "medium"
+        },
+        {
+            "name": "Ain't No Mountain High Enough",
+            "song_file_name": "AintNoMountainHighEnough",
+            "sprite_name": "AintNoMountainHighEnough",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "Ain't No Mountain High Enough\nBy - Marvin Gaye and Tammi Terrell\nDifficulty: <color=#B78F00>Easy</color>",
+            "artist": "Marvin Gaye and Tammi Terrell",
+            "difficulty_string": "easy"
         }
     ]
 }
