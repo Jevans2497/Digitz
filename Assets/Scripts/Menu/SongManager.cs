@@ -15,8 +15,8 @@ public class SongManager: MenuItemManager {
         this.songs = jsonLoader.loadSongs(isTutorial);
     }
 
-    public List<MenuGameObjects> createSongOptions(Transform menuCanvasTransform, GameObject menuObjectPrefab) {
-        return createMenuOptions<Song>(menuCanvasTransform, menuObjectPrefab, songs);
+    public List<MenuGameObjects> createSongOptions(Transform menuCanvasTransform, GameObject menuObjectPrefab, int currentLevel) {
+        return createMenuOptions<Song>(menuCanvasTransform, menuObjectPrefab, songs, currentLevel);
     }
 
     public void removeSongFromPool(Song songToRemove) {

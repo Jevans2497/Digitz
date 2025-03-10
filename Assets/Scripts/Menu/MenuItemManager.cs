@@ -65,8 +65,32 @@ public class MenuItemManager {
         return uniqueItems.ToList();
     }
 
-    public List<Song> getThreeDifficultyFactoredSongOptions(List<Song> items, int currentLevel) {
-        return new List<Song>();
+    public List<Song> getThreeDifficultyFactoredSongOptions(List<Song> songs, int currentLevel) {
+        List<Song> selectedSongs = new List<Song>();
+
+        while (selectedSongs.Count < 3) {
+            Song.SongDifficulty randomLevelBasedDifficulty = getDifficultyForSong(currentLevel);
+            List<Song> songsWithDifficulty = songs.FindAll(song => song.difficulty == randomLevelBasedDifficulty);
+            songsWithDifficulty.RemoveAll(song => selectedSongs.Contains(song));
+            if (songsWithDifficulty.Count > 0) {
+                selectedSongs.Add(songsWithDifficulty[UnityEngine.Random.Range(0, songsWithDifficulty.Count)]);
+            }
+        }
+
+        return selectedSongs;
+    }
+
+    public Song.SongDifficulty getDifficultyForSong(int currentLevel) {
+        float difficultyFactor = (currentLevel - 1) / 6f;
+        float randomValue = UnityEngine.Random.value; 
+
+        //If level is 1, difficulty factor is 0, meaning lerp will select the first value. If level is 7, will choose the second value. 
+        if (randomValue < Mathf.Lerp(0.50f, 0.00f, difficultyFactor)) return Song.SongDifficulty.veryEasy;
+        if (randomValue < Mathf.Lerp(0.85f, 0.05f, difficultyFactor)) return Song.SongDifficulty.easy;
+        if (randomValue < Mathf.Lerp(1.00f, 0.30f, difficultyFactor)) return Song.SongDifficulty.medium;
+        if (randomValue < Mathf.Lerp(1.00f, 0.70f, difficultyFactor)) return Song.SongDifficulty.hard;
+
+        return Song.SongDifficulty.veryHard;
     }
 }
 
