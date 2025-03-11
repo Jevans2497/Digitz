@@ -86,8 +86,18 @@
             "sprite_name": "AintNoMountainHighEnough",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "Ain't No Mountain High Enough\nBy - Marvin Gaye and Tammi Terrell\nDifficulty: <color=#B78F00>Easy</color>",
+            "description": "Ain't No Mountain High Enough\nBy - Marvin Gaye and Tammi Terrell\nDifficulty: <color=#3498DB>Medium</color>",
             "artist": "Marvin Gaye and Tammi Terrell",
+            "difficulty_string": "medium"
+        },
+        {
+            "name": "Letting Things Go",
+            "song_file_name": "LettingThingsGo",
+            "sprite_name": "LettingThingsGo",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "Letting Things Go\nBy - Vulfmon & Evangeline\nDifficulty: <color=#B78F00>Easy</color>",
+            "artist": "Vulfmon & Evangeline",
             "difficulty_string": "easy"
         }
     ]
