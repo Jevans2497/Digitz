@@ -25,6 +25,9 @@ public static class UpgradeTracker {
         Upgrade clonedUniqueUpgrade = upgrade.Clone();
         currentActiveUpgrades.Add(clonedUniqueUpgrade);
         upgradeDisplayManager.upgradeAdded(clonedUniqueUpgrade);
+
+        //Increase the original upgrade object's rarity so it is less likely to be seen in the future
+        upgrade.incrementRarityLevel();
     }
 
     private static void duplicateAllUpgrades() {

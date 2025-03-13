@@ -108,6 +108,21 @@ public class Upgrade: MenuItem {
         };
     }
 
+    public void incrementRarityLevel() {
+        switch (rarity) {
+            case UpgradeRarity.godly:
+            break;
+            case UpgradeRarity.rare:
+            rarity = UpgradeRarity.godly;
+            break;
+            case UpgradeRarity.uncommon:
+            rarity = UpgradeRarity.rare;
+            break;
+            case UpgradeRarity.common:
+            rarity = UpgradeRarity.uncommon;
+            break;
+        }
+    }
 
     public int GetRarityWeight() {
         switch (rarity) {
