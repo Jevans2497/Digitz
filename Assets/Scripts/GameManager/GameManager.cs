@@ -59,7 +59,7 @@ public partial class GameManager: MonoBehaviour {
         } else {
             songs = jsonLoader.loadSongs();
             levels = jsonLoader.loadLevels();
-            currentSong = "MammaMia";
+            currentSong = "LettingThingsGo";
         }
 
         if (levels.Count > 0) {
@@ -164,8 +164,17 @@ public partial class GameManager: MonoBehaviour {
             }
         }
 
+        checkAndCorrectSyncingDiscrepancy();
+
         if (isSongComplete()) {
             songFinished();
+        }
+    }
+
+    // Such simple code to solve a nasty bug. I was having syncing issues between the spawned arrows and the music. This checks if audioTime and songTime are synced. If not, sync them. 
+    private void checkAndCorrectSyncingDiscrepancy() {
+        if (Mathf.Abs((audioSource.time + delayStartSeconds) - getSongTime()) >= 0.05f) {
+            audioSource.time = songTime - delayStartSeconds;
         }
     }
 
