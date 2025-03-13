@@ -122,6 +122,8 @@ public class Upgrade: MenuItem {
             rarity = UpgradeRarity.uncommon;
             break;
         }
+
+        color = getColorForRarity();
     }
 
     public int GetRarityWeight() {
