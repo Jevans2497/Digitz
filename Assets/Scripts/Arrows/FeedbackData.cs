@@ -257,10 +257,10 @@ public class FeedbackData {
             }
 
             if (upgrade.effect == UpgradeEffect.Fertilizer) {                
-                defaultStinkyScore += 25 * 1.25f;
-                defaultGoodScore += 50 * 1.25f;
-                defaultGreatScore += 75 * 1.25f;
-                defaultPerfectScore += 100 * 1.25f;
+                defaultStinkyScore += 25 * .25f;
+                defaultGoodScore += 50 * .25f;
+                defaultGreatScore += 75 * .25f;
+                defaultPerfectScore += 100 * .25f;
             }
         }
     }

@@ -5,7 +5,7 @@
             "sprite_name": "EarlyBird",
             "challenge_type_string": "arrowSpeed",
             "color": "#007FFF",
-            "rarity_string": "common",
+            "rarity_string": "rare",
             "hasSeverity": true,
             "description": "Every note is shifted slightly early"
         },
@@ -14,18 +14,9 @@
             "sprite_name": "LaterGator",
             "challenge_type_string": "arrowSpeed",
             "color": "#007FFF",
-            "rarity_string": "common",
-            "hasSeverity": true,
-            "description": "Every note is shifted slightly late"
-        },
-        {
-            "name": "Broken Tape",
-            "sprite_name": "BrokenTape",
-            "challenge_type_string": "arrowSpeed",
-            "color": "#007FFF",
             "rarity_string": "rare",
             "hasSeverity": true,
-            "description": "Half of arrows are shifted either late or early."
+            "description": "Every note is shifted slightly late"
         },
         {
             "name": "Bombardment",
