@@ -38,11 +38,11 @@ public class ArrowData {
             layer = 0;
             break;
             case ArrowEffect.simultaneous:
-            color = SharedResources.hexToColor("#FFD700");
+            color = SharedResources.hexToColor("#00ffd4");
             layer = 6;
             break;
-            case ArrowEffect.golden:            
-        color = Color.yellow;
+            case ArrowEffect.golden:
+            color = SharedResources.hexToColor("#FFD700");
             layer = 7;
             break;
             case ArrowEffect.rainbow:

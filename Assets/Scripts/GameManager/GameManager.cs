@@ -59,7 +59,7 @@ public partial class GameManager: MonoBehaviour {
         } else {
             songs = jsonLoader.loadSongs();
             levels = jsonLoader.loadLevels();
-            currentSong = "IfYouWantTheTruth";
+            currentSong = "LittleSecrets";
         }
 
         if (levels.Count > 0) {
