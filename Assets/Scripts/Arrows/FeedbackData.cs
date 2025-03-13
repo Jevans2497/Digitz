@@ -202,7 +202,7 @@ public class FeedbackData {
             }
 
             //Abacus
-            if (upgrade.effect == UpgradeEffect.Abacus) {
+            if (upgrade.effect == UpgradeEffect.Abacus && feedbackForScore != FeedbackType.bandit) {
                 modifiedScore += currentSongFeedbackCounter[feedbackForScore];
             }
         }
