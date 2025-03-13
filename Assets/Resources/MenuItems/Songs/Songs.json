@@ -99,6 +99,16 @@
             "description": "Letting Things Go\nBy - Vulfmon & Evangeline\nDifficulty: <color=#B78F00>Easy</color>",
             "artist": "Vulfmon & Evangeline",
             "difficulty_string": "easy"
+        },
+        {
+            "name": "Dizzy",
+            "song_file_name": "Dizzy",
+            "sprite_name": "Dizzy",
+            "color": "#007FFF",
+            "rarity_string": "",
+            "description": "Dizzy\nBy - Tchotchke\nDifficulty: <color=#B78F00>Easy</color>",
+            "artist": "Tchotchke",
+            "difficulty_string": "easy"
         }
     ]
 }
