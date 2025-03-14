@@ -33,7 +33,8 @@ public class UpgradeDisplayManager: MonoBehaviour {
         upgradeDisplayObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(newXPosition, 0);
 
         GameObject foreground = upgradeDisplayObject.transform.Find("UpgradeDisplayForeground").gameObject;
-        foreground.GetComponent<Image>().color = SharedResources.hexToColor(upgrade.color);
+        string upgradeColor = upgrade.color == "rainbow" ? "00ffd4" : upgrade.color;
+        foreground.GetComponent<Image>().color = SharedResources.hexToColor(upgradeColor);
 
         // Set image
         GameObject image = foreground.transform.Find("UpgradeDisplayImage").gameObject;
@@ -102,7 +103,7 @@ public class UpgradeDisplayManager: MonoBehaviour {
             return;
         }
 
-        setUpgradeDisplayColor(upgradeToDisable.Value, SharedResources.hexToColor("#DEDEDE"));
+        setUpgradeDisplayColor(upgradeToDisable.Value, "#DEDEDE");
     }
 
     public void upgradeEnabled(Upgrade upgrade) {
@@ -114,11 +115,12 @@ public class UpgradeDisplayManager: MonoBehaviour {
             return;
         }
 
-        setUpgradeDisplayColor(upgradeToEnable.Value, SharedResources.hexToColor(upgrade.color));
+        string upgradeColor = upgrade.color == "rainbow" ? "00ffd4" : upgrade.color;
+        setUpgradeDisplayColor(upgradeToEnable.Value, upgradeColor);
     }
 
-    private void setUpgradeDisplayColor(GameObject upgradeDisplayObject, Color color) {
+    private void setUpgradeDisplayColor(GameObject upgradeDisplayObject, string color) {
         GameObject foreground = upgradeDisplayObject.transform.Find("UpgradeDisplayForeground").gameObject;
-        foreground.GetComponent<Image>().color = color;
+        foreground.GetComponent<Image>().color = SharedResources.hexToColor(color);
     }
 }

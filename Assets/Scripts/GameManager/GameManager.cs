@@ -52,6 +52,8 @@ public partial class GameManager: MonoBehaviour {
     private bool isInitialGameStart = true;
     private bool isGameComplete;
 
+    private bool isInMarcoMode;
+
     private void Start() {
         isTutorial = SceneManager.GetActiveScene().name == "Tutorial";
         if (isTutorial) {
@@ -112,6 +114,9 @@ public partial class GameManager: MonoBehaviour {
             }
             if (Input.GetKeyDown(KeyCode.N)) {
                 songFinished();
+            }
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && Input.GetKeyDown(KeyCode.M)) {
+                isInMarcoMode = true;
             }
         }
     }
