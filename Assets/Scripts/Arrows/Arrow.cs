@@ -42,18 +42,26 @@ public class Arrow: MonoBehaviour {
 
         Dictionary<KeyCode, string> keyToArrowMap = new Dictionary<KeyCode, string> {
         { KeyCode.LeftArrow, "LeftArrow" },
+        { KeyCode.A, "LeftArrow" },
         { KeyCode.UpArrow, "UpArrow" },
+        { KeyCode.W, "UpArrow" },
         { KeyCode.RightArrow, "RightArrow" },
-        { KeyCode.DownArrow, "DownArrow" }
+        { KeyCode.D, "RightArrow" },
+        { KeyCode.DownArrow, "DownArrow" },
+        { KeyCode.S, "DownArrow" }
     };
 
         // If electrical interference, mirror inputs
         if (isElectricalInterferenceActive) {
             keyToArrowMap = new Dictionary<KeyCode, string> {
         { KeyCode.LeftArrow, "RightArrow" },
+        { KeyCode.A, "RightArrow" },
         { KeyCode.UpArrow, "DownArrow" },
+        { KeyCode.W, "DownArrow" },
         { KeyCode.RightArrow, "LeftArrow" },
-        { KeyCode.DownArrow, "UpArrow" }
+        { KeyCode.D, "LeftArrow" },
+        { KeyCode.DownArrow, "UpArrow" },
+        { KeyCode.S, "UpArrow" },
     };
         }
 

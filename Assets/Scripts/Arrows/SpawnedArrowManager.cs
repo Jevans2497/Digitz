@@ -38,10 +38,13 @@ public class SpawnedArrowManager: MonoBehaviour {
     private void Update() {
         if (shouldSpawnArrows) {
             float songTime = gameManager.getSongTime();
-            if (currentArrowIndex < arrowSpawnDataList.Count && arrowSpawnDataList[currentArrowIndex].arrowData.timestamp <= songTime) {
-                spawnArrow(arrowSpawnDataList[currentArrowIndex]);
-                currentArrowIndex += 1;
-            }
+            if (currentArrowIndex < arrowSpawnDataList.Count) {
+                float currentArrowTimestamp = arrowSpawnDataList[currentArrowIndex].arrowData.timestamp;
+                if (currentArrowTimestamp <= songTime) {
+                    spawnArrow(arrowSpawnDataList[currentArrowIndex]);
+                    currentArrowIndex += 1;
+                }
+            }                       
         }
     }
 
@@ -60,6 +63,13 @@ public class SpawnedArrowManager: MonoBehaviour {
         preproccessArrowTimestampForArrivalTime();
         preprocessArrowsForArrowEffects();
         maximumBasePointsForSong = arrowSpawnDataList.Count * 100.0f;
+
+        if (gameManager.skipToTime > 0) {
+            Debug.Log("skipping over arrows");
+            while (arrowSpawnDataList[currentArrowIndex].arrowData.timestamp < gameManager.skipToTime) {
+                currentArrowIndex += 1;
+            }            
+        }
     }
 
     public void setShouldSpawnArrows(bool value) {

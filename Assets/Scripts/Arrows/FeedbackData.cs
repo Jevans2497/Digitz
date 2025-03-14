@@ -187,6 +187,7 @@ public class FeedbackData {
 
             //Anarchy
             if (upgrade.effect == UpgradeEffect.Anarchy) {
+                anarchyUpgradeFeedbackTracker.Add(feedbackForScore);
                 if (anarchyUpgradeFeedbackTracker.Count == getCurrentPotentialFeedbackTypes().Count) {
                     gameManager.multiplyScore(1.05f);
                     anarchyUpgradeFeedbackTracker.Clear();
@@ -219,7 +220,7 @@ public class FeedbackData {
             feedbackTypes.Remove(FeedbackType.bandit);
         }
 
-        if (UpgradeTracker.hasUpgrade(UpgradeEffect.Goalie) || UpgradeTracker.hasUpgrade(UpgradeEffect.Goalie)) {
+        if (UpgradeTracker.hasUpgrade(UpgradeEffect.Goalie) || UpgradeTracker.hasUpgrade(UpgradeEffect.LoadedDice)) {
             feedbackTypes.Remove(FeedbackType.miss);
         }
 
@@ -278,9 +279,6 @@ public class FeedbackData {
         if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.aintBroke) {
             FeedbackType mostReceivedFeedback = FeedbackData.fullGameFeedbackCounter.OrderByDescending(kvp => kvp.Value).First().Key;
             switch (mostReceivedFeedback) {
-                case FeedbackType.bandit:
-                banditDefaultScore *= 1.25f;
-                break;
                 case FeedbackType.perfect:
                 defaultPerfectScore *= 1.25f;
                 break;
