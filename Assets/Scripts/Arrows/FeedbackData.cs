@@ -93,7 +93,8 @@ public class FeedbackData {
 
         if (modifiedThreshold == banditThreshold) {
             feedbackForScore = FeedbackType.bandit;
-            calculatedScore = banditDefaultScore * gameManager.getLevelNumber();
+            int numberOfBandits = UpgradeTracker.GetUpgrades().FindAll(upgrade => upgrade.effect == UpgradeEffect.Bandit).Count;
+            calculatedScore = banditDefaultScore * gameManager.getLevelNumber() * numberOfBandits;
         } else if (modifiedThreshold <= perfectThreshold) {
             feedbackForScore = FeedbackType.perfect;
             calculatedScore = defaultPerfectScore;
