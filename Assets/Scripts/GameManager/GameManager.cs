@@ -160,7 +160,7 @@ public partial class GameManager: MonoBehaviour {
             scoreDisplay.text = $"<size=200%>{score.ToString("N0")}</size> / {scoreNeededToClearLevel.ToString("N0")}";
         }
 
-        if (!hasArrowsStarted) {
+        if (!hasArrowsStarted) {            
             startSpawningArrows();
         }
         if (!hasSongStarted) {
