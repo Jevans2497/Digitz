@@ -25,4 +25,9 @@ public class Tooltip: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
         isPointerInsideGameObject = false;
         TooltipManager.instance.hideTooltip();
     }
+
+    public void manuallyHideTooltip() {
+        isPointerInsideGameObject = false;
+        TooltipManager.instance.hideTooltip();
+    }
 }

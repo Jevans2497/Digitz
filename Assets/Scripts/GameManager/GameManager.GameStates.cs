@@ -34,7 +34,11 @@ public partial class GameManager: MonoBehaviour {
 
             resetSongLoop();
         } else {
-            gameWon();
+            if (isTutorial) {
+                playerBeatSong();
+            } else {
+                gameWon();
+            }
         }
     }
 

@@ -27,7 +27,7 @@ public static class UpgradeTracker {
         upgradeDisplayManager.upgradeAdded(clonedUniqueUpgrade);
 
         //Increase the original upgrade object's rarity so it is less likely to be seen in the future
-        upgrade.incrementRarityLevel();
+        upgrade.greatlyIncreaseRarityForUpgrade();
     }
 
     private static void duplicateAllUpgrades() {

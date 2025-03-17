@@ -108,7 +108,7 @@ public class Upgrade: MenuItem {
         };
     }
 
-    public void incrementRarityLevel() {
+    public void greatlyIncreaseRarityForUpgrade() {
         switch (rarity) {
             case UpgradeRarity.godly:
             break;
@@ -116,10 +116,10 @@ public class Upgrade: MenuItem {
             rarity = UpgradeRarity.godly;
             break;
             case UpgradeRarity.uncommon:
-            rarity = UpgradeRarity.rare;
+            rarity = UpgradeRarity.godly;
             break;
             case UpgradeRarity.common:
-            rarity = UpgradeRarity.uncommon;
+            rarity = UpgradeRarity.rare;
             break;
         }
 
@@ -130,8 +130,8 @@ public class Upgrade: MenuItem {
         switch (rarity) {
             case UpgradeRarity.always: return 1000; //Exclusively for testing, guarantees upgrade will appear
             case UpgradeRarity.godly: return 1;
-            case UpgradeRarity.rare: return 3;
-            case UpgradeRarity.uncommon: return 5;
+            case UpgradeRarity.rare: return 2;
+            case UpgradeRarity.uncommon: return 4;
             case UpgradeRarity.common: return 10;
             default: return 1;
         }

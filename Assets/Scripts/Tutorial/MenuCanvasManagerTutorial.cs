@@ -34,9 +34,7 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
 
     public bool isMenuLoopFinished = true;
 
-    private bool isInitialMenuLoop = true;
     private bool isUserInteractionEnabled = true;
-    private bool isSelectingUpgrade;
 
     public enum TutorialMenuStep {
         upgrade, challenge, song
@@ -45,7 +43,6 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
     public void startMenuLoop(TutorialMenuStep step) {
         LevelBonusTracker.reset();
         isLevelBonusOptionAvailable = false;
-        presentUpgradeOptions();
         isMenuLoopFinished = false;
         menuCanvas.enabled = true;
 
@@ -60,13 +57,6 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
             presentSongOptions();
             break;
         }
-
-        if (isInitialMenuLoop) {
-            isInitialMenuLoop = false;
-            presentChallengeOptions();
-        } else {
-            presentUpgradeOptions();
-        }        
 
         menuOptionExplanationText.gameObject.SetActive(true);
     }
@@ -103,8 +93,6 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
             if (menuGameObjects[2] != null) {
                 activateMenuItem(menuGameObjects[2].menuItem);
             }
-        } else if (Input.GetKeyDown(KeyCode.DownArrow) && isSelectingUpgrade) {
-            passOnUpgrades();
         }
     }
 
@@ -166,15 +154,10 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
         }
     }
 
-    private void passOnUpgrades() {
-        //Remove marshmallow upgrade if it exists
-        UpgradeTracker.removeFirstUpgradeWithEffect(Upgrade.UpgradeEffect.Marshmallow);
-        presentChallengeOptions();
-    }
-
     private void addUpgrade(Upgrade upgrade, bool isCompleteAfterUpgradeAdded = true) {
         AudioManager.Instance.playSound(upgradeSelectedClip);
         UpgradeTracker.addUpgrade(upgrade);
+        destroyPreexistingMenuObjects();
 
         menuCanvas.enabled = false;
         isMenuLoopFinished = true;
@@ -182,15 +165,10 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
     }
 
     private void addChallenge(Challenge challenge) {
-        if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.easyStreet) {
-            challenge.severity = challenge.reduceSeverityByOneGrade();
-            challenge.color = challenge.hexForSeverity(challenge.severity);
-        }
         AudioManager.Instance.playSound(challengeSelectedClip);
         ChallengeTracker.addChallenge(challenge);
         levelBonusGameObject.SetActive(false);
-        theCurseExplanation.SetActive(false);
-        challengeManager.removeChallengeFromPool(challenge);
+        destroyPreexistingMenuObjects();
 
         menuCanvas.enabled = false;
         isMenuLoopFinished = true;
@@ -208,7 +186,6 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
 
     private void presentUpgradeOptions() {
         destroyPreexistingMenuObjects();
-        isSelectingUpgrade = true;
         string menuExplanation = UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.Marshmallow) ? "Upgrade - Marshmallow Upgrade Active! Select upgrade(s) or press the down arrow at any time to continue." : "Upgrade";
         menuOptionExplanationText.text = menuExplanation;
         menuGameObjects = upgradeManager.createUpgradeOptions(menuCanvas.transform, menuObjectPrefab);
@@ -262,6 +239,12 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
 
     private void destroyPreexistingMenuObjects() {
         foreach (var menuGameObject in menuGameObjects) {
+            if (menuGameObject.background != null) {
+                Tooltip tooltip = menuGameObject.background.GetComponent<Tooltip>();
+                if (tooltip != null) {
+                    tooltip.manuallyHideTooltip();
+                }
+            }
             menuGameObject.destroy();
         }
     }

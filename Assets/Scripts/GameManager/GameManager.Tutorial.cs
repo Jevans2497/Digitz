@@ -43,7 +43,9 @@ public partial class GameManager: MonoBehaviour {
             new TutorialStep(() => showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep.upgrade)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.challenges1)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.challenges2)),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.challenges3)),
             new TutorialStep(() => showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep.challenge)),
+            new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.challenges4)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.royaltyFree2)),
             new TutorialStep(() => showTutorialMessage(TutorialTextManager.TutorialMessage.simultaneousArrows)),
             new TutorialStep(() => playSong("BigBandExplosion")),
@@ -60,7 +62,7 @@ public partial class GameManager: MonoBehaviour {
     }
 
     public void executeNextTutorialStep() {
-        resetForTutorialText();
+        resetForTutorialText();        
         TutorialStep currentStep = tutorialSteps.FirstOrDefault(step => !step.isCompleted);
         if (currentStep != null) {
             currentStep.execute();
@@ -95,6 +97,7 @@ public partial class GameManager: MonoBehaviour {
 
     private void showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep menuTutorialStep) {
         resetForTutorialText();
+
         menuCanvasManagerTutorial.startMenuLoop(menuTutorialStep);
         tutorialText.gameObject.SetActive(false);
     }
@@ -102,6 +105,7 @@ public partial class GameManager: MonoBehaviour {
     private void tutorialCompleted() {
         UpgradeTracker.reset();
         ChallengeTracker.reset();
+        LevelBonusTracker.reset();
         SceneManager.LoadSceneAsync("DDR");
     }
 

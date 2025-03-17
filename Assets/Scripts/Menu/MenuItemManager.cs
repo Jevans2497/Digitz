@@ -137,6 +137,6 @@ public class MenuGameObjects {
         if (text != null) {
             GameObject.Destroy(text);
             text = null;
-        }
+        }        
     }
 }
