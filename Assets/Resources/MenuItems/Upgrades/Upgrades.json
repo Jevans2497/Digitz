@@ -21,7 +21,7 @@
             "sprite_name": "Anarchy",
             "upgrade_type_string": "feedback",
             "color": "#007FFF",
-            "rarity_string": "uncommon",
+            "rarity_string": "rare",
             "description": "Each time you score all possible Feedback types, multiply total score by 1.05x"
         },
         {

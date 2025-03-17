@@ -163,7 +163,6 @@ public class MenuCanvasManager: MonoBehaviour {
             isSelectingUpgrade = false;
             presentChallengeOptions();
         }
-        destroyPreexistingMenuObjects();
     }
 
     private void addChallenge(Challenge challenge) {
@@ -176,7 +175,7 @@ public class MenuCanvasManager: MonoBehaviour {
         levelBonusGameObject.SetActive(false);
         theCurseExplanation.SetActive(false);
         challengeManager.removeChallengeFromPool(challenge);
-        destroyPreexistingMenuObjects();
+        presentSongOptions();
     }
 
     private void addSong(Song song) {

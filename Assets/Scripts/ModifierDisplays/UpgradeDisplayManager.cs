@@ -33,7 +33,7 @@ public class UpgradeDisplayManager: MonoBehaviour {
         upgradeDisplayObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(newXPosition, 0);
 
         GameObject foreground = upgradeDisplayObject.transform.Find("UpgradeDisplayForeground").gameObject;
-        string upgradeColor = upgrade.color == "rainbow" ? "00ffd4" : upgrade.color;
+        string upgradeColor = upgrade.color == "rainbow" ? "#00ffd4" : upgrade.color;
         foreground.GetComponent<Image>().color = SharedResources.hexToColor(upgradeColor);
 
         // Set image
@@ -115,7 +115,7 @@ public class UpgradeDisplayManager: MonoBehaviour {
             return;
         }
 
-        string upgradeColor = upgrade.color == "rainbow" ? "00ffd4" : upgrade.color;
+        string upgradeColor = upgrade.color == "rainbow" ? "#00ffd4" : upgrade.color;
         setUpgradeDisplayColor(upgradeToEnable.Value, upgradeColor);
     }
 

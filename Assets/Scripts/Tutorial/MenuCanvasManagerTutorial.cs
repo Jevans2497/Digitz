@@ -186,8 +186,7 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
 
     private void presentUpgradeOptions() {
         destroyPreexistingMenuObjects();
-        string menuExplanation = UpgradeTracker.hasUpgrade(Upgrade.UpgradeEffect.Marshmallow) ? "Upgrade - Marshmallow Upgrade Active! Select upgrade(s) or press the down arrow at any time to continue." : "Upgrade";
-        menuOptionExplanationText.text = menuExplanation;
+        menuOptionExplanationText.text = "Select Upgrade - Hover over with mouse to view description";
         menuGameObjects = upgradeManager.createUpgradeOptions(menuCanvas.transform, menuObjectPrefab);
         if (menuGameObjects.Count >= 3) {
             setupMenuOptions();
@@ -197,7 +196,7 @@ public class MenuCanvasManagerTutorial: MonoBehaviour {
 
     private void presentChallengeOptions() {
         destroyPreexistingMenuObjects();
-        menuOptionExplanationText.text = "Challenge";
+        menuOptionExplanationText.text = "Select Challenge - Hover over with mouse to view description";
         concealedChallengeExplanation.SetActive(true);
         setupLevelBonusOption();
         menuGameObjects = challengeManager.createChallengeOptions(menuCanvas.transform, menuObjectPrefab);
