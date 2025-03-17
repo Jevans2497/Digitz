@@ -18,6 +18,8 @@ public partial class GameManager: MonoBehaviour {
     [SerializeField] MenuCanvasManager menuCanvasManager;
     [SerializeField] SpriteRenderer blackBackgroundOverlay;
     [SerializeField] Slider progressBar;
+    [SerializeField] GameObject marcoModeDisplay;
+    [SerializeField] ParticleSystem marcoModeParticleSystem;
 
     [SerializeField] Arrow leftArrow;
     [SerializeField] Arrow upArrow;
@@ -115,8 +117,8 @@ public partial class GameManager: MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.N)) {
                 songFinished();
             }
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && Input.GetKeyDown(KeyCode.M)) {
-                isInMarcoMode = true;
+            if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.M)) {
+                toggleMarcoMode();
             }
         }
     }
@@ -270,7 +272,8 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void setupLevelProgress(Level currentLevel) {
-        scoreNeededToClearLevel = (currentLevel.completion_percent / 100.0f) * spawnedArrowManager.getMaximumBasePointsForCurrentSong();
+        float marcoModeScoreModifier = isInMarcoMode ? 0.5f : 1.0f;
+        scoreNeededToClearLevel = (currentLevel.completion_percent / 100.0f) * spawnedArrowManager.getMaximumBasePointsForCurrentSong() * marcoModeScoreModifier;
         progressBar.value = 0.0f;
 
         if (LevelBonusTracker.getActiveBonusEffect() == LevelBonus.LevelBonusEffect.tenPercentCoupon) {
@@ -279,6 +282,15 @@ public partial class GameManager: MonoBehaviour {
         }
 
         progressBar.maxValue = scoreNeededToClearLevel;
+    }
+
+    private void toggleMarcoMode() {
+        isInMarcoMode = !isInMarcoMode;
+        marcoModeDisplay.SetActive(isInMarcoMode);        
+        setupLevelProgress(currentLevel);
+        if (isInMarcoMode) {
+            marcoModeParticleSystem.Play();
+        }
     }
 
     private void handleUpgradesAndChallenges() {
