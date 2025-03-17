@@ -244,9 +244,16 @@ public class MenuCanvasManager: MonoBehaviour {
 
     private void destroyPreexistingMenuObjects() {
         foreach (var menuGameObject in menuGameObjects) {
+            if (menuGameObject.background != null) {
+                Tooltip tooltip = menuGameObject.background.GetComponent<Tooltip>();
+                if (tooltip != null) {
+                    tooltip.manuallyHideTooltip();
+                }
+            }
             menuGameObject.destroy();
         }
     }
+
 
     private void setupMenuOptions() {
         foreach (var gameObjects in menuGameObjects) {
