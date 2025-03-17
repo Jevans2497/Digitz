@@ -67,7 +67,9 @@ public partial class GameManager : MonoBehaviour {
 
             detourGameObject.GetComponent<RectTransform>().anchoredPosition = newPosition;
         } else {
-            detourGameObject.SetActive(false);
+            if (detourGameObject != null) {
+                detourGameObject.SetActive(false);
+            }
         }
     }
 }

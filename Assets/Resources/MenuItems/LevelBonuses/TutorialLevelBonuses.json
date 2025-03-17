@@ -1,0 +1,11 @@
+{
+    "levelBonuses": [
+        {
+            "level_number": 1,
+            "level_bonus_name": "Slow Arrows",
+            "level_bonus_sprite": "SlowArrows",
+            "level_bonus_string": "slowArrows",
+            "level_bonus_description": "Spawned arrows are slightly slowed"
+        }        
+    ]
+}

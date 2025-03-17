@@ -260,7 +260,9 @@ public partial class GameManager: MonoBehaviour {
         songTime = 0.0f;
         resetArrows();
         FeedbackData.currentSongFeedbackCounter = new Dictionary<FeedbackType, int>();
-        detourGameObject.SetActive(false);
+        if (detourGameObject != null) {
+            detourGameObject.SetActive(false);
+        }
     }
 
     private void setupLevel() {
