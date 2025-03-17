@@ -76,7 +76,9 @@ public partial class GameManager: MonoBehaviour {
             songTime = skipToTime;
         }
 
-        pressSpaceButton.SetActive(true);
+        if (!isTutorial) {
+            pressSpaceButton.SetActive(true);
+        }
 
         if (isInGenerateSongJSONMode || isInTestSongMode) {
             setupForDevMode();

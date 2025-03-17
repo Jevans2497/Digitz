@@ -1,13 +1,13 @@
 {
     "challenges": [
         {
-            "name": "Supersonic",
-            "sprite_name": "Supersonic",
+            "name": "Death Beam",
+            "sprite_name": "DeathBeam",
             "challenge_type_string": "arrowSpeed",
             "color": "#007FFF",
             "rarity_string": "common",
             "hasSeverity": true,
-            "description": "Spawned arrows move faster"
+            "description": "One random direction has increased arrow speed"
         },
         {
             "name": "High Pressure",

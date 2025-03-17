@@ -97,7 +97,6 @@ public partial class GameManager: MonoBehaviour {
 
     private void showMenuOption(MenuCanvasManagerTutorial.TutorialMenuStep menuTutorialStep) {
         resetForTutorialText();
-
         menuCanvasManagerTutorial.startMenuLoop(menuTutorialStep);
         tutorialText.gameObject.SetActive(false);
     }
