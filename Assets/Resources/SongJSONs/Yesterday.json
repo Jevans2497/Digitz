@@ -918,24 +918,28 @@
             "arrow_speed": 0.0
         },
         {
-            "timestamp": 122.14281686147054,
+            "timestamp": 122.16255410512288,
             "arrow_direction": "right",
-            "arrow_speed": 0.0
+            "arrow_speed": 0.0,
+            "arrow_effect": "simultaneous"
         },
         {
             "timestamp": 122.16255410512288,
             "arrow_direction": "up",
-            "arrow_speed": 0.0
+            "arrow_speed": 0.0,
+            "arrow_effect": "simultaneous"
         },
         {
-            "timestamp": 122.16577370961507,
+            "timestamp": 122.16255410512288,
             "arrow_direction": "down",
-            "arrow_speed": 0.0
+            "arrow_speed": 0.0,
+            "arrow_effect": "simultaneous"
         },
         {
-            "timestamp": 122.18282540639241,
+            "timestamp": 122.16255410512288,
             "arrow_direction": "left",
-            "arrow_speed": 0.0
+            "arrow_speed": 0.0,
+            "arrow_effect": "simultaneous"
         }
     ]
 }
