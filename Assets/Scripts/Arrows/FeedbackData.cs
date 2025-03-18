@@ -246,16 +246,16 @@ public class FeedbackData {
 
             if (upgrade.effect == UpgradeEffect.TheGTrain) {
                 defaultPerfectScore = 0.0f;
-                defaultGreatScore += 225.0f;
-                defaultGoodScore += 150.0f;
+                defaultGreatScore += 150.0f;
+                defaultGoodScore += 100.0f;
             }
 
             if (upgrade.effect == UpgradeEffect.GreatDay) {
-                defaultGreatScore += 225.0f;
+                defaultGreatScore += 150.0f;
             }
 
             if (upgrade.effect == UpgradeEffect.GoodGraces) {
-                defaultGoodScore += 350.0f;
+                defaultGoodScore += 300.0f;
             }
 
             if (upgrade.effect == UpgradeEffect.Fertilizer) {                

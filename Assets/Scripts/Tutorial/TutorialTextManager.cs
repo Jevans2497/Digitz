@@ -18,10 +18,10 @@ public class TutorialTextManager : MonoBehaviour {
 
     Dictionary<TutorialMessage, string> messages = new Dictionary<TutorialMessage, string>();
 
-    private void Start() {
+    private void Awake() {
         messages[TutorialMessage.introduction] = "Welcome to Digitz! Let's start with the basics. Use the arrow keys (or WASD) to hit the spawned arrows at the proper time.";
         messages[TutorialMessage.royaltyFree1] = "We'll start you off with some corny royalty free music and see how you do before hitting the big leagues.";
-        messages[TutorialMessage.gameBasics1] = "That was<0.75ff>... <r>really good!<1f> <0.015f>For your first time.<0.85f> <r>You may have noticed that when you hit the arrows, you received \"feedback.\"";
+        messages[TutorialMessage.gameBasics1] = "That was<0.65f>... <r>really good!<1f> <0.015f>For your first time.<0.85f> <r>You may have noticed that when you hit the arrows, you received \"feedback.\"";
         messages[TutorialMessage.gameBasics2] = "There are 5 main feedback types, each with a default score. But wait! That's just the start...";
         messages[TutorialMessage.upgrades1] = "After each song, you'll select a permanent upgrade. Upgrades can affect feedback, how fast arrows move, and a whole lot more!";
         messages[TutorialMessage.upgrades2] = "Hover your mouse over the upgrades to see what they do. Don't worry too much about the details for now.";
