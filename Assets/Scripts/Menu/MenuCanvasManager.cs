@@ -227,7 +227,14 @@ public class MenuCanvasManager: MonoBehaviour {
         isLevelBonusOptionAvailable = true;
         MenuItem menuItem = levelBonusManager.getLevelBonusMenuItemForLevel(gameManager.getLevelNumber());
         MenuGameObjects levelBonusGameObjects = levelBonusManager.createLevelBonusOption(menuItem, levelBonusGameObject);
-        customizeMenuOption(levelBonusGameObjects, menuItem.Name, menuItem.Color, levelBonusGameObjects.path, menuItem.Description);
+        string description = menuItem.Description;
+
+        if (menuItem is LevelBonus levelBonus && levelBonus.levelBonusEffect == LevelBonus.LevelBonusEffect.aintBroke) {
+            FeedbackType mostReceivedFeedback = FeedbackData.fullGameFeedbackCounter.OrderByDescending(kvp => kvp.Value).First().Key;
+            description = menuItem.Description + "\n\nMost Received Feedback: " + mostReceivedFeedback.ToString();
+        }
+
+    customizeMenuOption(levelBonusGameObjects, menuItem.Name, menuItem.Color, levelBonusGameObjects.path, description);
         StartCoroutine(animateMenuOptionGrowing(levelBonusGameObjects.background));
     }
 
@@ -260,10 +267,6 @@ public class MenuCanvasManager: MonoBehaviour {
             if (menuItem is Challenge challenge && challenge.isConcealed) {
                 string hiddenItemSpritePath = "MenuItems/Challenges/ChallengeIcons/QuestionMark";
                 customizeMenuOption(gameObjects, "???", "#DEDEDE", hiddenItemSpritePath, "");
-            } else if (menuItem is LevelBonus levelBonus && levelBonus.levelBonusEffect == LevelBonus.LevelBonusEffect.aintBroke) {
-                FeedbackType mostReceivedFeedback = FeedbackData.fullGameFeedbackCounter.OrderByDescending(kvp => kvp.Value).First().Key;                
-                string aintBrokeDescription = menuItem.Description + "\n\nMost Received Feedback: " + mostReceivedFeedback.ToString();
-                customizeMenuOption(gameObjects, menuItem.Name, menuItem.Color, gameObjects.path, aintBrokeDescription);
             } else {
                 if (menuItem is Challenge) {                    
                     setupMenuItemForChallenge(gameObjects);

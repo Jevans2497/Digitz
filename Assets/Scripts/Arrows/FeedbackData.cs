@@ -255,7 +255,7 @@ public class FeedbackData {
             }
 
             if (upgrade.effect == UpgradeEffect.GoodGraces) {
-                defaultGoodScore += 300.0f;
+                defaultGoodScore += 200;
             }
 
             if (upgrade.effect == UpgradeEffect.Fertilizer) {                

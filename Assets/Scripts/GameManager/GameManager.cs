@@ -118,12 +118,12 @@ public partial class GameManager: MonoBehaviour {
         }
 
         // Cheat codes for debugging
-        if (Input.GetKeyDown(KeyCode.P)) {
-            score += 5000f;
-        }
-        if (Input.GetKeyDown(KeyCode.N)) {
-            songFinished();
-        }
+        //if (Input.GetKeyDown(KeyCode.P)) {
+        //    score += 5000f;
+        //}
+        //if (Input.GetKeyDown(KeyCode.N)) {
+        //    songFinished();
+        //}
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.M)) {
             toggleMarcoMode();
         }

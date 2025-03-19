@@ -37,7 +37,7 @@
             "sprite_name": "Bandit",
             "upgrade_type_string": "other",
             "color": "#00D903",
-            "rarity_string": "uncommon",
+            "rarity_string": "rare",
             "description": "Hitting an arrow button at any time scores a small amount of points, increases each level"
         },
         {
@@ -93,7 +93,7 @@
             "sprite_name": "Marshmallow",
             "upgrade_type_string": "other",
             "color": "#007FFF",
-            "rarity_string": "rare",
+            "rarity_string": "godly",
             "description": "Skip upgrade this round and get all 3 next round"
         },
         {
@@ -158,7 +158,7 @@
             "upgrade_type_string": "other",
             "color": "#007FFF",
             "rarity_string": "common",
-            "description": "Base Good score worth 7x points"
+            "description": "Base Good score worth 5x points"
         },
         {
             "name": "Great Responsibility",
