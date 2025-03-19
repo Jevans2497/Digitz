@@ -14,8 +14,12 @@ public static class LevelBonusTracker {
 
     public static void addLevelBonus(LevelBonus newLevelBonus) {
         levelBonus = newLevelBonus;
+
         if (newLevelBonus.levelBonusEffect == LevelBonusEffect.DoubleDown) {
-            UpgradeTracker.duplicateRandomUpgrade();
+            int randomInt = Random.Range(0, 2);
+            if (randomInt == 0) {
+                UpgradeTracker.duplicateRandomUpgrade();
+            }
         }
 
         levelBonusDisplayManager.levelBonusAdded(newLevelBonus);

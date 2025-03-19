@@ -88,6 +88,10 @@ public partial class GameManager: MonoBehaviour {
     }
 
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SceneManager.LoadScene("Main Menu");
+        }
+
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (isGameComplete) {
                 SceneManager.LoadScene("Main Menu");
@@ -102,7 +106,7 @@ public partial class GameManager: MonoBehaviour {
                     if (songCompleteDisplay.enabled) {
                         startMenuLoop();
                     }
-                    if (menuCanvasManager.isMenuLoopFinished) {
+                    if (menuCanvasManager.isMenuLoopFinished && !inSongLoop) {
                         startSongLoop();
                     }
                 }
@@ -114,12 +118,12 @@ public partial class GameManager: MonoBehaviour {
         }
 
         // Cheat codes for debugging
-        //if (Input.GetKeyDown(KeyCode.P)) {
-        //    score += 5000f;
-        //}
-        //if (Input.GetKeyDown(KeyCode.N)) {
-        //    songFinished();
-        //}
+        if (Input.GetKeyDown(KeyCode.P)) {
+            score += 5000f;
+        }
+        if (Input.GetKeyDown(KeyCode.N)) {
+            songFinished();
+        }
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.M)) {
             toggleMarcoMode();
         }

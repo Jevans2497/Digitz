@@ -19,28 +19,28 @@
             "level_bonus_name": "Easy Street",
             "level_bonus_sprite": "EasyStreet",
             "level_bonus_string": "easyStreet",
-            "level_bonus_description": "Lowers challenge severity by one grade"
+            "level_bonus_description": "Lowers this challenge's severity by one grade"
         },
         {
             "level_number": 4,
             "level_bonus_name": "Rainbow Road",
             "level_bonus_sprite": "RainbowRoad",
             "level_bonus_string": "rainbowRoad",
-            "level_bonus_description": "Rainbow arrows 4x more likely to appear"
+            "level_bonus_description": "Rainbow arrows 4x more likely to appear (Rainbow arrows give random upgrades)"
         },
         {
             "level_number": 5,
             "level_bonus_name": "Double Down",
             "level_bonus_sprite": "DoubleDown",
             "level_bonus_string": "doubleDown",
-            "level_bonus_description": "Randomly duplicate one upgrade"
+            "level_bonus_description": "50% chance to randomly duplicate one upgrade"
         },
         {
             "level_number": 6,
             "level_bonus_name": "Yellow Brick",
             "level_bonus_sprite": "YellowBrick",
             "level_bonus_string": "yellowBrick",
-            "level_bonus_description": "Golden arrows 2x more likely to appear"
+            "level_bonus_description": "Golden arrows 2x more likely to appear (Golden arrows multiply score based on feedback)"
         },
         {
             "level_number": 7,

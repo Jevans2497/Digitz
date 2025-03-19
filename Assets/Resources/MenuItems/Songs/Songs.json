@@ -16,9 +16,9 @@
             "sprite_name": "FreakingOutTheNeighborhood",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "Freaking Out the Neighborhood\nBy - Mac Demarco\nDifficulty: <color=#3498DB>Medium</color>",
+            "description": "Freaking Out the Neighborhood\nBy - Mac Demarco\nDifficulty: <color=#B78F00>Easy</color>",
             "artist": "Mac Demarco",
-            "difficulty_string": "medium"
+            "difficulty_string": "easy"
         },
         {
             "name": "If You Want the Truth",
@@ -76,9 +76,9 @@
             "sprite_name": "SpeedRacer",
             "color": "#007FFF",
             "rarity_string": "",
-            "description": "Speed Racer\nBy - Her's\nDifficulty: <color=#3498DB>Medium</color>",
+            "description": "Speed Racer\nBy - Her's\nDifficulty: <color=#E74C3C>Very Hard</color>",
             "artist": "Her's",
-            "difficulty_string": "medium"
+            "difficulty_string": "veryHard"
         },
         {
             "name": "Ain't No Mountain High Enough",

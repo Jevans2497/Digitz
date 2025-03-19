@@ -678,7 +678,13 @@ PlayerSettings:
   windowsGamepadBackendHint: 0
   cloudProjectId: a091519a-ca6b-4a0a-bf76-41b945383bf1
   framebufferDepthMemorylessMode: 0
-  qualitySettingsNames: []
+  qualitySettingsNames:
+  - Very Low
+  - Low
+  - Medium
+  - High
+  - Very High
+  - Ultra
   projectName: Dance-Dance-Roguelike
   organizationId: jevans2497
   cloudEnabled: 0
